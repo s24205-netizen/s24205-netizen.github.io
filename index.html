@@ -3,943 +3,660 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Wah Yan Eco-Bridge Project at WYHK Campus - A sustainable architectural solution protecting local biodiversity.">
-    <title>Wah Yan Eco-Bridge | WYHK Next-Gen Ecological Architecture.</title>
+    <title>Wah Yan Eco-Bridge</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* ==========================================================================
-           CSS Variables & Global Styles
-           ========================================================================== */
+        /* ==========================================================
+           Super Fun & Pleasant CSS Variables
+           ========================================================== */
         :root {
-            --primary-color: #1b4332; /* Deep Forest Green */
-            --secondary-color: #2d6a4f;
-            --accent-color: #52b788;
-            --light-accent: #b7e4c7;
-            --dark-bg: #081c15;
-            --light-bg: #f8f9fa;
-            --text-main: #2b2d42;
-            --text-muted: #6c757d;
-            --white: #ffffff;
-            --transition-fast: 0.2s ease;
-            --transition-slow: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-            --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
-            --shadow-lg: 0 20px 40px rgba(0,0,0,0.15);
+            --bg-color: #e0f8e9;      /* Soft Mint Background */
+            --nav-bg: #ffffff;
+            --primary: #4ade80;       /* Bright Green */
+            --primary-dark: #166534;  /* Deep Forest Green (Shadows) */
+            --accent: #fcd34d;        /* Sunny Yellow */
+            --accent-dark: #b45309;
+            --text-main: #1e293b;
+            --card-bg: #ffffff;
+            --border-width: 4px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            font-family: 'Nunito', sans-serif;
+            cursor: none; /* We will use a custom butterfly cursor! */
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.8;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#bbf7d0 2px, transparent 2px);
+            background-size: 30px 30px; /* Fun polka dot background */
             color: var(--text-main);
-            background-color: var(--light-bg);
+            line-height: 1.7;
             overflow-x: hidden;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary-color);
-            line-height: 1.3;
+        /* ==========================================================
+           Custom Butterfly Cursor
+           ========================================================== */
+        #custom-cursor {
+            position: fixed;
+            top: 0; left: 0;
+            width: 30px; height: 30px;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 24px;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
+        /* ==========================================================
+           Virtual Page Navigation (SPA Logic)
+           ========================================================== */
+        .page-view {
+            display: none;
+            animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            min-height: 100vh;
+            padding-top: 100px;
+            padding-bottom: 50px;
         }
 
-        /* ==========================================================================
-           Animations
-           ========================================================================== */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .page-view.active { display: block; }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(82, 183, 136, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(82, 183, 136, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(82, 183, 136, 0); }
-        }
-
-        .animate-up {
-            animation: fadeInUp 1s forwards;
-        }
-
-        /* ==========================================================================
-           Navigation Bar
-           ========================================================================== */
+        /* ==========================================================
+           Fun Navigation Bar
+           ========================================================== */
         nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.5rem 5%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            width: 96%;
+            top: 15px; left: 2%;
+            z-index: 1000;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition-slow);
+            background: var(--nav-bg);
+            border: var(--border-width) solid var(--primary-dark);
+            border-radius: 50px;
+            box-shadow: 0 6px 0 var(--primary-dark);
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            font-family: 'Playfair Display', serif;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo i {
-            color: var(--accent-color);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--primary-dark);
+            letter-spacing: 1px;
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 1rem;
             list-style: none;
+            flex-wrap: wrap;
         }
 
-        .nav-links a {
-            font-weight: 500;
-            font-size: 0.95rem;
-            position: relative;
-            padding-bottom: 5px;
-            transition: color var(--transition-fast);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--accent-color);
-            transition: width var(--transition-fast);
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* ==========================================================================
-           Hero Section
-           ========================================================================== */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            background: linear-gradient(135deg, rgba(8, 28, 21, 0.85) 0%, rgba(27, 67, 50, 0.7) 100%), url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover fixed;
-            color: var(--white);
-            text-align: center;
-            padding: 0 5%;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            z-index: 2;
-            animation: fadeInDown 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(82, 183, 136, 0.2);
-            border: 1px solid var(--accent-color);
-            color: var(--light-accent);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 2rem;
-        }
-
-        .hero h1 {
-            font-size: 5rem;
-            color: var(--white);
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            font-weight: 300;
-            color: #e9ecef;
-            margin-bottom: 3rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
+        /* Chunky Bouncy Buttons */
         .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--accent-color);
-            color: var(--dark-bg);
-            padding: 1.2rem 2.5rem;
+            background: var(--primary);
+            color: var(--primary-dark);
+            border: var(--border-width) solid var(--primary-dark);
+            padding: 0.6rem 1.5rem;
             border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: var(--transition-fast);
-            border: 2px solid transparent;
-            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: 0 6px 0 var(--primary-dark);
+            transition: all 0.1s ease-in-out;
+            position: relative;
+            top: 0;
         }
 
         .btn:hover {
-            background: var(--white);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
+            background: var(--accent);
+            color: var(--accent-dark);
+            border-color: var(--accent-dark);
+            box-shadow: 0 6px 0 var(--accent-dark);
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--white);
-            color: var(--white);
-            margin-left: 1rem;
+        .btn:active, .btn.active-btn {
+            top: 6px;
+            box-shadow: 0 0px 0 var(--primary-dark);
         }
 
-        .btn-outline:hover {
-            background: var(--white);
-            color: var(--dark-bg);
-        }
-
-        /* ==========================================================================
-           General Section Styling
-           ========================================================================== */
-        .section {
-            padding: 120px 5%;
-            position: relative;
-        }
-
-        .section-alt {
-            background-color: var(--white);
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .section-subtitle {
-            color: var(--accent-color);
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-
-        .section-title {
-            font-size: 3.5rem;
-            margin-bottom: 25px;
-        }
-
-        .section-desc {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-        }
-
-        /* ==========================================================================
-           Grid Layouts
-           ========================================================================== */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-        }
-
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        /* ==========================================================================
-           Feature Cards & Content Blocks
-           ========================================================================== */
-        .image-wrapper {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .image-wrapper img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.8s ease;
-        }
-
-        .image-wrapper:hover img {
-            transform: scale(1.05);
-        }
-
-        .floating-card {
-            position: absolute;
-            bottom: -30px;
-            right: -30px;
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: var(--shadow-lg);
-            max-width: 300px;
-            border-left: 5px solid var(--accent-color);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .feature-card {
-            background: var(--white);
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition-slow);
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 0;
-            background: var(--primary-color);
-            z-index: -1;
-            transition: height 0.4s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-15px);
-            box-shadow: var(--shadow-lg);
-            border-color: transparent;
-        }
-
-        .feature-card:hover::before {
-            height: 100%;
-        }
-
-        .feature-card:hover * {
-            color: var(--white) !important;
-        }
-
-        .icon-box {
-            width: 80px;
-            height: 80px;
-            background: rgba(82, 183, 136, 0.1);
-            border-radius: 20px;
+        /* ==========================================================
+           Hero Section (Home Page)
+           ========================================================== */
+        .hero {
+            height: calc(100vh - 150px);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
-            transition: var(--transition-fast);
-        }
-
-        .feature-card:hover .icon-box {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .icon-box i {
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-        }
-
-        .feature-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-        }
-
-        /* ==========================================================================
-           Stats Section
-           ========================================================================== */
-        .stats-section {
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 80px 0;
-            position: relative;
-        }
-
-        .stats-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" stroke-width="2" fill="none"/></svg>');
-            opacity: 0.5;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 2rem;
-            border-right: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .stat-item:last-child {
-            border-right: none;
-        }
-
-        .stat-value {
-            font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            line-height: 1;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .stat-unit {
-            font-size: 2rem;
-            font-weight: 400;
-            color: var(--white);
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--light-accent);
-        }
-
-        /* ==========================================================================
-           Team Section
-           ========================================================================== */
-        .team-card {
-            background: var(--white);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition-slow);
             text-align: center;
         }
 
-        .team-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .team-header {
-            background: var(--light-bg);
-            height: 120px;
-            position: relative;
-            border-bottom: 5px solid var(--accent-color);
-        }
-
-        .team-avatar {
-            width: 120px;
-            height: 120px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            border: 5px solid var(--white);
-            position: absolute;
-            bottom: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 3rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .team-body {
-            padding: 80px 20px 30px;
-        }
-
-        .team-name {
-            font-size: 1.4rem;
-            margin-bottom: 5px;
-        }
-
-        .team-role {
-            color: var(--accent-color);
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .special-thanks-box {
-            background: linear-gradient(135deg, var(--primary-color), var(--dark-bg));
-            color: var(--white);
+        .hero-banner {
+            background: var(--card-bg);
+            border: 6px solid var(--primary-dark);
+            border-radius: 40px;
             padding: 4rem;
-            border-radius: 20px;
-            text-align: center;
-            margin-top: 60px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 12px 0 var(--primary-dark);
             position: relative;
-            overflow: hidden;
+            max-width: 900px;
+            width: 90%;
+            animation: float 4s ease-in-out infinite;
         }
 
-        .special-thanks-box::after {
-            content: '\f004'; /* FontAwesome Heart */
-            font-family: 'Font Awesome 6 Free';
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            color: var(--primary-dark);
             font-weight: 900;
-            position: absolute;
-            font-size: 15rem;
-            color: rgba(255, 255, 255, 0.03);
-            top: -20px;
-            right: -20px;
-            transform: rotate(-15deg);
-        }
-
-        .special-thanks-box h3 {
-            color: var(--white);
-            font-size: 2.5rem;
+            line-height: 1.1;
             margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 var(--primary);
         }
 
-        .special-thanks-box p {
-            font-size: 1.2rem;
-            color: var(--light-accent);
-            max-width: 600px;
-            margin: 0 auto;
+        /* ==========================================================
+           Content Pages & Cards
+           ========================================================== */
+        .content-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 5%;
         }
 
-        /* ==========================================================================
-           Technical Detail Blocks (Greenhouse & Future)
-           ========================================================================== */
-        .tech-block {
+        .content-card {
+            background: var(--card-bg);
+            border: 6px solid var(--primary-dark);
+            border-radius: 30px;
             padding: 3rem;
-            background: var(--white);
-            border-radius: 15px;
-            border-left: 8px solid var(--accent-color);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 2rem;
-        }
-
-        .tech-block h3 {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-        }
-
-        .tech-block i {
-            color: var(--accent-color);
-        }
-
-        /* ==========================================================================
-           Footer
-           ========================================================================== */
-        footer {
-            background: var(--dark-bg);
-            color: #adb5bd;
-            padding: 80px 5% 30px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 60px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 60px;
-        }
-
-        .footer-brand h2 {
-            color: var(--white);
-            font-size: 2rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .footer-brand p {
-            max-width: 400px;
-            margin-bottom: 30px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            transition: var(--transition-fast);
-        }
-
-        .social-links a:hover {
-            background: var(--accent-color);
-            transform: translateY(-3px);
-        }
-
-        .footer-links h4 {
-            color: var(--white);
-            font-family: 'Inter', sans-serif;
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            transition: var(--transition-fast);
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-color);
-            padding-left: 5px;
-        }
-
-        .footer-bottom {
+            box-shadow: 0 12px 0 var(--primary-dark);
             text-align: center;
-            font-size: 0.9rem;
+            position: relative;
         }
 
-        /* ==========================================================================
-           Responsive Design
-           ========================================================================== */
-        @media (max-width: 1024px) {
-            .hero h1 { font-size: 4rem; }
-            .grid-2 { grid-template-columns: 1fr; gap: 40px; }
-            .floating-card { display: none; } /* Hide on smaller screens to prevent overflow */
-            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+        .content-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 4px solid var(--primary-dark);
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 0 var(--primary-dark);
         }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; } /* Consider adding a hamburger menu here in production */
-            .hero h1 { font-size: 3rem; }
-            .section-title { font-size: 2.5rem; }
-            .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .stat-item:last-child { border-bottom: none; }
-            .grid-4 { grid-template-columns: 1fr; }
+        .content-card h2 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+        }
+
+        .content-card p {
+            font-size: 1.25rem;
+            color: var(--text-main);
+            line-height: 1.8;
+            font-weight: 700;
+        }
+
+        /* ==========================================================
+           Super Fun Mini Game Section
+           ========================================================== */
+        .game-section {
+            background: var(--card-bg);
+            border: 6px solid var(--primary-dark);
+            border-radius: 30px;
+            text-align: center;
+            padding: 3rem 5%;
+            margin: 4rem auto;
+            max-width: 900px;
+            box-shadow: 0 12px 0 var(--primary-dark);
+        }
+
+        .game-section h2 {
+            color: var(--primary-dark);
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 0 var(--accent);
+        }
+
+        #gameCanvas {
+            background: #bae6fd; /* Sky blue */
+            border: 6px solid var(--primary-dark);
+            border-radius: 20px;
+            margin: 1.5rem auto;
+            display: block;
+            max-width: 100%;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 15px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary-dark);
+        }
+        
+        .badge {
+            background: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            border: 3px solid var(--primary-dark);
+            box-shadow: 0 4px 0 var(--primary-dark);
+        }
+
+        /* Confetti Canvas */
+        #confettiCanvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9998;
         }
     </style>
 </head>
 <body>
 
+    <div id="custom-cursor">🦋</div>
+    
+    <canvas id="confettiCanvas"></canvas>
+
     <nav>
-        <a href="#" class="logo">
-            <i class="fa-solid fa-leaf"></i> 
-            <span>Wah Yan Eco-Bridge</span>
-        </a>
+        <div class="logo">🌿 Wah Yan Eco-Bridge</div>
         <ul class="nav-links">
-            <li><a href="#context">The Context</a></li>
-            <li><a href="#solution">Architecture</a></li>
-            <li><a href="#specs">Specifications</a></li>
-            <li><a href="#research">R&D & Future</a></li>
-            <li><a href="#team">Our Team</a></li>
+            <li><button class="btn active-btn" onclick="navigateTo('page-home', this)">Home</button></li>
+            <li><button class="btn" onclick="navigateTo('page-goal', this)">Goal</button></li>
+            <li><button class="btn" onclick="navigateTo('page-uv', this)">UV Coating</button></li>
+            <li><button class="btn" onclick="navigateTo('page-uv-how', this)">How UV Works</button></li>
+            <li><button class="btn" onclick="navigateTo('page-dimensions', this)">Dimensions</button></li>
+            <li><button class="btn" onclick="navigateTo('page-butterflies', this)">Butterflies</button></li>
+            <li><button class="btn" onclick="navigateTo('page-greenhouse', this)">Greenhouse</button></li>
+            <li><button class="btn" onclick="navigateTo('page-future', this)">Future</button></li>
         </ul>
-        <a href="#team" class="btn" style="padding: 0.6rem 1.5rem; font-size: 0.95rem;">Meet the Team</a>
     </nav>
 
-    <header class="hero">
-        <div class="hero-content">
-            <span class="badge">WYHK Campus Initiative</span>
-            <h1>Harmony Between Architecture & Nature</h1>
-            <p>At Wah Yan College, Hong Kong, we noticed a critical problem: human infrastructure was trapping local wildlife. This is our state-of-the-art architectural solution to protect delicate ecosystems while maintaining human utility.</p>
-            <div style="margin-top: 2rem;">
-                <a href="#context" class="btn">Explore the Problem <i class="fa-solid fa-arrow-down"></i></a>
-                <a href="#solution" class="btn btn-outline">View the Design</a>
+    <div id="page-home" class="page-view active">
+        <header class="hero">
+            <div class="hero-banner">
+                <h1>Welcome to<br>WAH YAN<br>ECO-BRIDGE</h1>
+                <p style="font-size: 1.2rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 2rem;">A brilliant design protecting our beautiful butterfly friends! 🦋✨</p>
+                <button class="btn" style="background: var(--accent); color: var(--accent-dark); border-color: var(--accent-dark); font-size: 1.2rem;" onclick="triggerFact()">Pop a Random Butterfly Fact! 🎈</button>
+                <p id="fact-display" style="margin-top: 15px; font-weight: 800; color: var(--primary-dark);"></p>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <section class="section section-alt" id="context">
-        <div class="container">
-            <div class="grid-2">
-                <div class="image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1550186937-25e24cb91be3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Butterfly trapped near glass">
-                    <div class="floating-card">
-                        <h4 style="font-family: 'Inter', sans-serif; font-size: 1.1rem; color: var(--primary-color); margin-bottom: 5px;">Phototaxis Behavior</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Butterflies instinctively move toward light sources, confusing artificial reflections for natural navigation points.</p>
-                    </div>
-                </div>
-                <div>
-                    <span class="section-subtitle">The Observation</span>
-                    <h2 class="section-title">The Entrapment Dilemma on the WYHK Campus</h2>
-                    <p class="section-desc" style="margin-bottom: 20px;">
-                        The original footbridge connecting the campus facilities was designed strictly with human transit in mind. However, our environmental monitoring teams observed a distressing trend: local butterflies were frequently becoming trapped within the confines of the original footbridge, finding it nearly impossible to escape back into the surrounding flora.
-                    </p>
-                    <p class="section-desc" style="margin-bottom: 30px;">
-                        <strong>Understanding the Biology:</strong> Butterflies exhibit a biological phenomenon known as <em>phototaxis</em>. This is an instinctive drive to move toward light sources. In the wild, this behavior helps them navigate using the sun. However, in an architectural environment, they use bright artificial bulbs and reflective glare as orienting points during flight. The old bridge's design inadvertently weaponized this biology, drawing them in without providing a clear exit path.
-                    </p>
-                    <ul style="list-style: none; padding-left: 0;">
-                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 15px; font-weight: 500;">
-                            <i class="fa-solid fa-circle-exclamation" style="color: #e63946; font-size: 1.2rem;"></i> High incidence of insect mortality
-                        </li>
-                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 15px; font-weight: 500;">
-                            <i class="fa-solid fa-circle-exclamation" style="color: #e63946; font-size: 1.2rem;"></i> Disruption of local pollination paths
-                        </li>
-                        <li style="display: flex; align-items: center; gap: 15px; font-weight: 500;">
-                            <i class="fa-solid fa-circle-exclamation" style="color: #e63946; font-size: 1.2rem;"></i> Conflict between urban utility and ecological health
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="solution">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Architectural Innovation</span>
-                <h2 class="section-title">Engineering a Safe Passage</h2>
-                <p class="section-desc">Our new design specifically addresses the entrapment issue, utilizing advanced material sciences to ensure a safer passage for local insect populations without compromising on the aesthetic or functional needs of the WYHK campus.</p>
-            </div>
-
-            <div class="grid-3">
-                <div class="feature-card">
-                    <div class="icon-box"><i class="fa-solid fa-shield-cat"></i></div>
-                    <h3>UV Reflective Coating</h3>
-                    <p style="color: var(--text-muted); line-height: 1.7;">To drastically reduce the rate of birds and insects colliding with the glass side panels, we integrated a specialized UV-reflective coating. This coating is uniquely formulated to interact with light spectrums that exist beyond standard human perception.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="icon-box"><i class="fa-regular fa-eye"></i></div>
-                    <h3>Dual-Perception Design</h3>
-                    <p style="color: var(--text-muted); line-height: 1.7;">The brilliance of this design lies in its biological targeting. Because birds and butterflies possess highly UV-sensitive eyes, the applied coatings appear as vivid, solid warning barriers to them. Meanwhile, it maintains near-perfect visual transparency for humans.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="icon-box"><i class="fa-solid fa-layer-group"></i></div>
-                    <h3>Multi-Surface Application</h3>
-                    <p style="color: var(--text-muted); line-height: 1.7;">This protective technology isn't just limited to one material. The design accounts for its use across various architectural elements including structural glass, surrounding metals, and canopy fabrics to create a comprehensive biological shield.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="stats-section" id="specs">
-        <div class="container">
-            <div class="section-header" style="margin-bottom: 50px;">
-                <h2 class="section-title" style="color: var(--white); font-size: 2.5rem;">Structural Dimensions</h2>
-                <p style="color: var(--light-accent); max-width: 600px; margin: 0 auto;">The new Eco-Bridge was carefully engineered to closely mirror the scale and utility footprint of the original footbridge, ensuring zero disruption to pedestrian flow.</p>
-            </div>
+        <section class="game-section">
+            <h2>🦋 Eco-Flight Challenge!</h2>
+            <p style="font-size: 1.2rem; font-weight: 700;">Tap the screen or press SPACE to help the butterfly navigate the bridge!</p>
+            <canvas id="gameCanvas" width="800" height="400"></canvas>
             
-            <div class="grid-3" style="gap: 0;">
-                <div class="stat-item">
-                    <div class="stat-value">12.9<span class="stat-unit">m</span></div>
-                    <div class="stat-label">Total Length</div>
+            <div style="margin-top: 1rem;">
+                <button id="startBtn" class="btn" style="font-size: 1.5rem; padding: 1rem 3rem;">▶️ Play Game!</button>
+                <div class="score-board">
+                    <div class="badge">Score: <span id="scoreDisplay">0</span></div>
+                    <div class="badge" style="background: #fbcfe8;">High Score: <span id="highScoreDisplay">0</span></div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">1.8<span class="stat-unit">m</span></div>
-                    <div class="stat-label">Walkway Width</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">3.5<span class="stat-unit">m</span></div>
-                    <div class="stat-label">Peak Height</div>
-                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="page-goal" class="page-view">
+        <div class="content-container">
+            <div class="content-card">
+                <img src="https://images.unsplash.com/photo-1550186937-25e24cb91be3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Butterfly on glass" class="content-image">
+                <h2>🎯 Goal of the Project</h2>
+                <p>We observed that butterflies often became trapped within the original footbridge, finding it difficult to escape. Our new design specifically addresses this issue, ensuring a safer passage for local insect populations.</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section class="section section-alt" id="research">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Phase Two Analysis</span>
-                <h2 class="section-title">Continuous Evaluation</h2>
-                <p class="section-desc">Architecture is never truly finished. We are actively monitoring the environmental integration of the bridge and have identified key areas for rigorous future study.</p>
-            </div>
-
-            <div class="grid-2">
-                <div class="tech-block">
-                    <h3><i class="fa-solid fa-temperature-half"></i> The Greenhouse Effect</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 15px;">A critical component of our Phase 2 R&D involves analyzing the internal thermodynamics of the bridge corridor.</p>
-                    <div style="background: var(--light-bg); padding: 15px; border-radius: 8px; border: 1px dashed #ccc;">
-                        <p style="font-family: monospace; color: #888; font-size: 0.9rem;">
-                            // Data Collection Pending<br>
-                            // Sensors currently being deployed to measure solar heat gain across various seasons.<br>
-                            // Goal: Ensure the enclosure does not become a thermal trap for wildlife.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="tech-block">
-                    <h3><i class="fa-solid fa-sun"></i> Community Light Reflection</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 15px;">We have proactively acknowledged that light reflected from the newly installed glass side panels might impact the surrounding WYHK community or adjacent urban structures.</p>
-                    <p style="color: var(--text-muted);">However, during the initial deployment phase, we were unable to execute a formal, large-scale experiment to mathematically quantify these specific reflections. Securing funding and methodology for this study is a primary objective for our upcoming academic term.</p>
-                </div>
+    <div id="page-uv" class="page-view">
+        <div class="content-container">
+            <div class="content-card">
+                <img src="https://images.unsplash.com/photo-1506509538350-13f56ce246e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Reflective glass panels" class="content-image">
+                <h2>✨ UV-Reflective Coating</h2>
+                <p>To prevent birds and insects from colliding with the glass, we decided to apply a UV-reflective coating. This makes the panels visible to wildlife while maintaining transparency for humans.</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section class="section" id="team" style="background: #eef2f3;">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">The Minds Behind the Bridge</span>
-                <h2 class="section-title">Meet the Design & Management Team</h2>
-                <p class="section-desc">The Wah Yan Eco-Bridge was brought to life by a dedicated group of students and faculty members at the WYHK campus, merging leadership, scientific research, and innovative marketing.</p>
+    <div id="page-uv-how" class="page-view">
+        <div class="content-container">
+            <div class="content-card">
+                <img src="https://images.unsplash.com/photo-1494249465471-5655b7878482?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Close up of a butterfly wing" class="content-image">
+                <h2>🔍 How Does the Coating Work?</h2>
+                <p>Designed for use on various materials—including glass, metals, and fabrics—UV-reflective coatings interact with light spectrums beyond human perception. However, because birds and butterflies possess UV-sensitive eyes, these coatings remain visible to them as a solid barrier!</p>
             </div>
-
-            <div class="grid-4">
-                <div class="team-card">
-                    <div class="team-header">
-                        <div class="team-avatar"><i class="fa-solid fa-user-tie"></i></div>
-                    </div>
-                    <div class="team-body">
-                        <h4 class="team-name">Yang Chun Kit Jason</h4>
-                        <span class="team-role">General Manager</span>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Overseeing the entire architectural timeline, budget allocation, and inter-departmental coordination.</p>
-                    </div>
-                </div>
-
-                <div class="team-card">
-                    <div class="team-header">
-                        <div class="team-avatar"><i class="fa-solid fa-flask"></i></div>
-                    </div>
-                    <div class="team-body">
-                        <h4 class="team-name">Lo Shing Yu Perley</h4>
-                        <span class="team-role">R&D Manager</span>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Co-leading the research into UV-reflective materials and biological behavioral patterns.</p>
-                    </div>
-                </div>
-
-                <div class="team-card">
-                    <div class="team-header">
-                        <div class="team-avatar"><i class="fa-solid fa-microscope"></i></div>
-                    </div>
-                    <div class="team-body">
-                        <h4 class="team-name">Fang Liangyu</h4>
-                        <span class="team-role">R&D Manager</span>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Driving the structural feasibility studies and preparing the impending Greenhouse Effect data collection.</p>
-                    </div>
-                </div>
-
-                <div class="team-card">
-                    <div class="team-header">
-                        <div class="team-avatar"><i class="fa-solid fa-bullhorn"></i></div>
-                    </div>
-                    <div class="team-body">
-                        <h4 class="team-name">Tse Man Shun Nathan</h4>
-                        <span class="team-role">Marketing Manager</span>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Communicating the project's ecological value to the student body and wider Hong Kong community.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="special-thanks-box">
-                <h3 style="font-family: 'Playfair Display', serif;">Special Thanks</h3>
-                <p>We extend our deepest gratitude to <strong>Ms. Chan Siu Chuk Prudence</strong>. Her unwavering support, guidance, and advocacy for environmental consciousness on the WYHK campus made this ambitious project a reality.</p>
-            </div>
-
         </div>
-    </section>
+    </div>
 
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <h2><i class="fa-solid fa-leaf" style="color: var(--accent-color);"></i> WYHK Eco-Bridge</h2>
-                    <p>Redefining how educational campuses interact with their surrounding ecosystems through thoughtful, science-backed architectural design.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-solid fa-envelope"></i></a>
-                    </div>
-                </div>
+    <div id="page-dimensions" class="page-view">
+        <div class="content-container">
+            <div class="content-card">
+                <img src="https://images.unsplash.com/photo-1444525873963-75d329ef9e1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="A wooden and metal footbridge" class="content-image">
+                <h2>📏 Information & Dimensions</h2>
+                <p>With a length of 12.9 meters, a width of 1.8 meters, and a peak height of 3.5 meters, the bridge closely mirrors the scale of the original footbridge, making it perfectly functional for daily use.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-butterflies" class="page-view">
+        <div class="content-container">
+            <div class="content-card">
+                <img src="https://images.unsplash.com/photo-1534444569502-99ab94f71a06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Butterfly flying toward the sun" class="content-image">
+                <h2>🦋 Characteristics of Butterflies</h2>
+                <p>Butterflies exhibit <em>phototaxis</em>, an instinctive drive to move toward light sources. This biological behavior leads them to navigate toward the sun or artificial bulbs, as they use bright points to orient themselves during flight.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-greenhouse" class="page-view">
+        <div class="content-container">
+            <div class="content-card">
+                <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4ce88?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Plants inside a glass greenhouse" class="content-image">
+                <h2>🌡️ The Greenhouse Effect</h2>
+                <p>Will the sunlight shine into the bridge and make the inside too hot? <strong>The answer is no!</strong> The UV-reflective coating doesn't just protect wildlife; it also significantly reduces the greenhouse effect. By deflecting excess solar radiation, it ensures the interior remains at a comfortable temperature for everyone crossing it.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-future" class="page-view">
+        <div class="content-container">
+            <div class="content-card">
+                <img src="https://images.unsplash.com/photo-1495562569060-2eec283d3391?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Sunlight reflecting off a building" class="content-image">
+                <h2>🔮 Things We Will Consider in the Future</h2>
+                <p>We acknowledge that light reflected from the glass side panels might impact the surrounding community. However, we were unable to execute a formal experiment to quantify these reflections during this initial phase.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================================
+           Custom Cursor Logic
+           ========================================================== */
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Rotate cursor when clicking
+        document.addEventListener('mousedown', () => cursor.style.transform = 'translate(-50%, -50%) rotate(-20deg) scale(1.2)');
+        document.addEventListener('mouseup', () => cursor.style.transform = 'translate(-50%, -50%) rotate(0deg) scale(1)');
+
+        /* ==========================================================
+           Random Fun Facts
+           ========================================================== */
+        const facts = [
+            "Butterflies taste with their feet! 🦶",
+            "A group of butterflies is called a kaleidoscope! 🌈",
+            "Butterflies can see colors that humans can't! 🎨",
+            "The top flight speed of a butterfly is 12 mph! 🏎️"
+        ];
+        function triggerFact() {
+            const factDisplay = document.getElementById('fact-display');
+            const randomFact = facts[Math.floor(Math.random() * facts.length)];
+            factDisplay.innerText = randomFact;
+            fireConfetti(); // Pop confetti!
+        }
+
+        /* ==========================================================
+           Page Navigation
+           ========================================================== */
+        function navigateTo(pageId, btnElement) {
+            document.querySelectorAll('.page-view').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active-btn'));
+            if (btnElement) btnElement.classList.add('active-btn');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            fireConfetti(); // Mini celebration on page change!
+        }
+
+        /* ==========================================================
+           Mini Confetti Engine
+           ========================================================== */
+        const confCanvas = document.getElementById('confettiCanvas');
+        const confCtx = confCanvas.getContext('2d');
+        confCanvas.width = window.innerWidth;
+        confCanvas.height = window.innerHeight;
+        let particles = [];
+
+        function fireConfetti() {
+            for(let i=0; i<30; i++) {
+                particles.push({
+                    x: Math.random() * confCanvas.width,
+                    y: -10,
+                    r: Math.random() * 6 + 4,
+                    dx: Math.random() * 4 - 2,
+                    dy: Math.random() * 5 + 2,
+                    color: `hsl(${Math.random() * 360}, 100%, 70%)`
+                });
+            }
+        }
+
+        function animateConfetti() {
+            confCtx.clearRect(0, 0, confCanvas.width, confCanvas.height);
+            for(let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                confCtx.beginPath();
+                confCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                confCtx.fillStyle = p.color;
+                confCtx.fill();
+                p.x += p.dx;
+                p.y += p.dy;
+                // Remove if off screen
+                if(p.y > confCanvas.height) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animateConfetti);
+        }
+        animateConfetti();
+
+        /* ==========================================================
+           Upgraded Mini Game Logic
+           ========================================================== */
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const startBtn = document.getElementById("startBtn");
+        const scoreDisplay = document.getElementById("scoreDisplay");
+        const highScoreDisplay = document.getElementById("highScoreDisplay");
+
+        let gameLoop;
+        let isPlaying = false;
+        let frame = 0;
+        let score = 0;
+        let highScore = localStorage.getItem('ecoBridgeHighScore') || 0;
+        highScoreDisplay.innerText = highScore;
+
+        const butterfly = {
+            x: 150, y: 150, size: 35,
+            velocity: 0, gravity: 0.5, jump: -8,
+            draw() {
+                ctx.font = this.size + "px Arial";
+                // Rotate slightly based on velocity
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.velocity * 0.05);
+                ctx.fillText("🦋", -this.size/2, this.size/2);
+                ctx.restore();
+            },
+            update() {
+                this.velocity += this.gravity;
+                this.y += this.velocity;
+            }
+        };
+
+        let pillars = [];
+        const pillarWidth = 70;
+        const gap = 160;
+        const speed = 4;
+
+        function drawPillars() {
+            ctx.fillStyle = "#4ade80"; // Vibrant green
+            ctx.strokeStyle = "#166534"; // Thick border
+            ctx.lineWidth = 4;
+
+            for (let i = 0; i < pillars.length; i++) {
+                let p = pillars[i];
                 
-                <div class="footer-links">
-                    <h4>Project Sections</h4>
-                    <ul>
-                        <li><a href="#context">The Problem</a></li>
-                        <li><a href="#solution">UV Architecture</a></li>
-                        <li><a href="#specs">Bridge Dimensions</a></li>
-                        <li><a href="#research">Phase 2 Research</a></li>
-                    </ul>
-                </div>
+                // Top Pillar
+                ctx.fillRect(p.x, 0, pillarWidth, p.top);
+                ctx.strokeRect(p.x, 0, pillarWidth, p.top);
+                
+                // Bottom Pillar
+                ctx.fillRect(p.x, p.top + gap, pillarWidth, canvas.height - p.top - gap);
+                ctx.strokeRect(p.x, p.top + gap, pillarWidth, canvas.height - p.top - gap);
+                
+                p.x -= speed;
 
-                <div class="footer-links">
-                    <h4>Institution</h4>
-                    <ul>
-                        <li><a href="#">Wah Yan College, Hong Kong</a></li>
-                        <li><a href="#">Campus Environmental Board</a></li>
-                        <li><a href="#">Student Projects Archive</a></li>
-                        <li><a href="#">Contact Faculty</a></li>
-                    </ul>
-                </div>
-            </div>
+                // Collision Detection (Box model approximation for emoji)
+                let bLeft = butterfly.x - 10;
+                let bRight = butterfly.x + 10;
+                let bTop = butterfly.y - 15;
+                let bBottom = butterfly.y + 10;
+
+                if (
+                    bRight > p.x && bLeft < p.x + pillarWidth &&
+                    (bTop < p.top || bBottom > p.top + gap)
+                ) {
+                    gameOver();
+                }
+
+                // 🎯 SCORE UPDATE LOGIC 🎯
+                // If the pillar passes the butterfly and hasn't been scored yet
+                if (p.x + pillarWidth < butterfly.x && !p.passed) {
+                    score++;
+                    scoreDisplay.innerText = score;
+                    p.passed = true;
+                    fireConfetti(); // Pop confetti for scoring!
+                    
+                    if (score > highScore) {
+                        highScore = score;
+                        highScoreDisplay.innerText = highScore;
+                        localStorage.setItem('ecoBridgeHighScore', highScore);
+                    }
+                }
+            }
+        }
+
+        function spawnPillar() {
+            if (frame % 90 === 0) {
+                let topHeight = Math.random() * (canvas.height - gap - 60) + 30;
+                // Added passed: false property to track scoring
+                pillars.push({ x: canvas.width, top: topHeight, passed: false });
+            }
+            if (pillars.length > 0 && pillars[0].x < -pillarWidth) {
+                pillars.shift();
+            }
+        }
+
+        function drawBackground() {
+            // Draw cute clouds
+            ctx.fillStyle = "rgba(255,255,255,0.8)";
+            ctx.beginPath();
+            ctx.arc(200 - (frame*0.5)%800, 80, 30, 0, Math.PI*2);
+            ctx.arc(230 - (frame*0.5)%800, 80, 40, 0, Math.PI*2);
+            ctx.arc(260 - (frame*0.5)%800, 80, 30, 0, Math.PI*2);
+            ctx.fill();
+        }
+
+        function resetGame() {
+            butterfly.y = canvas.height / 2;
+            butterfly.velocity = 0;
+            pillars = [];
+            score = 0;
+            scoreDisplay.innerText = score;
+            frame = 0;
+        }
+
+        function gameOver() {
+            isPlaying = false;
+            cancelAnimationFrame(gameLoop);
             
-            <div class="footer-bottom">
-                <p>&copy; 2026 Wah Yan Eco-Bridge Project Team (WYHK). Designed with purpose for the protection of local wildlife. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+            // Fun Game Over Screen
+            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+            ctx.fillRect(0,0, canvas.width, canvas.height);
+            ctx.fillStyle = "#166534";
+            ctx.font = "900 40px Nunito";
+            ctx.fillText("Oops! Try Again! 💥", 220, 200);
+            
+            startBtn.innerText = "🔄 Restart Game";
+            startBtn.style.display = "inline-block";
+        }
 
+        function animate() {
+            if (!isPlaying) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            drawBackground();
+            butterfly.update();
+            butterfly.draw();
+            spawnPillar();
+            drawPillars();
+            
+            // Floor/Ceiling collision
+            if (butterfly.y >= canvas.height || butterfly.y <= 0) {
+                gameOver();
+            }
+
+            frame++;
+            gameLoop = requestAnimationFrame(animate);
+        }
+
+        function flap() {
+            if (isPlaying) {
+                butterfly.velocity = butterfly.jump;
+            }
+        }
+
+        window.addEventListener("keydown", (e) => {
+            if (e.code === "Space") {
+                e.preventDefault(); // prevent page scrolling
+                flap();
+            }
+        });
+        canvas.addEventListener("mousedown", flap);
+        canvas.addEventListener("touchstart", (e) => { 
+            if(e.target === canvas) {
+                e.preventDefault(); 
+                flap(); 
+            }
+        });
+
+        startBtn.addEventListener("click", () => {
+            if (!isPlaying) {
+                resetGame();
+                isPlaying = true;
+                startBtn.style.display = "none";
+                animate();
+            }
+        });
+
+        // Initial Draw Screen
+        ctx.fillStyle = "#166534";
+        ctx.font = "900 30px Nunito";
+        ctx.fillText("Press 'Play Game' to start flying! 🦋", 150, 200);
+    </script>
 </body>
 </html>
