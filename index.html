@@ -43,7 +43,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Nunito', sans-serif;
-            cursor: none; /* Custom butterfly cursor */
         }
 
         body {
@@ -98,21 +97,6 @@
         }
 
         /* ==========================================================
-           Custom Smooth Butterfly Cursor
-           ========================================================= */
-        #custom-cursor {
-            position: fixed;
-            top: 0; left: 0;
-            width: 32px; height: 32px;
-            pointer-events: none;
-            z-index: 9999;
-            font-size: 26px;
-            transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
-        }
-
-        /* ==========================================================
            Bouncy "Pro-Fun" Buttons
            ========================================================= */
         .btn-modern {
@@ -132,6 +116,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             user-select: none;
+            cursor: pointer;
         }
 
         .btn-modern:hover {
@@ -158,7 +143,7 @@
         }
 
         /* ==========================================================
-           Sleek Glassmorphism Navigation & Hamburger
+           Sleek Glassmorphism Navigation (No Hamburger)
            ========================================================= */
         nav {
             position: fixed;
@@ -177,7 +162,7 @@
         }
 
         .logo {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 900;
             color: var(--text-dark);
             letter-spacing: -0.5px;
@@ -185,26 +170,28 @@
             align-items: center;
             gap: 10px;
             transition: opacity 0.2s ease;
+            cursor: pointer;
         }
         .logo:hover { opacity: 0.7; }
         .logo-img { height: 38px; width: auto; object-fit: contain; }
 
         .nav-links {
             display: flex;
-            gap: 0.2rem;
+            gap: 0.1rem;
             list-style: none;
-            flex-wrap: wrap;
+            flex-wrap: wrap; 
         }
 
         .btn-nav {
             background: transparent;
             color: var(--text-muted);
             border: none;
-            padding: 0.6rem 1.2rem;
+            padding: 0.4rem 0.7rem; 
             border-radius: 50px;
-            font-size: 0.9rem;
+            font-size: 0.8rem; 
             font-weight: 800;
             transition: all 0.3s var(--smooth);
+            cursor: pointer;
         }
 
         .btn-nav:hover {
@@ -216,40 +203,6 @@
             background: var(--brand-primary);
             color: white;
             box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
-        }
-
-        /* Hamburger Menu Styling */
-        .hamburger {
-            display: none; /* Hidden on desktop */
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 21px;
-            background: transparent;
-            border: none;
-            z-index: 1001;
-            padding: 0;
-            cursor: none;
-        }
-
-        .hamburger span {
-            width: 100%;
-            height: 3px;
-            background-color: var(--text-dark);
-            border-radius: 10px;
-            transition: all 0.3s var(--bounce);
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: translateY(9px) rotate(45deg);
-            background-color: var(--brand-primary);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
-            background-color: var(--brand-primary);
         }
 
         /* ==========================================================
@@ -311,7 +264,7 @@
         }
 
         /* ==========================================================
-           Content Pages (Soft Editorial Layout)
+           Content Pages
            ========================================================= */
         .content-container {
             max-width: 1200px;
@@ -373,9 +326,6 @@
             line-height: 1.8;
         }
 
-        /* ==========================================================
-           Fun Additions: Fact Box
-           ========================================================= */
         .fact-box {
             background: var(--brand-accent-light);
             padding: 1.5rem 2rem;
@@ -432,7 +382,7 @@
         }
 
         #gameCanvas {
-            background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%); /* Clean sky gradient */
+            background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%); 
             display: block;
             width: 100%;
         }
@@ -493,6 +443,20 @@
             pointer-events: none; z-index: 9998;
         }
 
+        /* Developer button - heavily disguised/small, faint red */
+        #devModeBtn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 15px;
+            height: 15px;
+            background: red;
+            border: none;
+            opacity: 0.2;
+            cursor: pointer;
+            z-index: 20;
+        }
+
         /* ==========================================================
            Mobile Responsive Adjustments
            ========================================================= */
@@ -502,34 +466,22 @@
             .split-text { padding: 3rem 2rem; }
             .hero h1 { font-size: 3.5rem; }
             
-            /* Responsive Navigation updates */
             nav { 
                 padding: 1rem 1.5rem; 
-                flex-wrap: wrap; 
+                flex-direction: column; 
                 border-radius: 20px;
             }
-            .hamburger { display: flex; } /* Show button on mobile */
             .nav-links { 
-                display: none; /* Hide links by default */
-                flex-direction: column; 
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
                 width: 100%; 
                 margin-top: 1rem;
                 padding-top: 1rem;
                 border-top: 1px solid rgba(0,0,0,0.1);
-                text-align: center;
             }
-            .nav-links.show {
-                display: flex;
-                animation: slideDown 0.3s var(--smooth) forwards;
-            }
-            
-            .page-view { padding-top: 120px; }
+            .page-view { padding-top: 180px; }
             .game-dashboard { padding: 2rem 1rem; }
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -541,7 +493,6 @@
         <div class="cloud c3"></div>
     </div>
 
-    <div id="custom-cursor">🦋</div>
     <canvas id="confettiCanvas"></canvas>
 
     <nav>
@@ -550,12 +501,6 @@
             Wah Yan Eco-Bridge
         </div>
         
-        <button class="hamburger" id="hamburgerMenu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
         <ul class="nav-links" id="navLinks">
             <li><button class="btn-nav active-btn" onclick="navigateTo('page-home', this)">Overview</button></li>
             <li><button class="btn-nav" onclick="navigateTo('page-goal', this)">Objective</button></li>
@@ -572,7 +517,6 @@
     <div id="page-home" class="page-view active">
         <header class="hero">
             <div class="hero-content">
-                <h1 style="color:var(--brand-accent-light); font-size:1.2rem; letter-spacing:4px; margin-bottom:1rem; font-weight:800; text-transform:uppercase; text-shadow:none;">Campus Initiative</h1>
                 <h1>WAH YAN <br>ECO-BRIDGE</h1>
                 <p>An innovative architectural solution protecting local biodiversity through advanced material science and compassionate design.</p>
                 <div style="margin-top: 2rem;">
@@ -590,7 +534,7 @@
                     <h2>Protecting Campus Biodiversity</h2>
                     <p>Welcome to the Wah Yan Eco-Bridge initiative. Explore our site to discover how we are blending architecture with biological compassion to protect and save local butterfly populations.</p>
                 </div>
-                <img src="https://images.unsplash.com/photo-1589134710150-f86a9f074d0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Beautiful campus nature and wildlife" class="split-image">
+                <img src="https://picsum.photos/seed/butterfly1/1000/800" alt="Beautiful campus nature and wildlife" class="split-image">
             </div>
         </div>
 
@@ -613,6 +557,7 @@
                     <div id="triviaOverlay" class="game-overlay">
                         <div class="trivia-box">
                             <h3>✨ Second Chance Protocol</h3>
+                            <div class="trivia-hint">💡 Hint: The information needed is given in the pages above!</div>
                             <div id="triviaQuestionText" class="trivia-question">Question goes here?</div>
                             <div id="triviaOptionsContainer" class="trivia-options">
                                 </div>
@@ -633,7 +578,7 @@
                     </div>
                 </div>
                 
-                <div style="margin-top: 2rem;">
+                <div style="margin-top: 2rem; position:relative;">
                     <button id="startBtn" class="btn-modern" style="padding: 1rem 3rem; font-size: 1.2rem;">
                         ▶️ Play Simulation
                     </button>
@@ -642,6 +587,7 @@
                         <div class="score-badge">Extra Lives<br><span id="livesDisplay">0</span></div>
                         <div class="score-badge">High Score<br><span id="highScoreDisplay">0</span></div>
                     </div>
+                    <button id="devModeBtn" aria-label="Dev Mode"></button>
                 </div>
             </div>
         </section>
@@ -650,7 +596,7 @@
     <div id="page-goal" class="page-view">
         <div class="content-container">
             <div class="split-card">
-                <img src="https://images.unsplash.com/photo-1550186937-25e24cb91be3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Butterfly near structure" class="split-image">
+                <img src="https://picsum.photos/seed/nature2/1000/800" alt="Butterfly near structure" class="split-image">
                 <div class="split-text">
                     <span class="section-number">01. The Objective</span>
                     <h2>Goal of the Project</h2>
@@ -668,7 +614,7 @@
                     <h2>UV-Reflective Coating</h2>
                     <p>To prevent birds and insects from colliding with the glass, we decided to apply a UV-reflective coating. This makes the panels visible to wildlife while maintaining visual transparency for humans.</p>
                 </div>
-                <img src="https://images.unsplash.com/photo-1506509538350-13f56ce246e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Reflective architectural glass" class="split-image">
+                <img src="https://picsum.photos/seed/glass3/1000/800" alt="Reflective architectural glass" class="split-image">
             </div>
         </div>
     </div>
@@ -676,7 +622,7 @@
     <div id="page-uv-how" class="page-view">
         <div class="content-container">
             <div class="split-card">
-                <img src="https://images.unsplash.com/photo-1494249465471-5655b7878482?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Macro detail of butterfly wing" class="split-image">
+                <img src="https://picsum.photos/seed/macro4/1000/800" alt="Macro detail of butterfly wing" class="split-image">
                 <div class="split-text">
                     <span class="section-number">03. Technology</span>
                     <h2>How Does the Coating Work?</h2>
@@ -694,7 +640,7 @@
                     <h2>Information</h2>
                     <p>With a length of 12.9 meters, a width of 1.8 meters, and a peak height of 3.5 meters, the bridge closely mirrors the scale of the original footbridge, ensuring optimal utility and seamless integration into the environment.</p>
                 </div>
-                <img src="https://images.unsplash.com/photo-1444525873963-75d329ef9e1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Structural footbridge" class="split-image">
+                <img src="https://picsum.photos/seed/bridge5/1000/800" alt="Structural footbridge" class="split-image">
             </div>
         </div>
     </div>
@@ -702,7 +648,7 @@
     <div id="page-butterflies" class="page-view">
         <div class="content-container">
             <div class="split-card">
-                <img src="https://images.unsplash.com/photo-1534444569502-99ab94f71a06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Butterfly navigating" class="split-image">
+                <img src="https://picsum.photos/seed/bio6/1000/800" alt="Butterfly navigating" class="split-image">
                 <div class="split-text">
                     <span class="section-number">05. Biology</span>
                     <h2>Characteristics of Butterflies</h2>
@@ -725,7 +671,7 @@
                     <h2>The Greenhouse Effect</h2>
                     <p>Will the sunlight shine into the bridge and make the inside too hot? The answer is no. The UV-reflective coating also significantly reduces the greenhouse effect, ensuring the interior remains at a comfortable temperature.</p>
                 </div>
-                <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4ce88?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Controlled temperature environment" class="split-image">
+                <img src="https://picsum.photos/seed/sun7/1000/800" alt="Controlled temperature environment" class="split-image">
             </div>
         </div>
     </div>
@@ -733,7 +679,7 @@
     <div id="page-future" class="page-view">
         <div class="content-container">
             <div class="split-card">
-                <img src="https://images.unsplash.com/photo-1495562569060-2eec283d3391?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Urban light reflection" class="split-image">
+                <img src="https://picsum.photos/seed/future8/1000/800" alt="Urban light reflection" class="split-image">
                 <div class="split-text">
                     <span class="section-number">07. Next Steps</span>
                     <h2>Considerations for the Future</h2>
@@ -773,28 +719,6 @@
 
     <script>
         /* ==========================================================
-           Hamburger Menu Logic
-           ========================================================= */
-        const hamburgerBtn = document.getElementById('hamburgerMenu');
-        const navLinksContainer = document.getElementById('navLinks');
-
-        hamburgerBtn.addEventListener('click', () => {
-            hamburgerBtn.classList.toggle('active');
-            navLinksContainer.classList.toggle('show');
-        });
-
-        /* ==========================================================
-           Custom Elegant Cursor
-           ========================================================= */
-        const cursor = document.getElementById('custom-cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-        document.addEventListener('mousedown', () => cursor.style.transform = 'translate(-50%, -50%) scale(0.85) rotate(-15deg)');
-        document.addEventListener('mouseup', () => cursor.style.transform = 'translate(-50%, -50%) scale(1) rotate(0deg)');
-
-        /* ==========================================================
            Fun Fact Generator (Sequential)
            ========================================================= */
         const facts = [
@@ -810,12 +734,9 @@
 
         function triggerFact(elementId) {
             const factDisplay = document.getElementById(elementId);
-            
             const nextFact = facts[currentFactIndex];
             factDisplay.innerText = nextFact;
-            
             currentFactIndex = (currentFactIndex + 1) % facts.length;
-            
             fireConfetti();
         }
 
@@ -829,17 +750,11 @@
             document.querySelectorAll('.btn-nav').forEach(btn => btn.classList.remove('active-btn'));
             if (btnElement) btnElement.classList.add('active-btn');
             
-            // Close mobile menu if it is open
-            if (window.innerWidth <= 900) {
-                hamburgerBtn.classList.remove('active');
-                navLinksContainer.classList.remove('show');
-            }
-            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         /* ==========================================================
-           Happy Confetti Engine
+           Happy Confetti Engine (+ 67 Easter Egg ONLY)
            ========================================================= */
         const confCanvas = document.getElementById('confettiCanvas');
         const confCtx = confCanvas.getContext('2d');
@@ -854,11 +769,14 @@
         const colors = ['#0d9488', '#f59e0b', '#34d399', '#f472b6'];
 
         function fireConfetti() {
-            for(let i=0; i<40; i++) {
+            // ONLY execute if the score is EXACTLY 67. No other confetti will spawn anywhere.
+            if (score !== 67) return;
+
+            for(let i=0; i<67; i++) {
                 particles.push({
                     x: Math.random() * confCanvas.width,
                     y: -20,
-                    r: Math.random() * 6 + 4,
+                    r: Math.random() * 6 + 6,
                     dx: Math.random() * 4 - 2,
                     dy: Math.random() * 5 + 3,
                     color: colors[Math.floor(Math.random() * colors.length)],
@@ -878,9 +796,11 @@
                 p.x += Math.sin(p.tiltAngle) * 2;
                 
                 confCtx.beginPath();
-                confCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                
+                // Because we only spawn when score === 67, we can just draw the 67 text reliably.
+                confCtx.font = "900 " + (p.r * 2.5) + "px Nunito";
                 confCtx.fillStyle = p.color;
-                confCtx.fill();
+                confCtx.fillText("67", p.x, p.y);
                 
                 if(p.y > confCanvas.height) {
                     particles.splice(i, 1);
@@ -892,7 +812,7 @@
         animateConfetti();
 
         /* ==========================================================
-           Modern Game Logic
+           Modern Game Logic - FIXED & OPTIMIZED
            ========================================================= */
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
@@ -912,7 +832,7 @@
         let gameLoop;
         let isPlaying = false;
         let isDead = false;
-        let hasSecondChance = true; // REBIRTH MECHANIC
+        let hasSecondChance = true; 
         let frame = 0;
         let score = 0;
         let extraLives = 0;
@@ -920,14 +840,22 @@
         let highScore = localStorage.getItem('modernEcoBridgeScore') || 0;
         highScoreDisplay.innerText = highScore;
 
-        // Sequential Trivia Question Tracking
+        let devModeActive = false;
+        document.getElementById('devModeBtn').addEventListener('click', () => {
+            let pass = prompt("Enter Developer Passcode:");
+            if (pass === "1215") {
+                devModeActive = true;
+                alert("🛠️ Developer Mode Activated!");
+            }
+        });
+
         const triviaQuestions = [
             { q: "What biological instinct drives butterflies toward light sources?", options: ["Thermotaxis", "Phototaxis", "Chemotaxis"], correct: 1 },
             { q: "What is the primary function of the UV-Reflective coating on the bridge?", options: ["Thermal insulation", "Attracts local birds", "Prevents wildlife collisions"], correct: 2 },
             { q: "How does the bridge design address the internal Greenhouse Effect?", options: ["It traps heat completely", "The UV coating reduces the effect", "It requires mechanical cooling"], correct: 1 },
             { q: "To human perception, how does the UV-reflective coating appear?", options: ["Opaque green", "Visually transparent", "Luminescent at night"], correct: 1 }
         ];
-        
+
         let currentQuestionIndex = 0;
 
         const butterfly = {
@@ -950,48 +878,48 @@
         const gap = 170;
         const speed = 4;
 
-        function drawPillars() {
-            ctx.fillStyle = "#0d9488"; // Vibrant Teal
+        function clearCurrentObstacles() {
+            pillars = [];
+            lights = [];
+            flowers = [];
+            butterfly.x = 120;
+            butterfly.y = canvas.height / 2;
+            butterfly.velocity = 0;
+        }
+
+        function updateScore() {
+            score++;
+            scoreDisplay.innerText = score;
+            if (score === 67) fireConfetti(); 
             
+            if (score > highScore) {
+                highScore = score;
+                highScoreDisplay.innerText = highScore;
+                localStorage.setItem('modernEcoBridgeScore', highScore);
+            }
+            
+            if (score === scoreToSpawnFlower) {
+                flowers.push({ x: canvas.width + 50, y: Math.random() * (canvas.height - 200) + 100, size: 35 });
+                scoreToSpawnFlower += 10;
+            }
+        }
+
+        function drawPillars() {
+            ctx.fillStyle = "#0d9488"; 
             for (let i = 0; i < pillars.length; i++) {
                 let p = pillars[i];
-                
-                // Draw rounded pillars
                 ctx.beginPath();
                 ctx.roundRect(p.x, -20, pillarWidth, p.top + 20, 10);
                 ctx.roundRect(p.x, p.top + gap, pillarWidth, canvas.height - p.top - gap + 20, 10);
                 ctx.fill();
                 p.x -= speed;
 
-                let bLeft = butterfly.x - 12;
-                let bRight = butterfly.x + 12;
-                let bTop = butterfly.y - 15;
-                let bBottom = butterfly.y + 12;
-
-                if (bRight > p.x && bLeft < p.x + pillarWidth && (bTop < p.top || bBottom > p.top + gap)) {
+                if (!devModeActive && butterfly.x + 10 > p.x && butterfly.x - 10 < p.x + pillarWidth && (butterfly.y - 10 < p.top || butterfly.y + 10 > p.top + gap)) {
                     handleDeath("Oops! You bumped into the structure.");
                 }
-
                 if (p.x + pillarWidth < butterfly.x && !p.passed) {
-                    score++;
-                    scoreDisplay.innerText = score;
                     p.passed = true;
-                    fireConfetti();
-                    if (score > highScore) {
-                        highScore = score;
-                        highScoreDisplay.innerText = highScore;
-                        localStorage.setItem('modernEcoBridgeScore', highScore);
-                    }
-                    
-                    // SPAWN FLOWER EVERY 10 SCORE
-                    if (score === scoreToSpawnFlower) {
-                        flowers.push({
-                            x: canvas.width + 50, 
-                            y: Math.random() * (canvas.height - 250) + 100,
-                            size: 35
-                        });
-                        scoreToSpawnFlower += 10;
-                    }
+                    updateScore();
                 }
             }
         }
@@ -1000,25 +928,13 @@
             for (let i = 0; i < flowers.length; i++) {
                 let f = flowers[i];
                 f.x -= speed;
-
-                // Draw the flower
                 ctx.font = f.size + "px Arial";
                 ctx.fillText("🌸", f.x - f.size/2, f.y + f.size/2);
 
-                // Collision detection between butterfly and flower
-                let dx = butterfly.x - f.x;
-                let dy = butterfly.y - f.y;
-                let distance = Math.sqrt(dx*dx + dy*dy);
-
-                if (distance < (butterfly.size/2 + f.size/2)) {
-                    // Collect Extra Life
+                let dist = Math.hypot(butterfly.x - f.x, butterfly.y - f.y);
+                if (dist < 30) {
                     extraLives++;
                     livesDisplay.innerText = extraLives;
-                    fireConfetti();
-                    flowers.splice(i, 1);
-                    i--;
-                } else if (f.x < -100) {
-                    // Remove if out of bounds
                     flowers.splice(i, 1);
                     i--;
                 }
@@ -1026,90 +942,61 @@
         }
 
         function handleLights() {
-            let isLightActive = false;
+            let pullActive = false;
             let targetY = butterfly.y;
             
             for (let i = 0; i < lights.length; i++) {
                 let light = lights[i];
                 light.x -= (speed - 1); 
 
-                ctx.shadowBlur = 50; ctx.shadowColor = "#f59e0b";
+                if (light.x > -50 && light.x < canvas.width + 50) {
+                    let dist = Math.hypot(butterfly.x - light.x, butterfly.y - light.y);
+                    if (!devModeActive && dist < light.radius + 10) {
+                        handleDeath("Oh no! You got too close to the artificial light.");
+                    }
+                    pullActive = true;
+                    targetY = light.y;
+                    ctx.fillStyle = "#ef4444";
+                    ctx.font = "800 18px Nunito";
+                    ctx.fillText("⚠️ Magnetic light pull! CLICK to escape!", canvas.width / 2 - 180, 40);
+                }
+
+                ctx.shadowBlur = 30; ctx.shadowColor = "#f59e0b";
                 ctx.fillStyle = "#fffbeb";
                 ctx.beginPath(); ctx.arc(light.x, light.y, light.radius, 0, Math.PI * 2); ctx.fill();
                 ctx.shadowBlur = 0;
-
-                if (light.x > -50 && light.x < canvas.width + 50) {
-                    isLightActive = true;
-                    targetY = light.y; // Track the height of the light for magnetic pull
-                    
-                    ctx.fillStyle = "#ef4444";
-                    ctx.font = "800 18px Nunito";
-                    ctx.fillText("⚠️ Magnetic light pull! Rapidly LEFT CLICK to escape!", canvas.width / 2 - 210, 40);
-
-                    let dx = butterfly.x - light.x;
-                    let dy = butterfly.y - light.y;
-                    if (Math.sqrt(dx*dx + dy*dy) < light.radius + butterfly.size/2) {
-                        handleDeath("Oh no! You got too close to the artificial light.");
-                    }
-                }
                 if (light.x < -100) { lights.splice(i, 1); i--; }
             }
 
-            // Limit the forward X speed from the magnetic pull
-            if (isLightActive) {
-                butterfly.x += 1.5; 
-                butterfly.y += (targetY - butterfly.y) * 0.02;
-                
-                // Keep the butterfly from going too far right, ensuring pillars remain visible
-                if (butterfly.x > 350) {
-                    butterfly.x = 350; 
-                }
-            } else {
-                if (butterfly.x > 120) butterfly.x -= 2;
-                if (butterfly.x < 120) butterfly.x += 2;
+            if (pullActive) {
+                butterfly.x += 1.2; 
+                butterfly.y += (targetY - butterfly.y) * 0.03;
+                if (butterfly.x > 400) butterfly.x = 400; 
+            } else if (butterfly.x > 120) {
+                butterfly.x -= 1;
             }
-            if (butterfly.x < 20) butterfly.x = 20;
-            if (butterfly.x > canvas.width) handleDeath("Swept away by the wind!");
         }
 
         function spawnEntities() {
-            if (frame % 80 === 0) {
-                let topHeight = Math.random() * (canvas.height - gap - 60) + 30;
+            if (frame % 90 === 0) {
+                let topHeight = Math.random() * (canvas.height - gap - 80) + 40;
                 pillars.push({ x: canvas.width, top: topHeight, passed: false });
             }
-            if (pillars.length > 0 && pillars[0].x < -pillarWidth) { pillars.shift(); }
-
-            // ARTIFICIAL LIGHT ONLY APPEARS AFTER 15 SCORE
-            if (score >= 15 && frame % 300 === 0) {
-                let lightY = Math.random() * (canvas.height - 100) + 50;
-                lights.push({ x: canvas.width + 50, y: lightY, radius: 25 });
+            if (score >= 15 && frame % 350 === 0) {
+                lights.push({ x: canvas.width + 50, y: Math.random() * (canvas.height - 100) + 50, radius: 25 });
             }
         }
 
-        /* --- Rebirth & Death Logic --- */
         function handleDeath(reason) {
             isPlaying = false;
             cancelAnimationFrame(gameLoop);
 
-            // Check for Extra Life First
             if (extraLives > 0) {
                 extraLives--;
                 livesDisplay.innerText = extraLives;
-                
-                // Clear nearby obstacles so player doesn't instantly die again
-                pillars = pillars.filter(p => p.x > 300);
-                lights = lights.filter(l => l.x > 300);
-                flowers = flowers.filter(f => f.x > 300);
-                
-                // Teleport to safety
-                butterfly.y = canvas.height / 2;
-                butterfly.velocity = 0;
-                
+                clearCurrentObstacles();
                 startCountdown("🌸 Extra Life Saved You! 🌸");
-                return; // Do not terminate game!
-            }
-            
-            if (hasSecondChance) {
+            } else if (hasSecondChance) {
                 startTrivia();
             } else {
                 triggerPermadeath(reason);
@@ -1118,9 +1005,7 @@
 
         function startTrivia() {
             triviaOverlay.style.display = "flex";
-            
             const qObj = triviaQuestions[currentQuestionIndex]; 
-            
             triviaQuestionText.innerText = qObj.q;
             triviaOptionsContainer.innerHTML = "";
             
@@ -1128,30 +1013,18 @@
                 let btn = document.createElement("button");
                 btn.className = "btn-modern alt";
                 btn.style.width = "100%";
-                btn.style.justifyContent = "flex-start";
                 btn.innerText = opt;
                 btn.onclick = () => answerTrivia(index === qObj.correct);
                 triviaOptionsContainer.appendChild(btn);
             });
-            
             currentQuestionIndex = (currentQuestionIndex + 1) % triviaQuestions.length;
         }
 
         function answerTrivia(isCorrect) {
             triviaOverlay.style.display = "none";
             hasSecondChance = false; 
-
             if (isCorrect) {
-                fireConfetti();
-                butterfly.y = canvas.height / 2;
-                butterfly.velocity = 0;
-                butterfly.x = 120;
-                
-                pillars = pillars.filter(p => p.x > 300);
-                lights = lights.filter(l => l.x > 300);
-                flowers = flowers.filter(f => f.x > 300);
-                
-                // Trigger 3 Second Countdown before continuing
+                clearCurrentObstacles(); 
                 startCountdown("✨ Rebirth Successful! ✨");
             } else {
                 triggerPermadeath("Incorrect answer! Better luck next time.");
@@ -1160,17 +1033,15 @@
 
         function startCountdown(message) {
             countdownOverlay.style.display = "flex";
-            countdownMessage.innerText = message || "Resuming...";
-            
+            countdownMessage.innerText = message;
             let count = 3;
             countdownNumber.innerText = count;
-            
-            let countdownInterval = setInterval(() => {
+            let interval = setInterval(() => {
                 count--;
                 if (count > 0) {
                     countdownNumber.innerText = count;
                 } else {
-                    clearInterval(countdownInterval);
+                    clearInterval(interval);
                     countdownOverlay.style.display = "none";
                     isPlaying = true;
                     animate();
@@ -1182,54 +1053,34 @@
             isDead = true;
             deathReasonText.innerText = reason;
             deathOverlay.style.display = "flex";
-            startBtn.style.display = "none";
         }
 
         function forceRestart() {
-            deathOverlay.style.display = "none";
             resetGame();
             isPlaying = true;
             animate();
         }
 
         function resetGame() {
-            butterfly.x = 120;
-            butterfly.y = canvas.height / 2;
-            butterfly.velocity = 0;
-            pillars = [];
-            lights = [];
-            flowers = [];
+            clearCurrentObstacles();
             score = 0;
             extraLives = 0;
             scoreToSpawnFlower = 10;
-            scoreDisplay.innerText = score;
-            livesDisplay.innerText = extraLives;
+            scoreDisplay.innerText = "0";
+            livesDisplay.innerText = "0";
             frame = 0;
             isDead = false;
             hasSecondChance = true; 
-            triviaOverlay.style.display = "none";
             deathOverlay.style.display = "none";
-            countdownOverlay.style.display = "none";
+            startBtn.style.display = "none";
         }
 
         function animate() {
             if (!isPlaying) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Draw soft clouds in background perfectly!
-            ctx.fillStyle = "rgba(255,255,255,0.5)";
-            
-            ctx.beginPath();
-            ctx.arc(200 - (frame*0.3)%900, 100, 40, 0, Math.PI*2);
-            ctx.fill();
-            
-            ctx.beginPath();
-            ctx.arc(240 - (frame*0.3)%900, 100, 50, 0, Math.PI*2);
-            ctx.fill();
-            
-            ctx.beginPath();
-            ctx.arc(280 - (frame*0.3)%900, 100, 40, 0, Math.PI*2);
-            ctx.fill();
+            ctx.fillStyle = "rgba(255,255,255,0.3)";
+            ctx.beginPath(); ctx.arc(100 - (frame*0.5)%1000, 50, 30, 0, Math.PI*2); ctx.fill();
 
             butterfly.velocity += butterfly.gravity;
             butterfly.y += butterfly.velocity;
@@ -1241,47 +1092,45 @@
             butterfly.draw();
             
             if (butterfly.y >= canvas.height || butterfly.y <= 0) {
-                handleDeath("You flew too far out of bounds!");
+                if (!devModeActive) handleDeath("You flew out of bounds!");
+                else butterfly.y = canvas.height/2;
             }
 
             frame++;
             gameLoop = requestAnimationFrame(animate);
         }
 
-        function flap() {
-            if (isPlaying) { butterfly.velocity = butterfly.jump; }
+        // --- FIXED: Game Start Logic ---
+        function startGame() {
+            if (!isPlaying) {
+                resetGame();
+                isPlaying = true;
+                animate();
+            }
         }
 
-        // Controls
+        startBtn.addEventListener("click", startGame);
+
         window.addEventListener("keydown", (e) => {
             if (e.code === "Space") {
                 e.preventDefault();
-                if (deathOverlay.style.display === "flex") {
+                if (isDead) {
                     forceRestart();
-                } else if (!isPlaying && !isDead && startBtn.style.display !== "none" && countdownOverlay.style.display !== "flex") {
-                    startBtn.click();
                 } else if (isPlaying) {
-                    flap();
+                    butterfly.velocity = butterfly.jump;
+                } else if (!isPlaying && startBtn.style.display !== "none") {
+                    startGame();
                 }
             }
         });
 
-        canvas.addEventListener("mousedown", (e) => {
-            if (e.button === 0 && isPlaying) {
-                butterfly.x -= 35; // Evasive maneuver
-                flap();
+        canvas.addEventListener("mousedown", () => {
+            if (isPlaying) {
+                butterfly.x -= 20; 
+                butterfly.velocity = butterfly.jump;
             }
         });
-
-        startBtn.addEventListener("click", () => {
-            if (!isPlaying) {
-                resetGame();
-                isPlaying = true;
-                startBtn.style.display = "none";
-                animate();
-            }
-        });
-
+        
         // Initial Canvas State
         ctx.fillStyle = "#0d9488";
         ctx.font = "800 24px Nunito";
