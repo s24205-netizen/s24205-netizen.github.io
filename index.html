@@ -3,26 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wah Yan Eco-Bridge</title>
+    <title>Wah Yan Eco-Bridge Initiative</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         /* ==========================================================
-           Super Fun & Pleasant CSS Variables
-           ========================================================== */
+           Modern "Pro + Fun" CSS Variables
+           ========================================================= */
         :root {
-            --bg-color: #e0f8e9;      /* Soft Mint Background */
-            --nav-bg: #ffffff;
-            --primary: #4ade80;       /* Bright Green */
-            --primary-dark: #166534;  /* Deep Forest Green (Shadows) */
-            --accent: #fcd34d;        /* Sunny Yellow */
-            --accent-dark: #b45309;
-            --text-main: #1e293b;
-            --card-bg: #ffffff;
-            --border-width: 4px;
+            --brand-primary: #0d9488;    /* Vibrant Teal */
+            --brand-dark: #115e59;       /* Deep Teal */
+            --brand-light: #ccfbf1;      /* Soft Mint */
+            --brand-accent: #f59e0b;     /* Sunny Amber */
+            --brand-accent-light: #fef3c7; 
+            --bg-page: #f8fafc;          /* Clean Slate off-white */
+            --bg-card: #ffffff;
+            --text-main: #334155;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(13, 148, 136, 0.1);
+            --shadow-lg: 0 20px 40px -10px rgba(13, 148, 136, 0.15);
+            --shadow-float: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
+            
+            --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --smooth: cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -30,288 +43,605 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Nunito', sans-serif;
-            cursor: none; /* We will use a custom butterfly cursor! */
+            cursor: none; /* Custom butterfly cursor */
         }
 
         body {
-            background-color: var(--bg-color);
-            background-image: radial-gradient(#bbf7d0 2px, transparent 2px);
-            background-size: 30px 30px; /* Fun polka dot background */
+            background-color: var(--bg-page);
             color: var(--text-main);
             line-height: 1.7;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* ==========================================================
-           Custom Butterfly Cursor
-           ========================================================== */
+           Nature Background Elements
+           ========================================================= */
+        #nature-background {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.02);
+            animation: floatCloud linear infinite;
+        }
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+        }
+        
+        /* Cloud Shapes */
+        .c1 { top: 10%; left: -20%; width: 140px; height: 50px; animation-duration: 40s; }
+        .c1::before { width: 70px; height: 70px; top: -30px; left: 20px; }
+        .c1::after { width: 50px; height: 50px; top: -20px; right: 20px; }
+
+        .c2 { top: 35%; left: -30%; width: 200px; height: 60px; animation-duration: 55s; animation-delay: -15s; }
+        .c2::before { width: 90px; height: 90px; top: -40px; left: 30px; }
+        .c2::after { width: 70px; height: 70px; top: -30px; right: 30px; }
+
+        .c3 { top: 15%; left: -10%; width: 120px; height: 40px; animation-duration: 45s; animation-delay: -25s; opacity: 0.7;}
+        .c3::before { width: 60px; height: 60px; top: -25px; left: 15px; }
+        .c3::after { width: 40px; height: 40px; top: -15px; right: 15px; }
+
+        @keyframes floatCloud {
+            from { transform: translateX(-30vw); }
+            to { transform: translateX(130vw); }
+        }
+
+        /* ==========================================================
+           Custom Smooth Butterfly Cursor
+           ========================================================= */
         #custom-cursor {
             position: fixed;
             top: 0; left: 0;
-            width: 30px; height: 30px;
+            width: 32px; height: 32px;
             pointer-events: none;
             z-index: 9999;
-            font-size: 24px;
+            font-size: 26px;
             transform: translate(-50%, -50%);
             transition: transform 0.1s ease-out;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
         }
 
         /* ==========================================================
-           Virtual Page Navigation (SPA Logic)
-           ========================================================== */
-        .page-view {
-            display: none;
-            animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            min-height: 100vh;
-            padding-top: 100px;
-            padding-bottom: 50px;
+           Bouncy "Pro-Fun" Buttons
+           ========================================================= */
+        .btn-modern {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--brand-primary);
+            color: white;
+            padding: 0.85rem 2rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            border: none;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s var(--bounce);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            user-select: none;
         }
 
-        .page-view.active { display: block; }
+        .btn-modern:hover {
+            background: var(--brand-dark);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
 
-        @keyframes bounceIn {
-            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+        .btn-modern:active, .btn-modern.active-press {
+            transform: translateY(2px) scale(0.98);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-modern.alt {
+            background: white;
+            color: var(--brand-primary);
+            border: 2px solid var(--brand-primary);
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-modern.alt:hover {
+            background: var(--brand-light);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-float);
         }
 
         /* ==========================================================
-           Fun Navigation Bar
-           ========================================================== */
+           Sleek Glassmorphism Navigation & Hamburger
+           ========================================================= */
         nav {
             position: fixed;
             width: 96%;
             top: 15px; left: 2%;
             z-index: 1000;
-            padding: 1rem 2rem;
+            padding: 0.6rem 2%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--nav-bg);
-            border: var(--border-width) solid var(--primary-dark);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 50px;
-            box-shadow: 0 6px 0 var(--primary-dark);
+            box-shadow: var(--shadow-sm);
         }
 
         .logo {
-            font-size: 1.6rem;
+            font-size: 1.25rem;
             font-weight: 900;
-            color: var(--primary-dark);
-            letter-spacing: 1px;
+            color: var(--text-dark);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: opacity 0.2s ease;
         }
+        .logo:hover { opacity: 0.7; }
+        .logo-img { height: 38px; width: auto; object-fit: contain; }
 
         .nav-links {
             display: flex;
-            gap: 1rem;
+            gap: 0.2rem;
             list-style: none;
             flex-wrap: wrap;
         }
 
-        /* Chunky Bouncy Buttons */
-        .btn {
-            background: var(--primary);
-            color: var(--primary-dark);
-            border: var(--border-width) solid var(--primary-dark);
-            padding: 0.6rem 1.5rem;
+        .btn-nav {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            padding: 0.6rem 1.2rem;
             border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            box-shadow: 0 6px 0 var(--primary-dark);
-            transition: all 0.1s ease-in-out;
-            position: relative;
-            top: 0;
+            font-size: 0.9rem;
+            font-weight: 800;
+            transition: all 0.3s var(--smooth);
         }
 
-        .btn:hover {
-            background: var(--accent);
-            color: var(--accent-dark);
-            border-color: var(--accent-dark);
-            box-shadow: 0 6px 0 var(--accent-dark);
+        .btn-nav:hover {
+            color: var(--brand-primary);
+            background: var(--brand-light);
+        }
+        
+        .btn-nav.active-btn {
+            background: var(--brand-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
         }
 
-        .btn:active, .btn.active-btn {
-            top: 6px;
-            box-shadow: 0 0px 0 var(--primary-dark);
+        /* Hamburger Menu Styling */
+        .hamburger {
+            display: none; /* Hidden on desktop */
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            z-index: 1001;
+            padding: 0;
+            cursor: none;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--text-dark);
+            border-radius: 10px;
+            transition: all 0.3s var(--bounce);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+            background-color: var(--brand-primary);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+            background-color: var(--brand-primary);
         }
 
         /* ==========================================================
-           Hero Section (Home Page)
-           ========================================================== */
+           Virtual Page Navigation (SPA Logic)
+           ========================================================= */
+        .page-view {
+            display: none;
+            animation: softFadeIn 0.6s var(--smooth) forwards;
+            min-height: 100vh;
+            padding-top: 120px;
+            padding-bottom: 80px;
+        }
+
+        .page-view.active { display: block; }
+
+        @keyframes softFadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================================
+           Hero Section (Bright & Airy)
+           ========================================================= */
         .hero {
-            height: calc(100vh - 150px);
+            height: calc(100vh - 140px);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
-        }
-
-        .hero-banner {
-            background: var(--card-bg);
-            border: 6px solid var(--primary-dark);
-            border-radius: 40px;
-            padding: 4rem;
-            box-shadow: 0 12px 0 var(--primary-dark);
             position: relative;
-            max-width: 900px;
-            width: 90%;
-            animation: float 4s ease-in-out infinite;
+            background: url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover fixed;
+            margin: 0 2%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        .hero-content {
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            padding: 3rem;
+            z-index: 2;
         }
 
         .hero h1 {
-            font-size: 4.5rem;
-            color: var(--primary-dark);
+            font-size: 5rem;
             font-weight: 900;
             line-height: 1.1;
-            margin-bottom: 1rem;
-            text-shadow: 3px 3px 0 var(--primary);
+            margin-bottom: 1.5rem;
+            letter-spacing: -1.5px;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            color: rgba(255,255,255,0.95);
         }
 
         /* ==========================================================
-           Content Pages & Cards
-           ========================================================== */
+           Content Pages (Soft Editorial Layout)
+           ========================================================= */
         .content-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 4%;
         }
 
-        .content-card {
-            background: var(--card-bg);
-            border: 6px solid var(--primary-dark);
-            border-radius: 30px;
-            padding: 3rem;
-            box-shadow: 0 12px 0 var(--primary-dark);
+        .split-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s var(--smooth);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .split-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: var(--shadow-lg); 
+        }
+
+        .split-image {
+            width: 100%; height: 100%;
+            min-height: 450px;
+            object-fit: cover;
+        }
+
+        .split-text {
+            padding: 5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-number {
+            color: var(--brand-accent);
+            font-weight: 900;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .split-text h2 {
+            font-size: 3rem;
+            color: var(--text-dark);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.15;
+            letter-spacing: -1px;
+        }
+
+        .split-text p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            line-height: 1.8;
+        }
+
+        /* ==========================================================
+           Fun Additions: Fact Box
+           ========================================================= */
+        .fact-box {
+            background: var(--brand-accent-light);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius-md);
+            margin-top: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 2px dashed #fcd34d;
+        }
+
+        .fact-box button {
+            background: var(--brand-accent);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 800;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: all 0.2s var(--bounce);
+        }
+
+        .fact-box button:hover { transform: scale(1.05); }
+
+        /* ==========================================================
+           Modern Game Dashboard
+           ========================================================= */
+        .game-section {
+            max-width: 1000px;
+            margin: 5rem auto;
+            padding: 0 4%;
+        }
+
+        .game-dashboard {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 4rem;
+            box-shadow: var(--shadow-lg);
             text-align: center;
             position: relative;
+            border: 1px solid rgba(0,0,0,0.03);
         }
 
-        .content-image {
-            width: 100%;
-            height: 350px;
-            object-fit: cover;
-            border-radius: 20px;
-            border: 4px solid var(--primary-dark);
-            margin-bottom: 2rem;
-            box-shadow: 0 6px 0 var(--primary-dark);
-        }
-
-        .content-card h2 {
-            font-size: 2.5rem;
-            color: var(--primary-dark);
-            margin-bottom: 1.5rem;
-            font-weight: 900;
-        }
-
-        .content-card p {
-            font-size: 1.25rem;
-            color: var(--text-main);
-            line-height: 1.8;
-            font-weight: 700;
-        }
-
-        /* ==========================================================
-           Super Fun Mini Game Section
-           ========================================================== */
-        .game-section {
-            background: var(--card-bg);
-            border: 6px solid var(--primary-dark);
-            border-radius: 30px;
-            text-align: center;
-            padding: 3rem 5%;
-            margin: 4rem auto;
-            max-width: 900px;
-            box-shadow: 0 12px 0 var(--primary-dark);
-        }
-
-        .game-section h2 {
-            color: var(--primary-dark);
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 0 var(--accent);
+        .canvas-wrapper {
+            position: relative;
+            width: 800px;
+            max-width: 100%;
+            margin: 3rem auto 2rem;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 4px solid var(--brand-light);
         }
 
         #gameCanvas {
-            background: #bae6fd; /* Sky blue */
-            border: 6px solid var(--primary-dark);
-            border-radius: 20px;
-            margin: 1.5rem auto;
+            background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%); /* Clean sky gradient */
             display: block;
-            max-width: 100%;
+            width: 100%;
         }
+
+        /* Modern Overlays */
+        .game-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            backdrop-filter: blur(8px);
+            z-index: 10;
+        }
+
+        .trivia-box {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            max-width: 90%;
+            border: 2px solid var(--brand-light);
+        }
+
+        .trivia-box h3 { color: var(--brand-primary); font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+        .trivia-question { font-size: 1.6rem; font-weight: 900; color: var(--text-dark); margin-bottom: 2rem; line-height: 1.3; }
+        
+        .trivia-options { display: flex; flex-direction: column; gap: 12px; }
 
         .score-board {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-top: 15px;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--primary-dark);
-        }
-        
-        .badge {
-            background: var(--accent);
-            padding: 0.5rem 1rem;
-            border-radius: 15px;
-            border: 3px solid var(--primary-dark);
-            box-shadow: 0 4px 0 var(--primary-dark);
+            gap: 1.5rem;
+            margin-top: 30px;
         }
 
-        /* Confetti Canvas */
+        .score-badge {
+            background: var(--bg-page);
+            padding: 1rem 2rem;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            min-width: 120px;
+        }
+        .score-badge span { color: var(--brand-primary); font-size: 1.6rem; display: block; font-weight: 900; }
+
         #confettiCanvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 9998;
         }
+
+        /* ==========================================================
+           Mobile Responsive Adjustments
+           ========================================================= */
+        @media (max-width: 900px) {
+            .split-card { grid-template-columns: 1fr; }
+            .split-image { height: 300px; min-height: auto; }
+            .split-text { padding: 3rem 2rem; }
+            .hero h1 { font-size: 3.5rem; }
+            
+            /* Responsive Navigation updates */
+            nav { 
+                padding: 1rem 1.5rem; 
+                flex-wrap: wrap; 
+                border-radius: 20px;
+            }
+            .hamburger { display: flex; } /* Show button on mobile */
+            .nav-links { 
+                display: none; /* Hide links by default */
+                flex-direction: column; 
+                width: 100%; 
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid rgba(0,0,0,0.1);
+                text-align: center;
+            }
+            .nav-links.show {
+                display: flex;
+                animation: slideDown 0.3s var(--smooth) forwards;
+            }
+            
+            .page-view { padding-top: 120px; }
+            .game-dashboard { padding: 2rem 1rem; }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
+    <div id="nature-background">
+        <div class="cloud c1"></div>
+        <div class="cloud c2"></div>
+        <div class="cloud c3"></div>
+    </div>
+
     <div id="custom-cursor">🦋</div>
-    
     <canvas id="confettiCanvas"></canvas>
 
     <nav>
-        <div class="logo">🌿 Wah Yan Eco-Bridge</div>
-        <ul class="nav-links">
-            <li><button class="btn active-btn" onclick="navigateTo('page-home', this)">Home</button></li>
-            <li><button class="btn" onclick="navigateTo('page-goal', this)">Goal</button></li>
-            <li><button class="btn" onclick="navigateTo('page-uv', this)">UV Coating</button></li>
-            <li><button class="btn" onclick="navigateTo('page-uv-how', this)">How UV Works</button></li>
-            <li><button class="btn" onclick="navigateTo('page-dimensions', this)">Dimensions</button></li>
-            <li><button class="btn" onclick="navigateTo('page-butterflies', this)">Butterflies</button></li>
-            <li><button class="btn" onclick="navigateTo('page-greenhouse', this)">Greenhouse</button></li>
-            <li><button class="btn" onclick="navigateTo('page-future', this)">Future</button></li>
+        <div class="logo" onclick="navigateTo('page-home', document.querySelectorAll('.btn-nav')[0])">
+            <img src="https://www.wahyan.edu.hk/sites/default/files/wahyan_logo.png" alt="Wah Yan Logo" class="logo-img">
+            Wah Yan Eco-Bridge
+        </div>
+        
+        <button class="hamburger" id="hamburgerMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+            <li><button class="btn-nav active-btn" onclick="navigateTo('page-home', this)">Overview</button></li>
+            <li><button class="btn-nav" onclick="navigateTo('page-goal', this)">Objective</button></li>
+            <li><button class="btn-nav" onclick="navigateTo('page-uv', this)">UV Material</button></li>
+            <li><button class="btn-nav" onclick="navigateTo('page-uv-how', this)">Mechanism</button></li>
+            <li><button class="btn-nav" onclick="navigateTo('page-dimensions', this)">Dimensions</button></li>
+            <li><button class="btn-nav" onclick="navigateTo('page-butterflies', this)">Biology</button></li>
+            <li><button class="btn-nav" onclick="navigateTo('page-greenhouse', this)">Thermodynamics</button></li>
+            <li><button class="btn-nav" onclick="navigateTo('page-future', this)">Future</button></li>
+            <li><button class="btn-nav" onclick="navigateTo('page-thanks', this)">Special Thanks</button></li>
         </ul>
     </nav>
 
     <div id="page-home" class="page-view active">
         <header class="hero">
-            <div class="hero-banner">
-                <h1>Welcome to<br>WAH YAN<br>ECO-BRIDGE</h1>
-                <p style="font-size: 1.2rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 2rem;">A brilliant design protecting our beautiful butterfly friends! 🦋✨</p>
-                <button class="btn" style="background: var(--accent); color: var(--accent-dark); border-color: var(--accent-dark); font-size: 1.2rem;" onclick="triggerFact()">Pop a Random Butterfly Fact! 🎈</button>
-                <p id="fact-display" style="margin-top: 15px; font-weight: 800; color: var(--primary-dark);"></p>
+            <div class="hero-content">
+                <h1 style="color:var(--brand-accent-light); font-size:1.2rem; letter-spacing:4px; margin-bottom:1rem; font-weight:800; text-transform:uppercase; text-shadow:none;">Campus Initiative</h1>
+                <h1>WAH YAN <br>ECO-BRIDGE</h1>
+                <p>An innovative architectural solution protecting local biodiversity through advanced material science and compassionate design.</p>
+                <div style="margin-top: 2rem;">
+                    <button class="btn-modern" onclick="navigateTo('page-goal', document.querySelectorAll('.btn-nav')[1])">
+                        Explore the Project
+                    </button>
+                </div>
             </div>
         </header>
 
+        <div class="content-container" style="margin-top: -4rem; position: relative; z-index: 5;">
+            <div class="split-card" style="box-shadow: var(--shadow-lg);">
+                <div class="split-text">
+                    <span class="section-number">Welcome</span>
+                    <h2>Protecting Campus Biodiversity</h2>
+                    <p>Welcome to the Wah Yan Eco-Bridge initiative. Explore our site to discover how we are blending architecture with biological compassion to protect and save local butterfly populations.</p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1589134710150-f86a9f074d0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Beautiful campus nature and wildlife" class="split-image">
+            </div>
+        </div>
+
         <section class="game-section">
-            <h2>🦋 Eco-Flight Challenge!</h2>
-            <p style="font-size: 1.2rem; font-weight: 700;">Tap the screen or press SPACE to help the butterfly navigate the bridge!</p>
-            <canvas id="gameCanvas" width="800" height="400"></canvas>
-            
-            <div style="margin-top: 1rem;">
-                <button id="startBtn" class="btn" style="font-size: 1.5rem; padding: 1rem 3rem;">▶️ Play Game!</button>
-                <div class="score-board">
-                    <div class="badge">Score: <span id="scoreDisplay">0</span></div>
-                    <div class="badge" style="background: #fbcfe8;">High Score: <span id="highScoreDisplay">0</span></div>
+            <div class="game-dashboard">
+                <h2 style="font-size: 2.8rem; font-weight: 900; color: var(--text-dark); margin-bottom: 10px;">Eco-Flight Simulation</h2>
+                <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 10px;">
+                    Use the <strong>SPACEBAR</strong> or tap the screen to navigate through the structure.
+                </p>
+                <div style="background: var(--brand-accent-light); padding: 10px 20px; border-radius: 50px; display: inline-block; margin-bottom: 20px;">
+                    <p style="font-size: 1rem; color: #b45309; font-weight: 800; margin: 0;">
+                        ⚠️ Lights appear after 15 score. Evade magnetic pull!<br>
+                        🌸 Eat flowers (every 10 points) for an Extra Life!
+                    </p>
+                </div>
+                
+                <div class="canvas-wrapper">
+                    <canvas id="gameCanvas" width="800" height="400"></canvas>
+                    
+                    <div id="triviaOverlay" class="game-overlay">
+                        <div class="trivia-box">
+                            <h3>✨ Second Chance Protocol</h3>
+                            <div id="triviaQuestionText" class="trivia-question">Question goes here?</div>
+                            <div id="triviaOptionsContainer" class="trivia-options">
+                                </div>
+                        </div>
+                    </div>
+
+                    <div id="countdownOverlay" class="game-overlay" style="background: rgba(255,255,255,0.85); flex-direction: column;">
+                        <div id="countdownMessage" style="font-size: 2.5rem; color: var(--brand-accent); font-weight: 900; margin-bottom: 20px;"></div>
+                        <div id="countdownNumber" style="font-size: 7rem; font-weight: 900; color: var(--brand-primary);">3</div>
+                    </div>
+
+                    <div id="deathOverlay" class="game-overlay">
+                        <h2 style="font-size: 3.5rem; color: var(--text-dark); font-weight: 900;">Oops!</h2>
+                        <p id="deathReasonText" style="font-size: 1.4rem; margin-bottom: 30px; font-weight: 600; color: var(--text-muted);"></p>
+                        <button class="btn-modern" onclick="forceRestart()">
+                            🔄 Try Again (Spacebar)
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <button id="startBtn" class="btn-modern" style="padding: 1rem 3rem; font-size: 1.2rem;">
+                        ▶️ Play Simulation
+                    </button>
+                    <div class="score-board">
+                        <div class="score-badge">Score<br><span id="scoreDisplay">0</span></div>
+                        <div class="score-badge">Extra Lives<br><span id="livesDisplay">0</span></div>
+                        <div class="score-badge">High Score<br><span id="highScoreDisplay">0</span></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -319,136 +649,222 @@
 
     <div id="page-goal" class="page-view">
         <div class="content-container">
-            <div class="content-card">
-                <img src="https://images.unsplash.com/photo-1550186937-25e24cb91be3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Butterfly on glass" class="content-image">
-                <h2>🎯 Goal of the Project</h2>
-                <p>We observed that butterflies often became trapped within the original footbridge, finding it difficult to escape. Our new design specifically addresses this issue, ensuring a safer passage for local insect populations.</p>
+            <div class="split-card">
+                <img src="https://images.unsplash.com/photo-1550186937-25e24cb91be3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Butterfly near structure" class="split-image">
+                <div class="split-text">
+                    <span class="section-number">01. The Objective</span>
+                    <h2>Goal of the Project</h2>
+                    <p>We observed that butterflies often became trapped within the original footbridge, finding it difficult to escape. Our new design specifically addresses this issue, ensuring a safer passage for local insect populations.</p>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="page-uv" class="page-view">
         <div class="content-container">
-            <div class="content-card">
-                <img src="https://images.unsplash.com/photo-1506509538350-13f56ce246e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Reflective glass panels" class="content-image">
-                <h2>✨ UV-Reflective Coating</h2>
-                <p>To prevent birds and insects from colliding with the glass, we decided to apply a UV-reflective coating. This makes the panels visible to wildlife while maintaining transparency for humans.</p>
+            <div class="split-card">
+                <div class="split-text">
+                    <span class="section-number">02. Material Science</span>
+                    <h2>UV-Reflective Coating</h2>
+                    <p>To prevent birds and insects from colliding with the glass, we decided to apply a UV-reflective coating. This makes the panels visible to wildlife while maintaining visual transparency for humans.</p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1506509538350-13f56ce246e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Reflective architectural glass" class="split-image">
             </div>
         </div>
     </div>
 
     <div id="page-uv-how" class="page-view">
         <div class="content-container">
-            <div class="content-card">
-                <img src="https://images.unsplash.com/photo-1494249465471-5655b7878482?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Close up of a butterfly wing" class="content-image">
-                <h2>🔍 How Does the Coating Work?</h2>
-                <p>Designed for use on various materials—including glass, metals, and fabrics—UV-reflective coatings interact with light spectrums beyond human perception. However, because birds and butterflies possess UV-sensitive eyes, these coatings remain visible to them as a solid barrier!</p>
+            <div class="split-card">
+                <img src="https://images.unsplash.com/photo-1494249465471-5655b7878482?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Macro detail of butterfly wing" class="split-image">
+                <div class="split-text">
+                    <span class="section-number">03. Technology</span>
+                    <h2>How Does the Coating Work?</h2>
+                    <p>Designed for use on various materials—including glass, metals, and fabrics—UV-reflective coatings interact with light spectrums beyond human perception. However, because birds and butterflies possess UV-sensitive eyes, these coatings remain visible to them.</p>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="page-dimensions" class="page-view">
         <div class="content-container">
-            <div class="content-card">
-                <img src="https://images.unsplash.com/photo-1444525873963-75d329ef9e1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="A wooden and metal footbridge" class="content-image">
-                <h2>📏 Information & Dimensions</h2>
-                <p>With a length of 12.9 meters, a width of 1.8 meters, and a peak height of 3.5 meters, the bridge closely mirrors the scale of the original footbridge, making it perfectly functional for daily use.</p>
+            <div class="split-card">
+                <div class="split-text">
+                    <span class="section-number">04. Specifications</span>
+                    <h2>Information</h2>
+                    <p>With a length of 12.9 meters, a width of 1.8 meters, and a peak height of 3.5 meters, the bridge closely mirrors the scale of the original footbridge, ensuring optimal utility and seamless integration into the environment.</p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1444525873963-75d329ef9e1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Structural footbridge" class="split-image">
             </div>
         </div>
     </div>
 
     <div id="page-butterflies" class="page-view">
         <div class="content-container">
-            <div class="content-card">
-                <img src="https://images.unsplash.com/photo-1534444569502-99ab94f71a06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Butterfly flying toward the sun" class="content-image">
-                <h2>🦋 Characteristics of Butterflies</h2>
-                <p>Butterflies exhibit <em>phototaxis</em>, an instinctive drive to move toward light sources. This biological behavior leads them to navigate toward the sun or artificial bulbs, as they use bright points to orient themselves during flight.</p>
+            <div class="split-card">
+                <img src="https://images.unsplash.com/photo-1534444569502-99ab94f71a06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Butterfly navigating" class="split-image">
+                <div class="split-text">
+                    <span class="section-number">05. Biology</span>
+                    <h2>Characteristics of Butterflies</h2>
+                    <p>Butterflies exhibit phototaxis, an instinctive drive to move toward light sources. This biological behavior leads them to navigate toward the sun or artificial bulbs, as they use bright points to orient themselves during flight.</p>
+                    
+                    <div class="fact-box">
+                        <button onclick="triggerFact('fact2')">Pop Fact! 🎈</button>
+                        <span id="fact2" style="font-size: 1rem; font-weight: 700; color: var(--text-dark);">Click the button for a butterfly fact!</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="page-greenhouse" class="page-view">
         <div class="content-container">
-            <div class="content-card">
-                <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4ce88?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Plants inside a glass greenhouse" class="content-image">
-                <h2>🌡️ The Greenhouse Effect</h2>
-                <p>Will the sunlight shine into the bridge and make the inside too hot? <strong>The answer is no!</strong> The UV-reflective coating doesn't just protect wildlife; it also significantly reduces the greenhouse effect. By deflecting excess solar radiation, it ensures the interior remains at a comfortable temperature for everyone crossing it.</p>
+            <div class="split-card">
+                <div class="split-text">
+                    <span class="section-number">06. Thermodynamics</span>
+                    <h2>The Greenhouse Effect</h2>
+                    <p>Will the sunlight shine into the bridge and make the inside too hot? The answer is no. The UV-reflective coating also significantly reduces the greenhouse effect, ensuring the interior remains at a comfortable temperature.</p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4ce88?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Controlled temperature environment" class="split-image">
             </div>
         </div>
     </div>
 
     <div id="page-future" class="page-view">
         <div class="content-container">
-            <div class="content-card">
-                <img src="https://images.unsplash.com/photo-1495562569060-2eec283d3391?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Sunlight reflecting off a building" class="content-image">
-                <h2>🔮 Things We Will Consider in the Future</h2>
-                <p>We acknowledge that light reflected from the glass side panels might impact the surrounding community. However, we were unable to execute a formal experiment to quantify these reflections during this initial phase.</p>
+            <div class="split-card">
+                <img src="https://images.unsplash.com/photo-1495562569060-2eec283d3391?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Urban light reflection" class="split-image">
+                <div class="split-text">
+                    <span class="section-number">07. Next Steps</span>
+                    <h2>Considerations for the Future</h2>
+                    <p>We acknowledge that light reflected from the glass side panels might impact the surrounding community. However, we were unable to execute a formal experiment to quantify these reflections during the initial phase.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-thanks" class="page-view">
+        <div class="content-container">
+            <div class="split-card">
+                <div class="split-text">
+                    <span class="section-number">08. Acknowledgements</span>
+                    <h2>Special Thanks</h2>
+                    <p style="margin-bottom: 2rem;">We would like to extend our deepest gratitude to the incredible team and supporters who made this project and vision possible.</p>
+                    
+                    <div style="background: var(--bg-page); padding: 1.5rem; border-radius: var(--radius-sm); border-left: 4px solid var(--brand-primary); margin-bottom: 1rem;">
+                        <h3 style="color: var(--brand-primary); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem;">Website Development</h3>
+                        <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-dark);">Perley Lo & Nathan Tse</p>
+                    </div>
+
+                    <div style="background: var(--bg-page); padding: 1.5rem; border-radius: var(--radius-sm); border-left: 4px solid var(--text-muted); margin-bottom: 1rem;">
+                        <h3 style="color: var(--text-muted); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem;">3D & Physical Model</h3>
+                        <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-dark);">Jason Yang & Fang Liangyu</p>
+                    </div>
+
+                    <div style="background: var(--bg-page); padding: 1.5rem; border-radius: var(--radius-sm); border-left: 4px solid var(--brand-accent);">
+                        <h3 style="color: var(--brand-accent); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem;">Valuable Advice</h3>
+                        <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-dark);">Ms Prudence Chan, Mr Edward Yeung & all the special guests from The Hong Kong Polytechnic University</p>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Teamwork and collaboration" class="split-image">
             </div>
         </div>
     </div>
 
     <script>
         /* ==========================================================
-           Custom Cursor Logic
-           ========================================================== */
+           Hamburger Menu Logic
+           ========================================================= */
+        const hamburgerBtn = document.getElementById('hamburgerMenu');
+        const navLinksContainer = document.getElementById('navLinks');
+
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            navLinksContainer.classList.toggle('show');
+        });
+
+        /* ==========================================================
+           Custom Elegant Cursor
+           ========================================================= */
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
-
-        // Rotate cursor when clicking
-        document.addEventListener('mousedown', () => cursor.style.transform = 'translate(-50%, -50%) rotate(-20deg) scale(1.2)');
-        document.addEventListener('mouseup', () => cursor.style.transform = 'translate(-50%, -50%) rotate(0deg) scale(1)');
+        document.addEventListener('mousedown', () => cursor.style.transform = 'translate(-50%, -50%) scale(0.85) rotate(-15deg)');
+        document.addEventListener('mouseup', () => cursor.style.transform = 'translate(-50%, -50%) scale(1) rotate(0deg)');
 
         /* ==========================================================
-           Random Fun Facts
-           ========================================================== */
+           Fun Fact Generator (Sequential)
+           ========================================================= */
         const facts = [
-            "Butterflies taste with their feet! 🦶",
-            "A group of butterflies is called a kaleidoscope! 🌈",
-            "Butterflies can see colors that humans can't! 🎨",
-            "The top flight speed of a butterfly is 12 mph! 🏎️"
+            "Butterflies taste food with their feet! 🦶",
+            "A group of butterflies is called a kaleidoscope. 🌈",
+            "Butterflies can see colors that humans can't. 🎨",
+            "The top flight speed of a butterfly is 12 mph! 🏎️",
+            "Many adult butterflies only live for 1 to 2 weeks. ⏳",
+            "Butterflies breathe through tiny openings on their abdomen. 🌬️"
         ];
-        function triggerFact() {
-            const factDisplay = document.getElementById('fact-display');
-            const randomFact = facts[Math.floor(Math.random() * facts.length)];
-            factDisplay.innerText = randomFact;
-            fireConfetti(); // Pop confetti!
+        
+        let currentFactIndex = 0;
+
+        function triggerFact(elementId) {
+            const factDisplay = document.getElementById(elementId);
+            
+            const nextFact = facts[currentFactIndex];
+            factDisplay.innerText = nextFact;
+            
+            currentFactIndex = (currentFactIndex + 1) % facts.length;
+            
+            fireConfetti();
         }
 
         /* ==========================================================
            Page Navigation
-           ========================================================== */
+           ========================================================= */
         function navigateTo(pageId, btnElement) {
             document.querySelectorAll('.page-view').forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             
-            document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active-btn'));
+            document.querySelectorAll('.btn-nav').forEach(btn => btn.classList.remove('active-btn'));
             if (btnElement) btnElement.classList.add('active-btn');
             
+            // Close mobile menu if it is open
+            if (window.innerWidth <= 900) {
+                hamburgerBtn.classList.remove('active');
+                navLinksContainer.classList.remove('show');
+            }
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            fireConfetti(); // Mini celebration on page change!
         }
 
         /* ==========================================================
-           Mini Confetti Engine
-           ========================================================== */
+           Happy Confetti Engine
+           ========================================================= */
         const confCanvas = document.getElementById('confettiCanvas');
         const confCtx = confCanvas.getContext('2d');
-        confCanvas.width = window.innerWidth;
-        confCanvas.height = window.innerHeight;
+        function resizeConfetti() {
+            confCanvas.width = window.innerWidth;
+            confCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeConfetti);
+        resizeConfetti();
+
         let particles = [];
+        const colors = ['#0d9488', '#f59e0b', '#34d399', '#f472b6'];
 
         function fireConfetti() {
-            for(let i=0; i<30; i++) {
+            for(let i=0; i<40; i++) {
                 particles.push({
                     x: Math.random() * confCanvas.width,
-                    y: -10,
+                    y: -20,
                     r: Math.random() * 6 + 4,
                     dx: Math.random() * 4 - 2,
-                    dy: Math.random() * 5 + 2,
-                    color: `hsl(${Math.random() * 360}, 100%, 70%)`
+                    dy: Math.random() * 5 + 3,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    tilt: Math.floor(Math.random() * 10) - 10,
+                    tiltAngleIncrement: (Math.random() * 0.07) + 0.05,
+                    tiltAngle: 0
                 });
             }
         }
@@ -457,13 +873,15 @@
             confCtx.clearRect(0, 0, confCanvas.width, confCanvas.height);
             for(let i = 0; i < particles.length; i++) {
                 let p = particles[i];
+                p.tiltAngle += p.tiltAngleIncrement;
+                p.y += (Math.cos(p.tiltAngle) + p.dy + p.r / 2) / 2;
+                p.x += Math.sin(p.tiltAngle) * 2;
+                
                 confCtx.beginPath();
                 confCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
                 confCtx.fillStyle = p.color;
                 confCtx.fill();
-                p.x += p.dx;
-                p.y += p.dy;
-                // Remove if off screen
+                
                 if(p.y > confCanvas.height) {
                     particles.splice(i, 1);
                     i--;
@@ -474,150 +892,356 @@
         animateConfetti();
 
         /* ==========================================================
-           Upgraded Mini Game Logic
-           ========================================================== */
+           Modern Game Logic
+           ========================================================= */
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const startBtn = document.getElementById("startBtn");
         const scoreDisplay = document.getElementById("scoreDisplay");
+        const livesDisplay = document.getElementById("livesDisplay");
         const highScoreDisplay = document.getElementById("highScoreDisplay");
+        const triviaOverlay = document.getElementById("triviaOverlay");
+        const deathOverlay = document.getElementById("deathOverlay");
+        const countdownOverlay = document.getElementById("countdownOverlay");
+        const countdownMessage = document.getElementById("countdownMessage");
+        const countdownNumber = document.getElementById("countdownNumber");
+        const triviaQuestionText = document.getElementById("triviaQuestionText");
+        const triviaOptionsContainer = document.getElementById("triviaOptionsContainer");
+        const deathReasonText = document.getElementById("deathReasonText");
 
         let gameLoop;
         let isPlaying = false;
+        let isDead = false;
+        let hasSecondChance = true; // REBIRTH MECHANIC
         let frame = 0;
         let score = 0;
-        let highScore = localStorage.getItem('ecoBridgeHighScore') || 0;
+        let extraLives = 0;
+        let scoreToSpawnFlower = 10;
+        let highScore = localStorage.getItem('modernEcoBridgeScore') || 0;
         highScoreDisplay.innerText = highScore;
 
+        // Sequential Trivia Question Tracking
+        const triviaQuestions = [
+            { q: "What biological instinct drives butterflies toward light sources?", options: ["Thermotaxis", "Phototaxis", "Chemotaxis"], correct: 1 },
+            { q: "What is the primary function of the UV-Reflective coating on the bridge?", options: ["Thermal insulation", "Attracts local birds", "Prevents wildlife collisions"], correct: 2 },
+            { q: "How does the bridge design address the internal Greenhouse Effect?", options: ["It traps heat completely", "The UV coating reduces the effect", "It requires mechanical cooling"], correct: 1 },
+            { q: "To human perception, how does the UV-reflective coating appear?", options: ["Opaque green", "Visually transparent", "Luminescent at night"], correct: 1 }
+        ];
+        
+        let currentQuestionIndex = 0;
+
         const butterfly = {
-            x: 150, y: 150, size: 35,
-            velocity: 0, gravity: 0.5, jump: -8,
+            x: 120, y: 200, size: 35,
+            velocity: 0, gravity: 0.45, jump: -7.5,
             draw() {
                 ctx.font = this.size + "px Arial";
-                // Rotate slightly based on velocity
                 ctx.save();
                 ctx.translate(this.x, this.y);
-                ctx.rotate(this.velocity * 0.05);
+                ctx.rotate(this.velocity * 0.04);
                 ctx.fillText("🦋", -this.size/2, this.size/2);
                 ctx.restore();
-            },
-            update() {
-                this.velocity += this.gravity;
-                this.y += this.velocity;
             }
         };
 
         let pillars = [];
-        const pillarWidth = 70;
-        const gap = 160;
+        let lights = [];
+        let flowers = [];
+        const pillarWidth = 65;
+        const gap = 170;
         const speed = 4;
 
         function drawPillars() {
-            ctx.fillStyle = "#4ade80"; // Vibrant green
-            ctx.strokeStyle = "#166534"; // Thick border
-            ctx.lineWidth = 4;
-
+            ctx.fillStyle = "#0d9488"; // Vibrant Teal
+            
             for (let i = 0; i < pillars.length; i++) {
                 let p = pillars[i];
                 
-                // Top Pillar
-                ctx.fillRect(p.x, 0, pillarWidth, p.top);
-                ctx.strokeRect(p.x, 0, pillarWidth, p.top);
-                
-                // Bottom Pillar
-                ctx.fillRect(p.x, p.top + gap, pillarWidth, canvas.height - p.top - gap);
-                ctx.strokeRect(p.x, p.top + gap, pillarWidth, canvas.height - p.top - gap);
-                
+                // Draw rounded pillars
+                ctx.beginPath();
+                ctx.roundRect(p.x, -20, pillarWidth, p.top + 20, 10);
+                ctx.roundRect(p.x, p.top + gap, pillarWidth, canvas.height - p.top - gap + 20, 10);
+                ctx.fill();
                 p.x -= speed;
 
-                // Collision Detection (Box model approximation for emoji)
-                let bLeft = butterfly.x - 10;
-                let bRight = butterfly.x + 10;
+                let bLeft = butterfly.x - 12;
+                let bRight = butterfly.x + 12;
                 let bTop = butterfly.y - 15;
-                let bBottom = butterfly.y + 10;
+                let bBottom = butterfly.y + 12;
 
-                if (
-                    bRight > p.x && bLeft < p.x + pillarWidth &&
-                    (bTop < p.top || bBottom > p.top + gap)
-                ) {
-                    gameOver();
+                if (bRight > p.x && bLeft < p.x + pillarWidth && (bTop < p.top || bBottom > p.top + gap)) {
+                    handleDeath("Oops! You bumped into the structure.");
                 }
 
-                // 🎯 SCORE UPDATE LOGIC 🎯
-                // If the pillar passes the butterfly and hasn't been scored yet
                 if (p.x + pillarWidth < butterfly.x && !p.passed) {
                     score++;
                     scoreDisplay.innerText = score;
                     p.passed = true;
-                    fireConfetti(); // Pop confetti for scoring!
-                    
+                    fireConfetti();
                     if (score > highScore) {
                         highScore = score;
                         highScoreDisplay.innerText = highScore;
-                        localStorage.setItem('ecoBridgeHighScore', highScore);
+                        localStorage.setItem('modernEcoBridgeScore', highScore);
+                    }
+                    
+                    // SPAWN FLOWER EVERY 10 SCORE
+                    if (score === scoreToSpawnFlower) {
+                        flowers.push({
+                            x: canvas.width + 50, 
+                            y: Math.random() * (canvas.height - 250) + 100,
+                            size: 35
+                        });
+                        scoreToSpawnFlower += 10;
                     }
                 }
             }
         }
 
-        function spawnPillar() {
-            if (frame % 90 === 0) {
-                let topHeight = Math.random() * (canvas.height - gap - 60) + 30;
-                // Added passed: false property to track scoring
-                pillars.push({ x: canvas.width, top: topHeight, passed: false });
-            }
-            if (pillars.length > 0 && pillars[0].x < -pillarWidth) {
-                pillars.shift();
+        function handleFlowers() {
+            for (let i = 0; i < flowers.length; i++) {
+                let f = flowers[i];
+                f.x -= speed;
+
+                // Draw the flower
+                ctx.font = f.size + "px Arial";
+                ctx.fillText("🌸", f.x - f.size/2, f.y + f.size/2);
+
+                // Collision detection between butterfly and flower
+                let dx = butterfly.x - f.x;
+                let dy = butterfly.y - f.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+
+                if (distance < (butterfly.size/2 + f.size/2)) {
+                    // Collect Extra Life
+                    extraLives++;
+                    livesDisplay.innerText = extraLives;
+                    fireConfetti();
+                    flowers.splice(i, 1);
+                    i--;
+                } else if (f.x < -100) {
+                    // Remove if out of bounds
+                    flowers.splice(i, 1);
+                    i--;
+                }
             }
         }
 
-        function drawBackground() {
-            // Draw cute clouds
-            ctx.fillStyle = "rgba(255,255,255,0.8)";
-            ctx.beginPath();
-            ctx.arc(200 - (frame*0.5)%800, 80, 30, 0, Math.PI*2);
-            ctx.arc(230 - (frame*0.5)%800, 80, 40, 0, Math.PI*2);
-            ctx.arc(260 - (frame*0.5)%800, 80, 30, 0, Math.PI*2);
-            ctx.fill();
+        function handleLights() {
+            let isLightActive = false;
+            let targetY = butterfly.y;
+            
+            for (let i = 0; i < lights.length; i++) {
+                let light = lights[i];
+                light.x -= (speed - 1); 
+
+                ctx.shadowBlur = 50; ctx.shadowColor = "#f59e0b";
+                ctx.fillStyle = "#fffbeb";
+                ctx.beginPath(); ctx.arc(light.x, light.y, light.radius, 0, Math.PI * 2); ctx.fill();
+                ctx.shadowBlur = 0;
+
+                if (light.x > -50 && light.x < canvas.width + 50) {
+                    isLightActive = true;
+                    targetY = light.y; // Track the height of the light for magnetic pull
+                    
+                    ctx.fillStyle = "#ef4444";
+                    ctx.font = "800 18px Nunito";
+                    ctx.fillText("⚠️ Magnetic light pull! Rapidly LEFT CLICK to escape!", canvas.width / 2 - 210, 40);
+
+                    let dx = butterfly.x - light.x;
+                    let dy = butterfly.y - light.y;
+                    if (Math.sqrt(dx*dx + dy*dy) < light.radius + butterfly.size/2) {
+                        handleDeath("Oh no! You got too close to the artificial light.");
+                    }
+                }
+                if (light.x < -100) { lights.splice(i, 1); i--; }
+            }
+
+            // Limit the forward X speed from the magnetic pull
+            if (isLightActive) {
+                butterfly.x += 1.5; 
+                butterfly.y += (targetY - butterfly.y) * 0.02;
+                
+                // Keep the butterfly from going too far right, ensuring pillars remain visible
+                if (butterfly.x > 350) {
+                    butterfly.x = 350; 
+                }
+            } else {
+                if (butterfly.x > 120) butterfly.x -= 2;
+                if (butterfly.x < 120) butterfly.x += 2;
+            }
+            if (butterfly.x < 20) butterfly.x = 20;
+            if (butterfly.x > canvas.width) handleDeath("Swept away by the wind!");
+        }
+
+        function spawnEntities() {
+            if (frame % 80 === 0) {
+                let topHeight = Math.random() * (canvas.height - gap - 60) + 30;
+                pillars.push({ x: canvas.width, top: topHeight, passed: false });
+            }
+            if (pillars.length > 0 && pillars[0].x < -pillarWidth) { pillars.shift(); }
+
+            // ARTIFICIAL LIGHT ONLY APPEARS AFTER 15 SCORE
+            if (score >= 15 && frame % 300 === 0) {
+                let lightY = Math.random() * (canvas.height - 100) + 50;
+                lights.push({ x: canvas.width + 50, y: lightY, radius: 25 });
+            }
+        }
+
+        /* --- Rebirth & Death Logic --- */
+        function handleDeath(reason) {
+            isPlaying = false;
+            cancelAnimationFrame(gameLoop);
+
+            // Check for Extra Life First
+            if (extraLives > 0) {
+                extraLives--;
+                livesDisplay.innerText = extraLives;
+                
+                // Clear nearby obstacles so player doesn't instantly die again
+                pillars = pillars.filter(p => p.x > 300);
+                lights = lights.filter(l => l.x > 300);
+                flowers = flowers.filter(f => f.x > 300);
+                
+                // Teleport to safety
+                butterfly.y = canvas.height / 2;
+                butterfly.velocity = 0;
+                
+                startCountdown("🌸 Extra Life Saved You! 🌸");
+                return; // Do not terminate game!
+            }
+            
+            if (hasSecondChance) {
+                startTrivia();
+            } else {
+                triggerPermadeath(reason);
+            }
+        }
+
+        function startTrivia() {
+            triviaOverlay.style.display = "flex";
+            
+            const qObj = triviaQuestions[currentQuestionIndex]; 
+            
+            triviaQuestionText.innerText = qObj.q;
+            triviaOptionsContainer.innerHTML = "";
+            
+            qObj.options.forEach((opt, index) => {
+                let btn = document.createElement("button");
+                btn.className = "btn-modern alt";
+                btn.style.width = "100%";
+                btn.style.justifyContent = "flex-start";
+                btn.innerText = opt;
+                btn.onclick = () => answerTrivia(index === qObj.correct);
+                triviaOptionsContainer.appendChild(btn);
+            });
+            
+            currentQuestionIndex = (currentQuestionIndex + 1) % triviaQuestions.length;
+        }
+
+        function answerTrivia(isCorrect) {
+            triviaOverlay.style.display = "none";
+            hasSecondChance = false; 
+
+            if (isCorrect) {
+                fireConfetti();
+                butterfly.y = canvas.height / 2;
+                butterfly.velocity = 0;
+                butterfly.x = 120;
+                
+                pillars = pillars.filter(p => p.x > 300);
+                lights = lights.filter(l => l.x > 300);
+                flowers = flowers.filter(f => f.x > 300);
+                
+                // Trigger 3 Second Countdown before continuing
+                startCountdown("✨ Rebirth Successful! ✨");
+            } else {
+                triggerPermadeath("Incorrect answer! Better luck next time.");
+            }
+        }
+
+        function startCountdown(message) {
+            countdownOverlay.style.display = "flex";
+            countdownMessage.innerText = message || "Resuming...";
+            
+            let count = 3;
+            countdownNumber.innerText = count;
+            
+            let countdownInterval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownNumber.innerText = count;
+                } else {
+                    clearInterval(countdownInterval);
+                    countdownOverlay.style.display = "none";
+                    isPlaying = true;
+                    animate();
+                }
+            }, 1000);
+        }
+
+        function triggerPermadeath(reason) {
+            isDead = true;
+            deathReasonText.innerText = reason;
+            deathOverlay.style.display = "flex";
+            startBtn.style.display = "none";
+        }
+
+        function forceRestart() {
+            deathOverlay.style.display = "none";
+            resetGame();
+            isPlaying = true;
+            animate();
         }
 
         function resetGame() {
+            butterfly.x = 120;
             butterfly.y = canvas.height / 2;
             butterfly.velocity = 0;
             pillars = [];
+            lights = [];
+            flowers = [];
             score = 0;
+            extraLives = 0;
+            scoreToSpawnFlower = 10;
             scoreDisplay.innerText = score;
+            livesDisplay.innerText = extraLives;
             frame = 0;
-        }
-
-        function gameOver() {
-            isPlaying = false;
-            cancelAnimationFrame(gameLoop);
-            
-            // Fun Game Over Screen
-            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-            ctx.fillRect(0,0, canvas.width, canvas.height);
-            ctx.fillStyle = "#166534";
-            ctx.font = "900 40px Nunito";
-            ctx.fillText("Oops! Try Again! 💥", 220, 200);
-            
-            startBtn.innerText = "🔄 Restart Game";
-            startBtn.style.display = "inline-block";
+            isDead = false;
+            hasSecondChance = true; 
+            triviaOverlay.style.display = "none";
+            deathOverlay.style.display = "none";
+            countdownOverlay.style.display = "none";
         }
 
         function animate() {
             if (!isPlaying) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            drawBackground();
-            butterfly.update();
-            butterfly.draw();
-            spawnPillar();
-            drawPillars();
+            // Draw soft clouds in background perfectly!
+            ctx.fillStyle = "rgba(255,255,255,0.5)";
             
-            // Floor/Ceiling collision
+            ctx.beginPath();
+            ctx.arc(200 - (frame*0.3)%900, 100, 40, 0, Math.PI*2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(240 - (frame*0.3)%900, 100, 50, 0, Math.PI*2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(280 - (frame*0.3)%900, 100, 40, 0, Math.PI*2);
+            ctx.fill();
+
+            butterfly.velocity += butterfly.gravity;
+            butterfly.y += butterfly.velocity;
+            
+            spawnEntities();
+            handleLights();
+            drawPillars();
+            handleFlowers();
+            butterfly.draw();
+            
             if (butterfly.y >= canvas.height || butterfly.y <= 0) {
-                gameOver();
+                handleDeath("You flew too far out of bounds!");
             }
 
             frame++;
@@ -625,22 +1249,27 @@
         }
 
         function flap() {
-            if (isPlaying) {
-                butterfly.velocity = butterfly.jump;
-            }
+            if (isPlaying) { butterfly.velocity = butterfly.jump; }
         }
 
+        // Controls
         window.addEventListener("keydown", (e) => {
             if (e.code === "Space") {
-                e.preventDefault(); // prevent page scrolling
-                flap();
+                e.preventDefault();
+                if (deathOverlay.style.display === "flex") {
+                    forceRestart();
+                } else if (!isPlaying && !isDead && startBtn.style.display !== "none" && countdownOverlay.style.display !== "flex") {
+                    startBtn.click();
+                } else if (isPlaying) {
+                    flap();
+                }
             }
         });
-        canvas.addEventListener("mousedown", flap);
-        canvas.addEventListener("touchstart", (e) => { 
-            if(e.target === canvas) {
-                e.preventDefault(); 
-                flap(); 
+
+        canvas.addEventListener("mousedown", (e) => {
+            if (e.button === 0 && isPlaying) {
+                butterfly.x -= 35; // Evasive maneuver
+                flap();
             }
         });
 
@@ -653,10 +1282,10 @@
             }
         });
 
-        // Initial Draw Screen
-        ctx.fillStyle = "#166534";
-        ctx.font = "900 30px Nunito";
-        ctx.fillText("Press 'Play Game' to start flying! 🦋", 150, 200);
+        // Initial Canvas State
+        ctx.fillStyle = "#0d9488";
+        ctx.font = "800 24px Nunito";
+        ctx.fillText("Ready to fly? Press SPACEBAR to start.", 180, 210);
     </script>
 </body>
 </html>
