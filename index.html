@@ -578,7 +578,18 @@
                         <h2 style="font-size: 3.5rem; color: var(--text-dark); font-weight: 900;">Oops!</h2>
                         <p id="deathReasonText" style="font-size: 1.4rem; margin-bottom: 30px; font-weight: 600; color: var(--text-muted);"></p>
                         <button class="btn-modern" onclick="forceRestart()">
-                            🔄 Try Again (Spacebar)
+                            🔄 Try Again
+                        </button>
+                    </div>
+
+                    <div id="winOverlay" class="game-overlay" style="background: rgba(255,255,255,0.95);">
+                        <h2 style="font-size: 4rem; color: var(--brand-accent); font-weight: 900; margin-bottom: 0;">You Won! 🎉</h2>
+                        <p style="font-size: 1.8rem; margin-bottom: 15px; font-weight: 900; color: var(--brand-primary);">100 Score Reached!</p>
+                        <p style="font-size: 1.2rem; margin-bottom: 30px; font-weight: 700; color: var(--text-dark); max-width: 600px; padding: 0 20px; line-height: 1.6;">
+                            Congratulations! You can receive a real-life reward at the booth. Please go to the booth and show them this screen to claim your prize!
+                        </p>
+                        <button class="btn-modern" onclick="forceRestart()">
+                            🔄 Play Again
                         </button>
                     </div>
                 </div>
@@ -743,7 +754,6 @@
             const nextFact = facts[currentFactIndex];
             factDisplay.innerText = nextFact;
             currentFactIndex = (currentFactIndex + 1) % facts.length;
-            fireConfetti();
         }
 
         /* ==========================================================
@@ -760,7 +770,7 @@
         }
 
         /* ==========================================================
-           Happy Confetti Engine (+ 67 Easter Egg ONLY)
+           Happy Confetti Engine (+ 67 and 100 WIN Easter Eggs)
            ========================================================= */
         const confCanvas = document.getElementById('confettiCanvas');
         const confCtx = confCanvas.getContext('2d');
@@ -774,11 +784,13 @@
         let particles = [];
         const colors = ['#0d9488', '#f59e0b', '#34d399', '#f472b6'];
 
-        function fireConfetti() {
-            // ONLY execute if the score is EXACTLY 67. No other confetti will spawn anywhere.
-            if (score !== 67) return;
+        function fireConfetti(isWin = false) {
+            if (score !== 67 && !isWin) return;
 
-            for(let i=0; i<67; i++) {
+            let particleCount = isWin ? 150 : 67;
+            let displayString = isWin ? "100" : "67";
+
+            for(let i=0; i<particleCount; i++) {
                 particles.push({
                     x: Math.random() * confCanvas.width,
                     y: -20,
@@ -788,7 +800,8 @@
                     color: colors[Math.floor(Math.random() * colors.length)],
                     tilt: Math.floor(Math.random() * 10) - 10,
                     tiltAngleIncrement: (Math.random() * 0.07) + 0.05,
-                    tiltAngle: 0
+                    tiltAngle: 0,
+                    text: displayString
                 });
             }
         }
@@ -803,10 +816,9 @@
                 
                 confCtx.beginPath();
                 
-                // Because we only spawn when score === 67, we can just draw the 67 text reliably.
                 confCtx.font = "900 " + (p.r * 2.5) + "px Nunito";
                 confCtx.fillStyle = p.color;
-                confCtx.fillText("67", p.x, p.y);
+                confCtx.fillText(p.text, p.x, p.y);
                 
                 if(p.y > confCanvas.height) {
                     particles.splice(i, 1);
@@ -818,7 +830,7 @@
         animateConfetti();
 
         /* ==========================================================
-           Modern Game Logic - FIXED & OPTIMIZED
+           Modern Game Logic - FIXED & OPTIMIZED (WITH 10X DEV MODE)
            ========================================================= */
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
@@ -828,6 +840,7 @@
         const highScoreDisplay = document.getElementById("highScoreDisplay");
         const triviaOverlay = document.getElementById("triviaOverlay");
         const deathOverlay = document.getElementById("deathOverlay");
+        const winOverlay = document.getElementById("winOverlay"); 
         const countdownOverlay = document.getElementById("countdownOverlay");
         const countdownMessage = document.getElementById("countdownMessage");
         const countdownNumber = document.getElementById("countdownNumber");
@@ -846,12 +859,16 @@
         let highScore = localStorage.getItem('modernEcoBridgeScore') || 0;
         highScoreDisplay.innerText = highScore;
 
+        // Dynamic speed for Dev Mode
+        let speed = 4;
         let devModeActive = false;
+
         document.getElementById('devModeBtn').addEventListener('click', () => {
             let pass = prompt("Enter Developer Passcode:");
             if (pass === "1215") {
                 devModeActive = true;
-                alert("🛠️ Developer Mode Activated!");
+                speed = 40; // 10x Speed Multiplier!
+                alert("🛠️ Developer Mode Activated! (Invincible & 10x Faster)");
             }
         });
 
@@ -882,7 +899,6 @@
         let flowers = [];
         const pillarWidth = 65;
         const gap = 170;
-        const speed = 4;
 
         function clearCurrentObstacles() {
             pillars = [];
@@ -893,10 +909,18 @@
             butterfly.velocity = 0;
         }
 
+        function handleWin() {
+            isPlaying = false;
+            cancelAnimationFrame(gameLoop);
+            isDead = true; 
+            winOverlay.style.display = "flex";
+            fireConfetti(true); 
+        }
+
         function updateScore() {
             score++;
             scoreDisplay.innerText = score;
-            if (score === 67) fireConfetti(); 
+            if (score === 67) fireConfetti(false); 
             
             if (score > highScore) {
                 highScore = score;
@@ -908,6 +932,10 @@
                 flowers.push({ x: canvas.width + 50, y: Math.random() * (canvas.height - 200) + 100, size: 35 });
                 scoreToSpawnFlower += 10;
             }
+
+            if (score >= 100) {
+                handleWin();
+            }
         }
 
         function drawPillars() {
@@ -918,7 +946,7 @@
                 ctx.roundRect(p.x, -20, pillarWidth, p.top + 20, 10);
                 ctx.roundRect(p.x, p.top + gap, pillarWidth, canvas.height - p.top - gap + 20, 10);
                 ctx.fill();
-                p.x -= speed;
+                p.x -= speed; // Moves horizontally at base or 10x speed
 
                 if (!devModeActive && butterfly.x + 10 > p.x && butterfly.x - 10 < p.x + pillarWidth && (butterfly.y - 10 < p.top || butterfly.y + 10 > p.top + gap)) {
                     handleDeath("Oops! You bumped into the structure.");
@@ -984,11 +1012,15 @@
         }
 
         function spawnEntities() {
-            if (frame % 90 === 0) {
+            // Adjust spawn rate based on Dev Mode so the map stays populated
+            let pillarSpawnRate = devModeActive ? 9 : 90;
+            if (frame % pillarSpawnRate === 0) {
                 let topHeight = Math.random() * (canvas.height - gap - 80) + 40;
                 pillars.push({ x: canvas.width, top: topHeight, passed: false });
             }
-            if (score >= 15 && frame % 350 === 0) {
+            
+            let lightSpawnRate = devModeActive ? 35 : 350;
+            if (score >= 15 && frame % lightSpawnRate === 0) {
                 lights.push({ x: canvas.width + 50, y: Math.random() * (canvas.height - 100) + 50, radius: 25 });
             }
         }
@@ -1078,6 +1110,7 @@
             isDead = false;
             hasSecondChance = true; 
             deathOverlay.style.display = "none";
+            winOverlay.style.display = "none"; 
             startBtn.style.display = "none";
         }
 
