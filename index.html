@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wah Yan Eco-Bridge</title>
+    <title>Wah Yan Eco-Bridge Initiative</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -173,6 +173,22 @@
             cursor: pointer;
         }
         .logo:hover { opacity: 0.7; }
+
+        /* Hamburger Icon Styling */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1001;
+        }
+        .hamburger .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-dark);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
 
         .nav-links {
             display: flex;
@@ -474,18 +490,38 @@
             
             nav { 
                 padding: 1rem 1.5rem; 
-                flex-direction: column; 
+                flex-direction: row; 
                 border-radius: 20px;
             }
+            .hamburger { display: flex; }
             .nav-links { 
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                width: 100%; 
-                margin-top: 1rem;
-                padding-top: 1rem;
-                border-top: 1px solid rgba(0,0,0,0.1);
+                position: absolute;
+                top: 100%; left: 0; width: 100%;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(16px);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                margin-top: 10px;
+                border-radius: 20px;
+                box-shadow: var(--shadow-lg);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
             }
+            .nav-links.nav-active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+            .nav-links li { margin: 0.5rem 0; width: 100%; text-align: center; }
+            
+            /* Hamburger animation */
+            .hamburger.toggle .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.toggle .bar:nth-child(2) { opacity: 0; }
+            .hamburger.toggle .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
             .page-view { padding-top: 180px; }
             .game-dashboard { padding: 2rem 1rem; }
         }
@@ -505,6 +541,12 @@
         <div class="logo" onclick="navigateTo('page-home', document.querySelectorAll('.btn-nav')[0])">
             Wah Yan Eco-Bridge
         </div>
+
+        <div class="hamburger" id="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
         
         <ul class="nav-links" id="navLinks">
             <li><button class="btn-nav active-btn" onclick="navigateTo('page-home', this)">Overview</button></li>
@@ -512,8 +554,8 @@
             <li><button class="btn-nav" onclick="navigateTo('page-uv', this)">UV Material</button></li>
             <li><button class="btn-nav" onclick="navigateTo('page-uv-how', this)">Mechanism</button></li>
             <li><button class="btn-nav" onclick="navigateTo('page-dimensions', this)">Dimensions</button></li>
-            <li><button class="btn-nav" onclick="navigateTo('page-butterflies', this)">Phototaxis</button></li>
-            <li><button class="btn-nav" onclick="navigateTo('page-greenhouse', this)">Greenhouse</button></li>
+            <li><button class="btn-nav" onclick="navigateTo('page-butterflies', this)">Biology</button></li>
+            <li><button class="btn-nav" onclick="navigateTo('page-greenhouse', this)">Thermodynamics</button></li>
             <li><button class="btn-nav" onclick="navigateTo('page-future', this)">Future</button></li>
             <li><button class="btn-nav" onclick="navigateTo('page-thanks', this)">Special Thanks</button></li>
         </ul>
@@ -522,9 +564,6 @@
     <div id="page-home" class="page-view active">
         <header class="hero">
             <div class="hero-content">
-                <div style="background: rgba(13, 148, 136, 0.85); display: inline-block; padding: 8px 20px; border-radius: 50px; font-weight: 900; font-size: 0.95rem; letter-spacing: 1px; margin-bottom: 1.5rem; border: 2px solid rgba(255,255,255,0.6); text-transform: uppercase; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); backdrop-filter: blur(5px);">
-                    Wah Yan College Hong Kong • Class 3W • Group 8
-                </div>
                 <h1>WAH YAN <br>ECO-BRIDGE</h1>
                 <p>An innovative architectural solution protecting local biodiversity through advanced material science and compassionate design.</p>
                 <div style="margin-top: 2rem;">
@@ -670,7 +709,7 @@
             <div class="split-card">
                 <img src="https://picsum.photos/seed/bio6/1000/800" alt="Butterfly navigating" class="split-image">
                 <div class="split-text">
-                    <span class="section-number">05. Phototaxis</span>
+                    <span class="section-number">05. Biology</span>
                     <h2>Characteristics of Butterflies</h2>
                     <p>Butterflies exhibit phototaxis, an instinctive drive to navigate towards light sources. This biological behavior leads them to move towards the sun or artificial bulbs, as they rely on bright points of light for flight orientation.</p>
                     
@@ -687,7 +726,7 @@
         <div class="content-container">
             <div class="split-card">
                 <div class="split-text">
-                    <span class="section-number">06. Greenhouse</span>
+                    <span class="section-number">06. Thermodynamics</span>
                     <h2>The Greenhouse Effect</h2>
                     <p>Does direct sunlight turn the bridge interior into an oven? The answer is no. The UV-reflective coating significantly mitigates the greenhouse effect, ensuring the interior maintains a comfortable ambient temperature.</p>
                 </div>
@@ -739,6 +778,17 @@
 
     <script>
         /* ==========================================================
+           HAMBURGER MENU LOGIC
+           ========================================================= */
+        const hamburger = document.getElementById('hamburger');
+        const navLinksMenu = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('toggle');
+            navLinksMenu.classList.toggle('nav-active');
+        });
+
+        /* ==========================================================
            Fun Fact Generator (Sequential)
            ========================================================= */
         const facts = [
@@ -769,6 +819,12 @@
             document.querySelectorAll('.btn-nav').forEach(btn => btn.classList.remove('active-btn'));
             if (btnElement) btnElement.classList.add('active-btn');
             
+            // Close mobile menu if it is open
+            if(navLinksMenu.classList.contains('nav-active')) {
+                hamburger.classList.remove('toggle');
+                navLinksMenu.classList.remove('nav-active');
+            }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
