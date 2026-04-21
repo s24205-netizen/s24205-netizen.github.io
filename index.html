@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Wah Yan Eco-Bridge Initiative</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -143,14 +143,14 @@
         }
 
         /* ==========================================================
-           Sleek Glassmorphism Navigation (No Hamburger)
+           Sleek Glassmorphism Navigation & Hamburger Menu
            ========================================================= */
         nav {
             position: fixed;
             width: 96%;
             top: 15px; left: 2%;
             z-index: 1000;
-            padding: 0.6rem 2%;
+            padding: 0.6rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -174,9 +174,9 @@
         }
         .logo:hover { opacity: 0.7; }
 
-        /* Hamburger Icon Styling */
+        /* Universal Hamburger Icon */
         .hamburger {
-            display: none;
+            display: flex;
             flex-direction: column;
             cursor: pointer;
             gap: 5px;
@@ -190,12 +190,38 @@
             transition: all 0.3s ease;
         }
 
+        /* Hamburger to X animation */
+        .hamburger.toggle .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.toggle .bar:nth-child(2) { opacity: 0; }
+        .hamburger.toggle .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* Dropdown Links - Right Aligned */
         .nav-links {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            flex-direction: column;
+            align-items: flex-end; /* Align content to right */
+            padding: 1rem 1.5rem;
+            margin-top: 10px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
             display: flex;
-            gap: 0.1rem;
             list-style: none;
-            flex-wrap: wrap; 
+            min-width: 200px;
         }
+        .nav-links.nav-active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .nav-links li { margin: 0.4rem 0; width: 100%; text-align: right; }
 
         .btn-nav {
             background: transparent;
@@ -203,7 +229,7 @@
             border: none;
             padding: 0.4rem 0.7rem; 
             border-radius: 50px;
-            font-size: 0.8rem; 
+            font-size: 0.9rem; 
             font-weight: 800;
             transition: all 0.3s var(--smooth);
             cursor: pointer;
@@ -367,7 +393,7 @@
         .fact-box button:hover { transform: scale(1.05); }
 
         /* ==========================================================
-           Modern Game Dashboard
+           Modern Game Dashboard & Fullscreen
            ========================================================= */
         .game-section {
             max-width: 1000px;
@@ -387,22 +413,60 @@
 
         .canvas-wrapper {
             position: relative;
-            width: 800px;
-            max-width: 100%;
+            width: 100%;
+            max-width: 800px;
             margin: 3rem auto 2rem;
             border-radius: var(--radius-md);
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             border: 4px solid var(--brand-light);
+            background: #bae6fd;
+            transition: all 0.3s;
         }
 
         #gameCanvas {
-            background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%); 
             display: block;
             width: 100%;
+            height: auto;
+            aspect-ratio: 2/1; /* Keeps correct scale universally */
+            object-fit: contain;
+            background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%); 
         }
 
-        /* Modern Overlays */
+        /* Fullscreen API styles */
+        #canvasContainer:fullscreen { 
+            background: #bae6fd; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: none; 
+            border-radius: 0; 
+            max-width: none; 
+            width: 100vw; 
+            height: 100vh; 
+            margin: 0;
+        }
+        #canvasContainer:fullscreen #gameCanvas { 
+            width: 100vw; 
+            height: 100vh; 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain; 
+            border-radius: 0; 
+        }
+        #canvasContainer:fullscreen .game-overlay { border-radius: 0; }
+
+        /* Fullscreen Button */
+        #fullscreenBtn { 
+            position: absolute; top: 15px; right: 15px; z-index: 20; 
+            background: rgba(255,255,255,0.7); border: 2px solid white; 
+            border-radius: 8px; padding: 5px 12px; cursor: pointer; 
+            font-size: 1.2rem; font-weight: bold; backdrop-filter: blur(4px); 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15); transition: all 0.2s; 
+            color: var(--text-dark); 
+        }
+        #fullscreenBtn:hover { background: rgba(255,255,255,0.95); transform: scale(1.1); }
+
         .game-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -488,41 +552,7 @@
             .split-text { padding: 3rem 2rem; }
             .hero h1 { font-size: 3.5rem; }
             
-            nav { 
-                padding: 1rem 1.5rem; 
-                flex-direction: row; 
-                border-radius: 20px;
-            }
-            .hamburger { display: flex; }
-            .nav-links { 
-                position: absolute;
-                top: 100%; left: 0; width: 100%;
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(16px);
-                flex-direction: column;
-                align-items: center;
-                padding: 1rem 0;
-                margin-top: 10px;
-                border-radius: 20px;
-                box-shadow: var(--shadow-lg);
-                opacity: 0;
-                visibility: hidden;
-                transform: translateY(-10px);
-                transition: all 0.3s ease;
-            }
-            .nav-links.nav-active {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0);
-            }
-            .nav-links li { margin: 0.5rem 0; width: 100%; text-align: center; }
-            
-            /* Hamburger animation */
-            .hamburger.toggle .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-            .hamburger.toggle .bar:nth-child(2) { opacity: 0; }
-            .hamburger.toggle .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-            .page-view { padding-top: 180px; }
+            .page-view { padding-top: 130px; }
             .game-dashboard { padding: 2rem 1rem; }
         }
     </style>
@@ -541,13 +571,13 @@
         <div class="logo" onclick="navigateTo('page-home', document.querySelectorAll('.btn-nav')[0])">
             Wah Yan Eco-Bridge
         </div>
-
+        
         <div class="hamburger" id="hamburger">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </div>
-        
+
         <ul class="nav-links" id="navLinks">
             <li><button class="btn-nav active-btn" onclick="navigateTo('page-home', this)">Overview</button></li>
             <li><button class="btn-nav" onclick="navigateTo('page-goal', this)">Objective</button></li>
@@ -579,7 +609,7 @@
                 <div class="split-text">
                     <span class="section-number">Welcome</span>
                     <h2>Protecting Campus Biodiversity</h2>
-                    <p>Welcome to the Wah Yan Eco-Bridge initiative. Explore our site to discover how we are blending architecture with biological compassion to protect and preserve local butterfly populations.</p>
+                    <p>Welcome to the Wah Yan Eco-Bridge initiative. Explore our site to discover how we are blending architecture with biological compassion to protect and save local butterfly populations.</p>
                 </div>
                 <img src="https://picsum.photos/seed/butterfly1/1000/800" alt="Beautiful campus nature and wildlife" class="split-image">
             </div>
@@ -589,16 +619,17 @@
             <div class="game-dashboard">
                 <h2 style="font-size: 2.8rem; font-weight: 900; color: var(--text-dark); margin-bottom: 10px;">Eco-Flight Simulation</h2>
                 <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 10px;">
-                    Use the <strong>SPACEBAR</strong> or tap the screen to navigate through the structure.
+                    Use the <strong>SPACEBAR</strong> or tap the game screen to navigate through the structure.
                 </p>
                 <div style="background: var(--brand-accent-light); padding: 10px 20px; border-radius: 50px; display: inline-block; margin-bottom: 20px;">
                     <p style="font-size: 1rem; color: #b45309; font-weight: 800; margin: 0;">
-                        ⚠️ Lights appear after 15 points. Beware of the magnetic pull!<br>
-                        🌸 Collect flowers (every 10 points) for an Extra Life!
+                        ⚠️ Lights appear after 15 score. Evade magnetic pull!<br>
+                        🌸 Eat flowers (every 10 points) for an Extra Life!
                     </p>
                 </div>
                 
-                <div class="canvas-wrapper">
+                <div class="canvas-wrapper" id="canvasContainer">
+                    <button id="fullscreenBtn" aria-label="Toggle Fullscreen" title="Go Fullscreen">⛶</button>
                     <canvas id="gameCanvas" width="800" height="400"></canvas>
                     
                     <div id="triviaOverlay" class="game-overlay">
@@ -621,17 +652,6 @@
                         <p id="deathReasonText" style="font-size: 1.4rem; margin-bottom: 30px; font-weight: 600; color: var(--text-muted);"></p>
                         <button class="btn-modern" onclick="forceRestart()">
                             🔄 Try Again
-                        </button>
-                    </div>
-
-                    <div id="winOverlay" class="game-overlay" style="background: rgba(255,255,255,0.95);">
-                        <h2 style="font-size: 4rem; color: var(--brand-accent); font-weight: 900; margin-bottom: 0;">You Won! 🎉</h2>
-                        <p style="font-size: 1.8rem; margin-bottom: 15px; font-weight: 900; color: var(--brand-primary);">Score of 80 Reached!</p>
-                        <p style="font-size: 1.2rem; margin-bottom: 30px; font-weight: 700; color: var(--text-dark); max-width: 600px; padding: 0 20px; line-height: 1.6;">
-                            Congratulations! You are eligible for a real-life reward. Please visit our booth and present this screen to claim your prize!
-                        </p>
-                        <button class="btn-modern" onclick="forceRestart()">
-                            🔄 Play Again
                         </button>
                     </div>
                 </div>
@@ -659,7 +679,7 @@
                 <div class="split-text">
                     <span class="section-number">01. The Objective</span>
                     <h2>Goal of the Project</h2>
-                    <p>We observed that butterflies often become trapped within the original footbridge, struggling to escape. Our new design specifically addresses this issue, ensuring a safer passage for local insect populations.</p>
+                    <p>We observed that butterflies often became trapped within the original footbridge, finding it difficult to escape. Our new design specifically addresses this issue, ensuring a safer passage for local insect populations.</p>
                 </div>
             </div>
         </div>
@@ -671,7 +691,7 @@
                 <div class="split-text">
                     <span class="section-number">02. Material Science</span>
                     <h2>UV-Reflective Coating</h2>
-                    <p>To prevent birds and insects from colliding with the glass, we applied a UV-reflective coating. This makes the panels visible to wildlife while maintaining visual transparency for humans.</p>
+                    <p>To prevent birds and insects from colliding with the glass, we decided to apply a UV-reflective coating. This makes the panels visible to wildlife while maintaining visual transparency for humans.</p>
                 </div>
                 <img src="https://picsum.photos/seed/glass3/1000/800" alt="Reflective architectural glass" class="split-image">
             </div>
@@ -685,7 +705,7 @@
                 <div class="split-text">
                     <span class="section-number">03. Technology</span>
                     <h2>How Does the Coating Work?</h2>
-                    <p>Designed for use on various materials—including glass, metals, and fabrics—UV-reflective coatings interact with light spectra beyond human perception. However, because birds and butterflies possess UV-sensitive eyes, these coatings remain visible to them.</p>
+                    <p>Designed for use on various materials—including glass, metals, and fabrics—UV-reflective coatings interact with light spectrums beyond human perception. However, because birds and butterflies possess UV-sensitive eyes, these coatings remain visible to them.</p>
                 </div>
             </div>
         </div>
@@ -695,9 +715,9 @@
         <div class="content-container">
             <div class="split-card">
                 <div class="split-text">
-                    <span class="section-number">04. Bridge Specifications</span>
+                    <span class="section-number">04. Specifications</span>
                     <h2>Information</h2>
-                    <p>With a length of 12.9 meters, a width of 1.8 meters, and a peak height of 3.5 meters, the new bridge closely mirrors the scale of the original footbridge, ensuring optimal utility and seamless integration into the environment.</p>
+                    <p>With a length of 12.9 meters, a width of 1.8 meters, and a peak height of 3.5 meters, the bridge closely mirrors the scale of the original footbridge, ensuring optimal utility and seamless integration into the environment.</p>
                 </div>
                 <img src="https://picsum.photos/seed/bridge5/1000/800" alt="Structural footbridge" class="split-image">
             </div>
@@ -711,7 +731,7 @@
                 <div class="split-text">
                     <span class="section-number">05. Biology</span>
                     <h2>Characteristics of Butterflies</h2>
-                    <p>Butterflies exhibit phototaxis, an instinctive drive to navigate towards light sources. This biological behavior leads them to move towards the sun or artificial bulbs, as they rely on bright points of light for flight orientation.</p>
+                    <p>Butterflies exhibit phototaxis, an instinctive drive to move toward light sources. This biological behavior leads them to navigate toward the sun or artificial bulbs, as they use bright points to orient themselves during flight.</p>
                     
                     <div class="fact-box">
                         <button onclick="triggerFact('fact2')">Pop Fact! 🎈</button>
@@ -728,7 +748,7 @@
                 <div class="split-text">
                     <span class="section-number">06. Thermodynamics</span>
                     <h2>The Greenhouse Effect</h2>
-                    <p>Does direct sunlight turn the bridge interior into an oven? The answer is no. The UV-reflective coating significantly mitigates the greenhouse effect, ensuring the interior maintains a comfortable ambient temperature.</p>
+                    <p>Will the sunlight shine into the bridge and make the inside too hot? The answer is no. The UV-reflective coating also significantly reduces the greenhouse effect, ensuring the interior remains at a comfortable temperature.</p>
                 </div>
                 <img src="https://picsum.photos/seed/sun7/1000/800" alt="Controlled temperature environment" class="split-image">
             </div>
@@ -742,7 +762,7 @@
                 <div class="split-text">
                     <span class="section-number">07. Next Steps</span>
                     <h2>Considerations for the Future</h2>
-                    <p>We acknowledge that light reflected from the glass panels may impact the surrounding community. While we were unable to conduct a formal experiment to quantify these reflections during the initial phase, it remains a key consideration for future evaluation.</p>
+                    <p>We acknowledge that light reflected from the glass side panels might impact the surrounding community. However, we were unable to execute a formal experiment to quantify these reflections during the initial phase.</p>
                 </div>
             </div>
         </div>
@@ -754,7 +774,7 @@
                 <div class="split-text">
                     <span class="section-number">08. Acknowledgements</span>
                     <h2>Special Thanks</h2>
-                    <p style="margin-bottom: 2rem;">We would like to extend our deepest gratitude to the incredible team and supporters who made this project and its vision a reality.</p>
+                    <p style="margin-bottom: 2rem;">We would like to extend our deepest gratitude to the incredible team and supporters who made this project and vision possible.</p>
                     
                     <div style="background: var(--bg-page); padding: 1.5rem; border-radius: var(--radius-sm); border-left: 4px solid var(--brand-primary); margin-bottom: 1rem;">
                         <h3 style="color: var(--brand-primary); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem;">Website Development</h3>
@@ -829,7 +849,7 @@
         }
 
         /* ==========================================================
-           Happy Confetti Engine (+ 67 and 80 WIN Easter Eggs)
+           Happy Confetti Engine
            ========================================================= */
         const confCanvas = document.getElementById('confettiCanvas');
         const confCtx = confCanvas.getContext('2d');
@@ -843,13 +863,11 @@
         let particles = [];
         const colors = ['#0d9488', '#f59e0b', '#34d399', '#f472b6'];
 
-        function fireConfetti(isWin = false) {
-            if (score !== 67 && !isWin) return;
+        function fireConfetti() {
+            // ONLY execute if the score is EXACTLY 67. No other confetti will spawn anywhere.
+            if (score !== 67) return;
 
-            let particleCount = isWin ? 150 : 67;
-            let displayString = isWin ? "80" : "67";
-
-            for(let i=0; i<particleCount; i++) {
+            for(let i=0; i<67; i++) {
                 particles.push({
                     x: Math.random() * confCanvas.width,
                     y: -20,
@@ -859,8 +877,7 @@
                     color: colors[Math.floor(Math.random() * colors.length)],
                     tilt: Math.floor(Math.random() * 10) - 10,
                     tiltAngleIncrement: (Math.random() * 0.07) + 0.05,
-                    tiltAngle: 0,
-                    text: displayString
+                    tiltAngle: 0
                 });
             }
         }
@@ -877,7 +894,7 @@
                 
                 confCtx.font = "900 " + (p.r * 2.5) + "px Nunito";
                 confCtx.fillStyle = p.color;
-                confCtx.fillText(p.text, p.x, p.y);
+                confCtx.fillText("67", p.x, p.y);
                 
                 if(p.y > confCanvas.height) {
                     particles.splice(i, 1);
@@ -889,9 +906,11 @@
         animateConfetti();
 
         /* ==========================================================
-           Modern Game Logic - FIXED & OPTIMIZED (WITH 10X DEV MODE)
+           Modern Game Logic
            ========================================================= */
         const canvas = document.getElementById("gameCanvas");
+        const canvasContainer = document.getElementById("canvasContainer");
+        const fullscreenBtn = document.getElementById("fullscreenBtn");
         const ctx = canvas.getContext("2d");
         const startBtn = document.getElementById("startBtn");
         const scoreDisplay = document.getElementById("scoreDisplay");
@@ -899,13 +918,33 @@
         const highScoreDisplay = document.getElementById("highScoreDisplay");
         const triviaOverlay = document.getElementById("triviaOverlay");
         const deathOverlay = document.getElementById("deathOverlay");
-        const winOverlay = document.getElementById("winOverlay"); 
         const countdownOverlay = document.getElementById("countdownOverlay");
         const countdownMessage = document.getElementById("countdownMessage");
         const countdownNumber = document.getElementById("countdownNumber");
         const triviaQuestionText = document.getElementById("triviaQuestionText");
         const triviaOptionsContainer = document.getElementById("triviaOptionsContainer");
         const deathReasonText = document.getElementById("deathReasonText");
+
+        /* Fullscreen API Logic */
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                canvasContainer.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                fullscreenBtn.innerText = "✖";
+                fullscreenBtn.title = "Exit Fullscreen";
+            } else {
+                fullscreenBtn.innerText = "⛶";
+                fullscreenBtn.title = "Go Fullscreen";
+            }
+        });
 
         let gameLoop;
         let isPlaying = false;
@@ -918,23 +957,19 @@
         let highScore = localStorage.getItem('modernEcoBridgeScore') || 0;
         highScoreDisplay.innerText = highScore;
 
-        // Dynamic speed for Dev Mode
-        let speed = 4;
         let devModeActive = false;
-
         document.getElementById('devModeBtn').addEventListener('click', () => {
             let pass = prompt("Enter Developer Passcode:");
             if (pass === "1215") {
                 devModeActive = true;
-                speed = 40; // 10x Speed Multiplier!
-                alert("🛠️ Developer Mode Activated! (Invincible & 10x Faster)");
+                alert("🛠️ Developer Mode Activated!");
             }
         });
 
         const triviaQuestions = [
-            { q: "What biological instinct drives butterflies towards light sources?", options: ["Thermotaxis", "Phototaxis", "Chemotaxis"], correct: 1 },
-            { q: "What is the primary function of the UV-reflective coating on the bridge?", options: ["Thermal insulation", "Attracts local birds", "Prevents wildlife collisions"], correct: 2 },
-            { q: "How does the bridge design address the internal greenhouse effect?", options: ["It traps heat completely", "The UV coating reduces the effect", "It requires mechanical cooling"], correct: 1 },
+            { q: "What biological instinct drives butterflies toward light sources?", options: ["Thermotaxis", "Phototaxis", "Chemotaxis"], correct: 1 },
+            { q: "What is the primary function of the UV-Reflective coating on the bridge?", options: ["Thermal insulation", "Attracts local birds", "Prevents wildlife collisions"], correct: 2 },
+            { q: "How does the bridge design address the internal Greenhouse Effect?", options: ["It traps heat completely", "The UV coating reduces the effect", "It requires mechanical cooling"], correct: 1 },
             { q: "To human perception, how does the UV-reflective coating appear?", options: ["Opaque green", "Visually transparent", "Luminescent at night"], correct: 1 }
         ];
 
@@ -958,6 +993,7 @@
         let flowers = [];
         const pillarWidth = 65;
         const gap = 170;
+        const speed = 4;
 
         function clearCurrentObstacles() {
             pillars = [];
@@ -968,18 +1004,10 @@
             butterfly.velocity = 0;
         }
 
-        function handleWin() {
-            isPlaying = false;
-            cancelAnimationFrame(gameLoop);
-            isDead = true; 
-            winOverlay.style.display = "flex";
-            fireConfetti(true); 
-        }
-
         function updateScore() {
             score++;
             scoreDisplay.innerText = score;
-            if (score === 67) fireConfetti(false); 
+            if (score === 67) fireConfetti(); 
             
             if (score > highScore) {
                 highScore = score;
@@ -991,10 +1019,6 @@
                 flowers.push({ x: canvas.width + 50, y: Math.random() * (canvas.height - 200) + 100, size: 35 });
                 scoreToSpawnFlower += 10;
             }
-
-            if (score >= 80) {
-                handleWin();
-            }
         }
 
         function drawPillars() {
@@ -1005,10 +1029,10 @@
                 ctx.roundRect(p.x, -20, pillarWidth, p.top + 20, 10);
                 ctx.roundRect(p.x, p.top + gap, pillarWidth, canvas.height - p.top - gap + 20, 10);
                 ctx.fill();
-                p.x -= speed; // Moves horizontally at base or 10x speed
+                p.x -= speed;
 
                 if (!devModeActive && butterfly.x + 10 > p.x && butterfly.x - 10 < p.x + pillarWidth && (butterfly.y - 10 < p.top || butterfly.y + 10 > p.top + gap)) {
-                    handleDeath("You collided with the structure!");
+                    handleDeath("Oops! You bumped into the structure.");
                 }
                 if (p.x + pillarWidth < butterfly.x && !p.passed) {
                     p.passed = true;
@@ -1045,7 +1069,7 @@
                 if (light.x > -50 && light.x < canvas.width + 50) {
                     let dist = Math.hypot(butterfly.x - light.x, butterfly.y - light.y);
                     if (!devModeActive && dist < light.radius + 10) {
-                        handleDeath("You were drawn into the artificial light!");
+                        handleDeath("Oh no! You got too close to the artificial light.");
                     }
                     pullActive = true;
                     targetY = light.y;
@@ -1071,15 +1095,11 @@
         }
 
         function spawnEntities() {
-            // Adjust spawn rate based on Dev Mode so the map stays populated
-            let pillarSpawnRate = devModeActive ? 9 : 90;
-            if (frame % pillarSpawnRate === 0) {
+            if (frame % 90 === 0) {
                 let topHeight = Math.random() * (canvas.height - gap - 80) + 40;
                 pillars.push({ x: canvas.width, top: topHeight, passed: false });
             }
-            
-            let lightSpawnRate = devModeActive ? 35 : 350;
-            if (score >= 15 && frame % lightSpawnRate === 0) {
+            if (score >= 15 && frame % 350 === 0) {
                 lights.push({ x: canvas.width + 50, y: Math.random() * (canvas.height - 100) + 50, radius: 25 });
             }
         }
@@ -1169,7 +1189,6 @@
             isDead = false;
             hasSecondChance = true; 
             deathOverlay.style.display = "none";
-            winOverlay.style.display = "none"; 
             startBtn.style.display = "none";
         }
 
@@ -1221,12 +1240,26 @@
             }
         });
 
-        canvas.addEventListener("mousedown", () => {
+        /* Canvas Touch & Click Interactions */
+        function processCanvasInteraction() {
             if (isPlaying) {
                 butterfly.x -= 20; 
                 butterfly.velocity = butterfly.jump;
             }
+        }
+
+        canvas.addEventListener("mousedown", (e) => {
+            if (isDead) forceRestart();
+            else if (!isPlaying && startBtn.style.display !== "none") startGame();
+            else processCanvasInteraction();
         });
+
+        canvas.addEventListener("touchstart", (e) => {
+            e.preventDefault(); // Prevents page scrolling when tapping game
+            if (isDead) forceRestart();
+            else if (!isPlaying && startBtn.style.display !== "none") startGame();
+            else if (isPlaying && e.touches.length > 0) processCanvasInteraction();
+        }, {passive: false});
         
         // Initial Canvas State
         ctx.fillStyle = "#0d9488";
