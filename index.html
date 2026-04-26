@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="description" content="Wah Yan Eco-Bridge Initiative: Harmonizing campus architecture with nature to protect local butterfly populations through sustainable design.">
+    <meta property="og:title" content="Wah Yan Eco-Bridge Initiative">
+    <meta property="og:description" content="An architectural project designed with heart to protect our beloved butterflies and local wildlife.">
+    <meta property="og:type" content="website">
+    
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3199/3199859.png" type="image/png">
+    
     <title>Wah Yan Eco-Bridge Initiative</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,18 +22,19 @@
            Nature Green & Luxurious CSS Variables
            ========================================================= */
         :root {
-            --brand-primary: #2f855a;    /* Rich Nature Green */
-            --brand-dark: #1c4532;       /* Deep Forest Green */
-            --brand-light: #f0fdf4;      /* Soft Mint/Leaf White */
-            --brand-accent: #fbbf24;     /* Sunbeam Gold */
-            --bg-page: #f8faf9;          /* Cozy off-white with hint of green */
+            --brand-primary: #2f855a;    
+            --brand-dark: #1c4532;       
+            --brand-light: #f0fdf4;      
+            --brand-accent: #fbbf24;     
+            --bg-page: #f8fafc;          
+            
             --text-main: #4a4a4a;
             --text-dark: #2c2c2c;
             --text-muted: #6b7280;
             
             --radius-lg: 16px;
             --radius-md: 12px;
-            --radius-sm: 6px;
+            --radius-sm: 8px;
             
             --shadow-sm: 0 2px 4px rgba(47, 133, 90, 0.05);
             --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.1);
@@ -34,11 +43,23 @@
             --smooth: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Professional Touches: Custom Scrollbar & Selection */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-page); }
+        ::-webkit-scrollbar-thumb { background: #9ae6b4; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand-primary); }
+        
+        ::selection { background: var(--brand-primary); color: white; }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -48,6 +69,54 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Professional Touches: Keyboard Accessibility Focus States */
+        button:focus-visible, a:focus-visible {
+            outline: 3px solid var(--brand-accent);
+            outline-offset: 3px;
+        }
+
+        /* ==========================================================
+           Preloader (Loading Screen)
+           ========================================================= */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-page);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(47, 133, 90, 0.2);
+            border-top-color: var(--brand-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .preloader-text {
+            color: var(--brand-primary);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            animation: pulseText 1.5s ease-in-out infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes pulseText { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+        
+        body.loaded #preloader {
+            opacity: 0;
+            visibility: hidden;
         }
 
         /* ==========================================================
@@ -69,12 +138,7 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.02);
             animation: floatCloud linear infinite;
         }
-        .cloud::before, .cloud::after {
-            content: '';
-            position: absolute;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-        }
+        .cloud::before, .cloud::after { content: ''; position: absolute; background: rgba(255, 255, 255, 0.9); border-radius: 50%; }
         
         .c1 { top: 10%; left: -20%; width: 140px; height: 50px; animation-duration: 40s; }
         .c1::before { width: 70px; height: 70px; top: -30px; left: 20px; }
@@ -97,302 +161,334 @@
            Refined UI Components
            ========================================================= */
         .btn-modern {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #2f855a, #48bb78);
-            color: white;
-            padding: 0.9rem 2.2rem;
-            border-radius: 30px; 
-            font-weight: 600;
-            font-size: 0.95rem;
-            border: none;
-            box-shadow: 0 10px 20px rgba(47, 133, 90, 0.3);
-            transition: all 0.4s var(--smooth);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(135deg, #2f855a, #48bb78); color: white;
+            padding: 0.9rem 2.2rem; border-radius: 30px; font-weight: 600; font-size: 0.95rem; border: none;
+            box-shadow: 0 10px 20px rgba(47, 133, 90, 0.3); transition: all 0.4s var(--smooth);
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
         }
 
-        .btn-modern:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(47, 133, 90, 0.4);
-            background: linear-gradient(135deg, #276749, #38a169);
-        }
+        .btn-modern:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(47, 133, 90, 0.4); background: linear-gradient(135deg, #276749, #38a169); }
 
         .btn-outline {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.5);
-            color: var(--brand-primary);
-            padding: 0.8rem 2rem;
-            border-radius: 30px; 
-            font-weight: 600;
-            font-size: 0.95rem;
-            border: 2px solid var(--brand-primary);
-            transition: all 0.3s var(--smooth);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: rgba(255, 255, 255, 0.5); color: var(--brand-primary);
+            padding: 0.8rem 2rem; border-radius: 30px; font-weight: 600; font-size: 0.95rem;
+            border: 2px solid var(--brand-primary); transition: all 0.3s var(--smooth);
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
         }
 
-        .btn-outline:hover {
-            background: var(--brand-light);
-            transform: translateY(-2px);
-        }
+        .btn-outline:hover { background: var(--brand-light); transform: translateY(-2px); }
 
         .page-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 2.5rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(47, 133, 90, 0.1);
-            gap: 1rem;
-            flex-wrap: wrap;
+            display: flex; justify-content: space-between; align-items: center; margin-top: 2.5rem;
+            padding-top: 2rem; border-top: 1px solid rgba(47, 133, 90, 0.1); gap: 1rem; flex-wrap: wrap;
         }
+
+        /* Professional Touches: Scroll to Top Button */
+        .scroll-top-btn {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--brand-primary); color: white;
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; border: none; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            opacity: 0; visibility: hidden; transform: translateY(20px);
+            transition: all 0.3s var(--smooth); z-index: 999;
+        }
+        .scroll-top-btn.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .scroll-top-btn:hover { background: var(--brand-dark); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
 
         /* ==========================================================
            Universal Hamburger Menu
            ========================================================= */
         nav {
-            position: fixed;
-            width: 96%;
-            top: 15px; left: 2%;
-            z-index: 1000;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(47, 133, 90, 0.1);
-            box-shadow: var(--shadow-sm);
-            border-radius: 50px;
+            position: fixed; width: 96%; top: 15px; left: 2%; z-index: 1000; padding: 1rem 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(47, 133, 90, 0.1); box-shadow: var(--shadow-sm); border-radius: 50px;
         }
 
-        .logo {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: var(--brand-primary);
-            letter-spacing: -0.5px;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
+        .logo { font-size: 1.2rem; font-weight: 800; color: var(--brand-primary); letter-spacing: -0.5px; cursor: pointer; text-transform: uppercase; }
 
-        /* Visible on ALL devices */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 6px;
-            z-index: 1001;
-            padding: 5px;
-        }
-
-        .hamburger .bar {
-            width: 26px; height: 3px;
-            background-color: var(--brand-primary);
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-
+        .hamburger { display: flex; flex-direction: column; cursor: pointer; gap: 6px; z-index: 1001; padding: 5px; }
+        .hamburger .bar { width: 26px; height: 3px; background-color: var(--brand-primary); border-radius: 3px; transition: all 0.3s ease; }
+        
         .hamburger.toggle .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
         .hamburger.toggle .bar:nth-child(2) { opacity: 0; }
         .hamburger.toggle .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-        /* Hidden right-aligned dropdown */
         .nav-links { 
-            position: absolute; 
-            top: 110%; 
-            right: 0; 
-            width: auto;
-            min-width: 220px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            flex-direction: column; 
-            align-items: flex-end;
-            padding: 1rem;
-            box-shadow: var(--shadow-lg);
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(47, 133, 90, 0.1);
-            opacity: 0; 
-            visibility: hidden;
-            transform: translateY(-10px); 
-            transition: all 0.3s ease;
-            display: flex; 
-            list-style: none;
+            position: absolute; top: 110%; right: 0; width: auto; min-width: 220px;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            flex-direction: column; align-items: flex-end; padding: 1rem;
+            box-shadow: var(--shadow-lg); border-radius: var(--radius-lg);
+            border: 1px solid rgba(47, 133, 90, 0.1); opacity: 0; visibility: hidden;
+            transform: translateY(-10px); transition: all 0.3s ease; display: flex; list-style: none;
         }
-        
-        .nav-links.nav-active { 
-            opacity: 1; 
-            visibility: visible; 
-            transform: translateY(0); 
-        }
-        
+        .nav-links.nav-active { opacity: 1; visibility: visible; transform: translateY(0); }
         .nav-links li { width: 100%; text-align: right; margin: 0.3rem 0;}
 
         .btn-nav {
-            background: transparent;
-            color: var(--text-muted);
-            border: none;
-            padding: 0.8rem 1.2rem; 
-            border-radius: 12px;
-            font-size: 0.95rem; 
-            font-weight: 600;
-            transition: all 0.3s var(--smooth);
-            cursor: pointer;
-            width: 100%;
-            text-align: right;
+            background: transparent; color: var(--text-muted); border: none; padding: 0.8rem 1.2rem; 
+            border-radius: 12px; font-size: 0.95rem; font-weight: 600; transition: all 0.3s var(--smooth);
+            cursor: pointer; width: 100%; text-align: right;
         }
-
-        .btn-nav:hover {
-            color: var(--brand-primary);
-            background: rgba(47, 133, 90, 0.1);
-        }
-        
-        .btn-nav.active-btn {
-            color: white;
-            background: var(--brand-primary);
-            box-shadow: 0 4px 10px rgba(47, 133, 90, 0.2);
-        }
+        .btn-nav:hover { color: var(--brand-primary); background: rgba(47, 133, 90, 0.1); }
+        .btn-nav.active-btn { color: white; background: var(--brand-primary); box-shadow: 0 4px 10px rgba(47, 133, 90, 0.2); }
 
         /* ==========================================================
            Virtual Page Navigation
            ========================================================= */
         .page-view {
-            display: none;
-            animation: softFadeIn 0.6s var(--smooth) forwards;
-            min-height: 100vh;
-            padding-top: 120px;
-            padding-bottom: 80px;
+            display: none; animation: softFadeIn 0.6s var(--smooth) forwards;
+            min-height: 100vh; padding-top: 120px; padding-bottom: 80px;
         }
-
         .page-view.active { display: block; }
-
-        @keyframes softFadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes softFadeIn { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
 
         /* ==========================================================
            Hero Section 
            ========================================================= */
         .hero {
-            height: 70vh;
-            display: flex; align-items: center; justify-content: center;
-            position: relative;
+            height: 70vh; display: flex; align-items: center; justify-content: center; position: relative;
             background: url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover fixed;
-            margin: 0 4%;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
+            margin: 0 4%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); overflow: hidden;
         }
 
         .hero-content {
-            text-align: center; color: white; max-width: 800px;
-            padding: 3rem; z-index: 2;
+            text-align: center; color: white; max-width: 800px; padding: 3rem; z-index: 2;
             text-shadow: 0 2px 10px rgba(0,0,0,0.4);
         }
 
-        .hero-subtitle {
-            font-size: 0.9rem; font-weight: 700; letter-spacing: 3px;
-            text-transform: uppercase; color: var(--brand-accent);
-            margin-bottom: 1.5rem; display: block;
+        .hero-subtitle { 
+            font-size: 0.85rem; 
+            font-weight: 700; 
+            letter-spacing: 3px; 
+            text-transform: uppercase; 
+            color: white; /* Changed to white */
+            margin-bottom: 1.5rem; 
+            display: block; 
+            text-shadow: 0 2px 6px rgba(0,0,0,0.6); /* Dropped shadow back in for legibility */
         }
 
-        .hero h1 {
-            font-size: 4.5rem; font-weight: 800; line-height: 1.1;
-            margin-bottom: 1.5rem; letter-spacing: -1px;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .hero p {
-            font-size: 1.25rem; font-weight: 500; margin-bottom: 2.5rem;
-            color: #fdf8f5;
-        }
+        .hero h1 { font-size: 4.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1px; font-family: 'Playfair Display', serif; }
+        .hero p { font-size: 1.25rem; font-weight: 600; margin-bottom: 2.5rem; color: #fdf8f5; }
 
         /* ==========================================================
            Content Pages Layout (FROSTED GLASS EFFECT)
            ========================================================= */
-        .content-container {
-            max-width: 1100px; margin: 0 auto; padding: 2rem 4%;
-        }
-
+        .content-container { max-width: 1100px; margin: 0 auto; padding: 2rem 4%; }
+        
         .split-card {
-            display: grid; grid-template-columns: 1fr 1fr;
-            background: rgba(255, 255, 255, 0.75); 
-            backdrop-filter: blur(15px);          
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: var(--radius-lg);
-            overflow: hidden; 
-            box-shadow: var(--shadow-md);
-            border: 1px solid rgba(255, 255, 255, 0.6); 
+            display: grid; grid-template-columns: 1fr 1fr; background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: var(--radius-lg);
+            overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid rgba(255, 255, 255, 0.6); 
         }
-
-        .split-image {
-            width: 100%; height: 100%; min-height: 400px; object-fit: cover;
-        }
-
-        .split-text {
-            padding: 4.5rem; display: flex; flex-direction: column; justify-content: center;
-        }
+        .split-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); transition: all 0.4s var(--smooth); }
+        .split-image { width: 100%; height: 100%; min-height: 400px; object-fit: cover; }
+        .split-text { padding: 4.5rem; display: flex; flex-direction: column; justify-content: center; }
 
         .section-number {
-            color: var(--brand-primary); font-weight: 800;
-            letter-spacing: 2px; font-size: 0.85rem; margin-bottom: 1rem;
-            text-transform: uppercase; display: inline-block;
-            background: rgba(240, 253, 244, 0.8); padding: 0.5rem 1rem;
+            color: var(--brand-primary); font-weight: 800; letter-spacing: 2px; font-size: 0.85rem; margin-bottom: 1rem;
+            text-transform: uppercase; display: inline-block; background: rgba(240, 253, 244, 0.8); padding: 0.5rem 1rem;
             border-radius: 20px; align-self: flex-start;
         }
 
-        .split-text h2 {
-            font-size: 2.6rem; color: var(--text-dark); font-weight: 800;
-            margin-bottom: 1.5rem; line-height: 1.2; letter-spacing: -0.5px;
-            font-family: 'Playfair Display', serif;
-        }
+        .split-text h2 { font-size: 2.6rem; color: var(--text-dark); font-weight: 800; margin-bottom: 1.5rem; line-height: 1.2; letter-spacing: -0.5px; font-family: 'Playfair Display', serif; }
+        .split-text p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem; color: var(--text-dark); font-weight: 500; }
 
-        .split-text p {
-            font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem; color: var(--text-dark);
-            font-weight: 500;
+        /* ==========================================================
+           NEW FEATURE LIST STYLING (WITH IMAGES)
+           ========================================================= */
+        .feature-list { 
+            list-style-type: none; 
+            padding: 0; 
+            margin-top: 1.5rem; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 1.5rem; 
         }
-
-        .info-box {
-            background: rgba(255, 255, 255, 0.6); padding: 1.5rem 2rem;
-            border-radius: var(--radius-md); margin-top: 2rem;
-            border-left: 4px solid var(--brand-primary);
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1.8rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(47, 133, 90, 0.15);
+            transition: all 0.3s ease;
         }
-
-        .feature-list { list-style-type: none; padding: 0; margin-top: 1rem; }
-        .feature-list li { font-size: 1.05rem; margin-bottom: 1.5rem; color: var(--text-dark); font-weight: 500; line-height: 1.7; }
-        
-        .feature-subtitle {
+        .feature-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+            border-color: rgba(47, 133, 90, 0.3);
+        }
+        .feature-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            flex-shrink: 0;
+            border: 3px solid white;
+            transition: transform 0.4s ease;
+        }
+        .feature-item:hover .feature-img {
+            transform: scale(1.05);
+        }
+        .feature-text-content { flex-grow: 1; }
+        .feature-subtitle { 
             color: var(--brand-primary); 
-            font-size: 1.15rem;
-            font-weight: 700; 
-            margin-bottom: 0.3rem;
-            display: block;
+            font-size: 1.3rem; 
+            font-weight: 800; 
+            margin-bottom: 0.5rem; 
+            display: block; 
+        }
+        .feature-text-content p {
+            margin: 0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            font-weight: 500;
         }
 
         /* Pop Fact Feature Box */
         .fact-box {
-            background: var(--brand-light); padding: 1.5rem 2rem;
-            border-radius: var(--radius-md); margin-top: 2.5rem;
-            display: flex; align-items: center; gap: 20px;
-            border: 2px dashed #48bb78;
+            background: var(--brand-light); padding: 1.5rem 2rem; border-radius: var(--radius-md); margin-top: 2.5rem;
+            display: flex; align-items: center; gap: 20px; border: 2px dashed #48bb78;
         }
         .fact-box button {
-            background: var(--brand-primary); color: white; border: none;
-            padding: 0.6rem 1.2rem; border-radius: 50px; font-weight: 800;
-            flex-shrink: 0; cursor: pointer; transition: all 0.2s var(--bounce);
+            background: var(--brand-primary); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 50px; 
+            font-weight: 800; flex-shrink: 0; cursor: pointer; transition: all 0.2s var(--bounce);
         }
         .fact-box button:hover { transform: scale(1.05); background: var(--brand-dark); }
 
-        /* Mobile Adjustments */
+        /* Additional Container for Diagrams below split cards */
+        .diagram-container {
+            margin-top: 2rem; 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: var(--radius-lg); 
+            padding: 3rem; 
+            text-align: center; 
+            box-shadow: var(--shadow-md); 
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .diagram-container h3 {
+            color: var(--text-dark); 
+            margin-bottom: 1.5rem; 
+            font-size: 1.8rem;
+            font-family: 'Playfair Display', serif;
+        }
+        .diagram-image {
+            max-width: 100%; 
+            height: auto; 
+            border-radius: var(--radius-sm); 
+            border: 1px solid rgba(47, 133, 90, 0.2);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ==========================================================
+           Special Thanks Full Page Layout (Forest Background)
+           ========================================================= */
+        .credits-container {
+            background: linear-gradient(rgba(28, 69, 50, 0.85), rgba(28, 69, 50, 0.9)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover no-repeat fixed;
+            border-radius: var(--radius-lg); padding: 5rem 4%; margin: 0 4%;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .credits-container::before {
+            content: ''; position: absolute; top: -30%; right: -20%; width: 70%; height: 70%;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .credits-header { text-align: center; margin-bottom: 4rem; position: relative; z-index: 2; }
+        .credits-header h2 {
+            font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;
+            color: #fef3c7; font-size: 3.5rem; margin-bottom: 0.5rem;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .credits-header p {
+            font-family: 'Inter', sans-serif; letter-spacing: 4px; font-weight: 500;
+            color: #a7f3d0; font-size: 0.95rem; text-transform: uppercase;
+        }
+        .section-title {
+            text-align: center; color: #fcd34d; font-size: 1.15rem; text-transform: uppercase;
+            letter-spacing: 3px; margin-bottom: 2rem; font-weight: 700; opacity: 0.95;
+        }
+        .dev-team-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem;
+            max-width: 900px; margin-left: auto; margin-right: auto; position: relative; z-index: 2;
+        }
+        .dev-card {
+            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px);
+            border: 1px solid rgba(251, 191, 36, 0.3); border-radius: var(--radius-md);
+            padding: 2.5rem 2rem; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.4s ease, background 0.4s ease;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .dev-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.12); border-color: rgba(251, 191, 36, 0.6); }
+        .dev-card h3 { color: #a7f3d0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; opacity: 0.95; }
+        .dev-card p { color: #fef3c7; font-size: 1.6rem; font-weight: 700; font-family: 'Playfair Display', serif; margin:0;}
+        .light-flare {
+            height: 1px; width: 70%; max-width: 500px; margin: 0 auto 4rem;
+            background: linear-gradient(90deg, transparent 0%, rgba(251, 191, 36, 0.4) 50%, transparent 100%);
+        }
+        .acknowledgements-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+            max-width: 1000px; margin: 0 auto 4rem; position: relative; z-index: 2;
+        }
+        .ack-card {
+            background: rgba(255,255,255,0.06); backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius-sm); 
+            padding: 1.5rem; text-align: center; transition: all 0.3s ease;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .ack-card:hover {
+            transform: translateY(-3px); background: rgba(255,255,255,0.1);
+            border-color: rgba(251, 191, 36, 0.4); box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .ack-card h4 {
+            color: #d1d5db; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.6rem;
+        }
+        .ack-card p {
+            color: #f8fafc; font-size: 1.1rem; font-weight: 500; margin: 0; line-height: 1.4;
+        }
+        .thank-you-box {
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(251, 191, 36, 0.2); 
+            border-radius: var(--radius-md);
+            padding: 2.5rem; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 0 auto; max-width: 600px; position: relative; z-index: 2;
+        }
+        .thank-you-box h2 {
+            font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: -1px; 
+            color: #f9fafb; 
+        }
+        .thank-you-box p {
+            font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin: 0; 
+            color: #f3f4f6; 
+            text-wrap: balance;
+        }
+        .site-footer {
+            text-align: center;
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 2;
+        }
+
         @media (max-width: 900px) {
             .split-card { grid-template-columns: 1fr; }
             .split-image { height: 300px; min-height: auto; }
@@ -400,10 +496,33 @@
             .hero h1 { font-size: 3rem; }
             .hero { height: auto; padding: 6rem 0; }
             .fact-box { flex-direction: column; text-align: center; }
+            .diagram-container { padding: 2rem 1.5rem; }
+            
+            /* Mobile adjustment for new features list */
+            .feature-item { flex-direction: column; text-align: center; padding: 1.5rem; gap: 1.5rem; }
+            .feature-img { width: 100%; height: 200px; }
+            
+            .credits-container { padding: 3rem 1.5rem; margin: 0; border-radius: 0; border-left: none; border-right: none; }
+            .credits-header h2 { font-size: 2.5rem; }
+            .dev-team-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .acknowledgements-grid { grid-template-columns: 1fr 1fr; }
+            .thank-you-box h2 { font-size: 2.2rem; }
+        }
+        @media (max-width: 600px) {
+            .acknowledgements-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+
+    <div id="preloader">
+        <div class="spinner"></div>
+        <div class="preloader-text">Loading Experience</div>
+    </div>
+
+    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top of page">
+        ↑
+    </button>
 
     <div id="nature-background">
         <div class="cloud c1"></div>
@@ -411,12 +530,12 @@
         <div class="cloud c3"></div>
     </div>
 
-    <nav>
-        <div class="logo" onclick="navigateTo('page-home')">
+    <nav aria-label="Main Navigation">
+        <div class="logo" onclick="navigateTo('page-home')" tabindex="0" role="button" aria-label="Go to homepage">
             Wah Yan Eco-Bridge
         </div>
         
-        <div class="hamburger" id="hamburger">
+        <div class="hamburger" id="hamburger" tabindex="0" role="button" aria-label="Toggle menu">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
@@ -430,273 +549,358 @@
             <li><button class="btn-nav" onclick="navigateTo('page-features')">Features</button></li>
             <li><button class="btn-nav" onclick="navigateTo('page-uv-coating')">UV Coating</button></li>
             <li><button class="btn-nav" onclick="navigateTo('page-greenhouse')">Temperature</button></li>
-            <li><button class="btn-nav" onclick="navigateTo('page-dimensions')">Dimension</button></li>
+            <li><button class="btn-nav" onclick="navigateTo('page-dimensions')">Dimensions</button></li>
             <li><button class="btn-nav" onclick="navigateTo('page-future')">Future</button></li>
             <li><button class="btn-nav" onclick="navigateTo('page-thanks')">Credits</button></li>
         </ul>
     </nav>
 
-    <div id="page-home" class="page-view active">
-        <header class="hero">
-            <div class="hero-content">
-                <span class="hero-subtitle">Wah Yan College Hong Kong | Class 3W | Group 8</span>
-                <h1>Wah Yan Eco-Bridge</h1>
-                <p>An architectural project designed with heart to protect our beloved butterflies and local wildlife through sustainable design and care.</p>
-                <div style="margin-top: 2rem;">
-                    <button class="btn-modern" onclick="navigateStep(1)">
-                        Explore The Project
-                    </button>
+    <main>
+        <div id="page-home" class="page-view active">
+            <header class="hero">
+                <div class="hero-content">
+                    <span class="hero-subtitle">Wah Yan College Hong Kong | Class 3W | Group 8</span>
+                    <h1>Wah Yan Eco-Bridge</h1>
+                    <p>An architectural project designed with heart to protect our beloved butterflies and local wildlife through sustainable design and care.</p>
+                    <div style="margin-top: 2rem;">
+                        <button class="btn-modern" onclick="navigateStep(1)">
+                            Explore The Project
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </header>
+            </header>
 
-        <div class="content-container" style="margin-top: 2rem; position: relative; z-index: 5;">
-            <div class="split-card">
-                <div class="split-text">
-                    <span class="section-number">Overview</span>
-                    <h2>Harmonizing Buildings and Nature</h2>
-                    <p>Welcome to the official platform for the Wah Yan Eco-Bridge project. Discover how we are redesigning our campus bridge to create a safe, welcoming connection for students while deeply respecting the delicate ecosystem of our school grounds, especially our beautiful butterfly populations.</p>
-                    
-                    <div class="page-controls" style="justify-content: flex-end;">
-                        <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+            <div class="content-container" style="margin-top: 2rem; position: relative; z-index: 5;">
+                <div class="split-card">
+                    <div class="split-text">
+                        <span class="section-number">Overview</span>
+                        <h2>Harmonizing Buildings and Nature</h2>
+                        <p>Welcome to the official platform for the Wah Yan Eco-Bridge project. Discover how we are redesigning our campus bridge to create a safe, welcoming connection for students while deeply respecting the delicate ecosystem of our school grounds, especially our beautiful butterfly populations.</p>
+                        
+                        <div class="page-controls" style="justify-content: flex-end;">
+                            <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+                        </div>
                     </div>
-                </div>
-                <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Campus nature and pathway" class="split-image">
-            </div>
-        </div>
-    </div>
-    
-    <div id="page-purpose" class="page-view">
-        <div class="content-container">
-            <div class="split-card">
-                <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Nature stewardship" class="split-image">
-                <div class="split-text">
-                    <span class="section-number">01. Our Purpose</span>
-                    <h2>Answering the Call of Laudato Si'</h2>
-                    <p>In Form 3, the IDEEA subject uniquely challenges us to combine all the skills we have learned over the previous two years to create a meaningful, real-world product.</p>
-                    <p>With this year's theme dedicated to the environment, our foundation is deeply inspired by our Catholic faith and Pope Francis's 2015 encyclical, Laudato Si'. We believe that God created this magnificent world and entrusted us to be its stewards. Answering the heartfelt call for the care of our common home, we firmly believe the environment is not a resource to be exploited, but a precious gift that we must actively protect for generations to come.</p>
-                    
-                    <div class="page-controls">
-                        <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
-                        <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Campus nature and pathway" class="split-image">
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="page-challenge" class="page-view">
-        <div class="content-container">
-            <div class="split-card">
-                <div class="split-text">
-                    <span class="section-number">02. The Challenge</span>
-                    <h2>Protecting Our Wildlife</h2>
-                    <p>Looking closely at our own campus, we noticed a heartbreaking ecological issue. Currently, our bridge leading to Gordon Wu Hall is an open structure with no windows, flanked by beautiful forests on both sides. For butterflies traveling between these green spaces, the easiest and most direct flight path is straight through the bridge.</p>
-                    <p>However, the existing bridge features a half-clear domed roof. As sunlight beams down through this material, it tricks the butterflies. Drawn to the light above, they fly upward instead of straight through. Sadly, they become trapped inside the dome and perish. Our goal is to prevent them from entering the bridge interior in the first place.</p>
-                    
-                    <div class="page-controls">
-                        <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
-                        <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
-                    </div>
-                </div>
-                <img src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Glass dome architecture challenge" class="split-image">
-            </div>
-        </div>
-    </div>
-
-    <div id="page-butterflies" class="page-view">
-        <div class="content-container">
-            <div class="split-card">
-                <img src="https://images.unsplash.com/photo-1536514498073-50e69d39c6cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Beautiful butterfly on flower" class="split-image">
-                <div class="split-text">
-                    <span class="section-number">03. Phototaxis</span>
-                    <h2>Drawn to the Light</h2>
-                    <p>Butterflies naturally fly toward light, a biological instinct known as phototaxis. This instinct helps them use the sun to navigate and find their way around the forests. However, this is the exact reason the old half-clear roof confused them and caused them to fly upward into the dome instead of flying safely across.</p>
-                    
-                    <div class="fact-box">
-                        <button onclick="triggerFact('fact2')">Pop Fact! 🎈</button>
-                        <span id="fact2" style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark);">Click the button for a butterfly fact!</span>
-                    </div>
-
-                    <div class="page-controls">
-                        <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
-                        <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+        
+        <div id="page-purpose" class="page-view">
+            <div class="content-container">
+                <div class="split-card">
+                    <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Nature stewardship" class="split-image">
+                    <div class="split-text">
+                        <span class="section-number">01. Our Purpose</span>
+                        <h2>Answering the Call of Laudato Si'</h2>
+                        <p>In Form 3, the IDEEA subject uniquely challenges us to combine all the skills we have learned over the previous two years to create a meaningful, real-world product.</p>
+                        <p>With this year's theme dedicated to the environment, our foundation is deeply inspired by our Catholic faith and Pope Francis's 2015 encyclical, Laudato Si'. We believe that God created this magnificent world and entrusted us to be its stewards. Answering the heartfelt call for the care of our common home, we firmly believe the environment is not a resource to be exploited, but a precious gift that we must actively protect for generations to come.</p>
+                        
+                        <div class="page-controls">
+                            <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
+                            <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="page-features" class="page-view">
-        <div class="content-container">
-            <div class="split-card">
-                <div class="split-text">
-                    <span class="section-number">04. Design</span>
-                    <h2>The Five Key Features</h2>
-                    <ul class="feature-list">
-                        <li>
-                            <span class="feature-subtitle">1. Enclosing Windows</span>
-                            We are installing glass walls to fully enclose the open bridge. This stops butterflies from entering the space while keeping our campus views completely clear.
-                        </li>
-                        <li>
-                            <span class="feature-subtitle">2. Advanced Membrane Roofing</span>
-                            We are replacing the half-clear dome with a solid GORE-TEX fabric roof. This blocks the confusing top-down sunlight, while remaining lightweight, highly breathable, and remarkably durable against all weather conditions.
-                        </li>
-                        <li>
-                            <span class="feature-subtitle">3. Aviary-Style Door Chains</span>
-                            Since we cannot put glass across the open walkways where people pass, we are hanging layered plastic chains at the doorways. Much like in a bird aviary, these allow humans to walk through easily but physically deter insects from flying inside.
-                        </li>
-                        <li>
-                            <span class="feature-subtitle">4. UV-Reflective Glass</span>
-                            The new enclosing windows are treated with a special coating so wildlife can visually detect the solid barrier without crashing into it.
-                        </li>
-                        <li>
-                            <span class="feature-subtitle">5. Climate Control System</span>
-                            Because sealing the bridge creates an enclosed space, we are adding exhaust fans and air vents to ensure continuous fresh air circulation.
-                        </li>
-                    </ul>
-                    <div class="page-controls">
-                        <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
-                        <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+        <div id="page-challenge" class="page-view">
+            <div class="content-container">
+                <div class="split-card">
+                    <div class="split-text">
+                        <span class="section-number">02. The Challenge</span>
+                        <h2>Protecting Our Wildlife</h2>
+                        <p>Looking closely at our own campus, we noticed a heartbreaking ecological issue. Currently, our bridge leading to Gordon Wu Hall is an open structure with no windows, flanked by beautiful forests on both sides. For butterflies traveling between these green spaces, the easiest and most direct flight path is straight through the bridge.</p>
+                        <p>However, the existing bridge features a semi-transparent domed roof. As sunlight beams down through this material, it tricks the butterflies. Drawn to the light above, they fly upward instead of straight through. Sadly, they become trapped inside the dome and perish. Our goal is to prevent them from entering the bridge interior in the first place.</p>
+                        
+                        <div class="page-controls">
+                            <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
+                            <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+                        </div>
                     </div>
+                    <img src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Glass dome architecture challenge" class="split-image">
                 </div>
-                <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Eco-friendly modern architecture" class="split-image">
             </div>
         </div>
-    </div>
 
-    <div id="page-uv-coating" class="page-view">
-        <div class="content-container">
-            <div class="split-card">
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Modern glass reflecting nature" class="split-image">
-                <div class="split-text">
-                    <span class="section-number">05. UV Coating</span>
-                    <h2>A Clear Solution</h2>
-                    <p>By putting up glass windows to block the butterflies from entering the bridge, we created a new problem: would they simply crash into the clear glass instead? To prevent these collisions, our windows use an innovative ultraviolet coating.</p>
-                    <p>This special coating reflects ultraviolet light. Humans cannot see this light, but the eyes of birds and butterflies are highly sensitive to it. When they see the glowing UV reflection on the glass, they perceive it as a solid wall and fly safely around the exterior of the bridge rather than crashing into it.</p>
-                    
-                    <div class="page-controls">
-                        <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
-                        <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+        <div id="page-butterflies" class="page-view">
+            <div class="content-container">
+                <div class="split-card">
+                    <img src="https://images.unsplash.com/photo-1536514498073-50e69d39c6cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Beautiful butterfly on flower" class="split-image">
+                    <div class="split-text">
+                        <span class="section-number">03. Phototaxis</span>
+                        <h2>Drawn to the Light</h2>
+                        <p>Butterflies naturally fly toward light, a biological instinct known as phototaxis. This instinct helps them use the sun to navigate and find their way around the forests. However, this is the exact reason the old semi-transparent roof confused them and caused them to fly upward into the dome instead of flying safely across.</p>
+                        
+                        <div class="fact-box">
+                            <button onclick="triggerFact('fact2')">Pop Fact! 💡</button>
+                            <span id="fact2" style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark);" aria-live="polite">Click the button for a butterfly fact!</span>
+                        </div>
+
+                        <div class="page-controls">
+                            <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
+                            <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="page-greenhouse" class="page-view">
-        <div class="content-container">
-            <div class="split-card">
-                <div class="split-text">
-                    <span class="section-number">06. Temperature</span>
-                    <h2>Beating the Greenhouse Effect</h2>
-                    <p>Enclosing the previously open bridge with windows naturally raises another concern: will the trapped air act like a greenhouse and make the bridge unbearably hot? Fortunately, our design solves this issue entirely.</p>
-                    <p>The specialized glass and its UV coating not only prevent wildlife collisions but also effectively block and reflect harsh solar heat. Combined with our new opaque GORE-TEX roof and built-in ventilation fans, the interior space remains cool, shaded, and incredibly comfortable.</p>
-                    
-                    <div class="page-controls">
-                        <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
-                        <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
-                    </div>
-                </div>
-                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Sunlight filtered through green canopy" class="split-image">
-            </div>
-        </div>
-    </div>
-
-    <div id="page-dimensions" class="page-view">
-        <div class="content-container">
-            <div class="split-card">
-                <img src="https://images.unsplash.com/photo-1513689125086-6c432170e843?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Pedestrian bridge and walkway" class="split-image">
-                <div class="split-text">
-                    <span class="section-number">07. Dimension</span>
-                    <h2>Bridge Measurements</h2>
-                    <p>Built to perfectly fit our campus landscape, the renewed bridge structural frame remains exactly 12.9 meters long, 1.8 meters wide, and 3.5 meters high. We kept the original dimensions to ensure the crossing is strong, secure, and familiar for everyone to use.</p>
-                    
-                    <div class="page-controls">
-                        <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
-                        <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="page-future" class="page-view">
-        <div class="content-container">
-            <div class="split-card">
-                <div class="split-text">
-                    <span class="section-number">08. Future</span>
-                    <h2>Looking Ahead</h2>
-                    <p>As caring designers, we understand that introducing large glass walls into a forest space can slightly alter the surrounding microclimate. Moving forward, our next goal is to meticulously measure any temperature shifts near the bridge exterior to ensure the entire school environment, and its beautiful butterfly population, stays balanced and healthy.</p>
-                    
-                    <div class="page-controls">
-                        <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
-                        <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
-                    </div>
-                </div>
-                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Vibrant green forest" class="split-image">
-            </div>
-        </div>
-    </div>
-
-    <div id="page-thanks" class="page-view">
-        <div class="content-container">
-            <div class="split-card" style="box-shadow: 0 0 30px rgba(47, 133, 90, 0.2); border: 2px solid var(--brand-primary);">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Teamwork and collaboration" class="split-image">
-                <div class="split-text" style="padding: 3.5rem 4.5rem;">
-                    <span class="section-number" style="background: transparent; padding: 0;">09. Acknowledgements</span>
-                    <h2 style="color: var(--brand-primary); font-family: 'Playfair Display', serif;">Special Thanks</h2>
-                    
-                    <p style="margin-bottom: 2rem; font-size: 1.05rem; font-weight: 500; color: var(--text-dark); line-height: 1.6;">
-                        It is with our most profound and heartfelt gratitude that we present this initiative. This project stands as a testament to the unwavering support, brilliant insights, and boundless dedication of the individuals who guided us.
-                    </p>
-                    
-                    <div style="background: rgba(255,255,255,0.6); padding: 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--brand-accent); margin-bottom: 1rem;">
-                        <h3 style="color: var(--brand-accent); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem;">Our Principal</h3>
-                        <p style="font-size: 1.1rem; font-weight: 700; color: var(--text-dark);">Dr Davis Chan</p>
-                    </div>
-
-                    <div style="background: rgba(255,255,255,0.6); padding: 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--brand-primary); margin-bottom: 1rem;">
-                        <h3 style="color: var(--brand-primary); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem;">Our Supervisor</h3>
-                        <p style="font-size: 1.1rem; font-weight: 700; color: var(--text-dark);">Fr Alan Wong</p>
-                    </div>
-
-                    <div style="background: rgba(255,255,255,0.6); padding: 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--brand-dark); margin-bottom: 1rem;">
-                        <h3 style="color: var(--brand-dark); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem;">Valuable Advice</h3>
-                        <p style="font-size: 1rem; font-weight: 600; color: var(--text-dark); line-height: 1.5;">
-                            Mr Tommy Fang, Miss Prudence Chan, Mr Edward Yeung, Mr YC Lam, Mr KK Siu, Mr Chris Lee & All special guests from The Hong Kong Polytechnic University
-                        </p>
-                    </div>
-
-                    <div style="background: rgba(255,255,255,0.6); padding: 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--text-muted); margin-bottom: 1rem;">
-                        <h3 style="color: var(--text-muted); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem;">WahYan Staff</h3>
-                        <p style="font-size: 1rem; font-weight: 600; color: var(--text-dark);">
-                            Jesuit Fathers, All WahYan Teachers, Office Staff & School Janitors
-                        </p>
-                    </div>
-                    
-                    <div style="background: rgba(255,255,255,0.6); padding: 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--brand-primary); margin-bottom: 1rem;">
-                        <h3 style="color: var(--brand-primary); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem;">Website Development</h3>
-                        <p style="font-size: 1.1rem; font-weight: 700; color: var(--text-dark);">Perley Lo & Nathan Tse</p>
-                    </div>
-
-                    <div style="background: rgba(255,255,255,0.6); padding: 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--brand-accent);">
-                        <h3 style="color: var(--brand-accent); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem;">3D & Physical Model</h3>
-                        <p style="font-size: 1.1rem; font-weight: 700; color: var(--text-dark);">Jason Yang & Fang Liangyu</p>
-                    </div>
-
-                    <div style="margin-top: 2rem; font-weight: 800; color: var(--brand-primary); letter-spacing: 1px; text-transform: uppercase; text-align: center;">
-                        — Wah Yan College Hong Kong, Class 3W, Group 8 —
+        <div id="page-features" class="page-view">
+            <div class="content-container">
+                <div class="split-card" style="grid-template-columns: 1fr;">
+                    <div class="split-text" style="padding: 3.5rem;">
+                        <span class="section-number">04. Design</span>
+                        <h2>The Five Key Features</h2>
+                        
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <img src="https://glas-pro.com/wp-content/uploads/2021/05/bird_safe_uv_reflective_anime_2_grey.gif" alt="UV-Reflective Glass Coating" class="feature-img">
+                                <div class="feature-text-content">
+                                    <span class="feature-subtitle">1. UV-Reflective Coating</span>
+                                    <p>We are installing tempered glass panels with a UV-reflective coating to fully enclose the open bridge. This creates a solid barrier that wildlife can visually detect, successfully preventing collisions.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <img src="https://www.mountainlifemedia.ca/wp-content/uploads/2023/01/GORE-TEX-ePE-membrane.jpeg" alt="GORE-TEX Membrane" class="feature-img">
+                                <div class="feature-text-content">
+                                    <span class="feature-subtitle">2. Lightweight GORE-TEX Roofing</span>
+                                    <p>We are replacing the semi-transparent dome with lightweight GORE-TEX fabric roofing. This blocks the confusing top-down sunlight, while remaining highly breathable and remarkably durable against all weather conditions.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <img src="https://smartvent.co.nz/assets/Uploads/SmartVent-types-of-ventilation-1080x600__ScaleWidthWzEyMDBd.png" alt="Ventilation System" class="feature-img">
+                                <div class="feature-text-content">
+                                    <span class="feature-subtitle">3. Louvered Ventilation Panels</span>
+                                    <p>Because sealing the bridge creates an enclosed space, we are adding louvered ventilation panels to ensure continuous fresh air circulation and climate control.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <img src="https://m.media-amazon.com/images/I/91s5Mqcb4ML._AC_UF894,1000_QL80_.jpg" alt="Plastic Chain Curtain" class="feature-img">
+                                <div class="feature-text-content">
+                                    <span class="feature-subtitle">4. Double-Link Plastic Chains</span>
+                                    <p>Since we cannot install glass across the open walkways where people pass, we are hanging a double-link plastic chain curtain at the doorways. This allows humans to walk through easily but physically deters insects from flying inside.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <img src="https://www.thespruce.com/thmb/MS37znwQg86HA-YKftunbSfLklE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-2163630272-566c5f4ab02f423fb030830722f07bf8.jpg" alt="Exterior Walkway" class="feature-img">
+                                <div class="feature-text-content">
+                                    <span class="feature-subtitle">5. Maintenance Access Walkway</span>
+                                    <p>We have integrated a maintenance access walkway with a perimeter safety railing. This dedicated exterior walkway allows for the safe and easy cleaning of the exterior glass windows.</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="page-controls">
+                            <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
+                            <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="page-controls" style="justify-content: flex-start; border: none;">
-                <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
+        </div>
+
+        <div id="page-uv-coating" class="page-view">
+            <div class="content-container">
+                <div class="split-card">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Modern glass reflecting nature" class="split-image">
+                    <div class="split-text">
+                        <span class="section-number">05. UV Coating</span>
+                        <h2>A Clear Solution</h2>
+                        <p>By putting up glass windows to block the butterflies from entering the bridge, we created a new problem: would they simply crash into the clear glass instead? To prevent these collisions, our windows use an innovative ultraviolet coating.</p>
+                        <p>This special coating reflects ultraviolet light. Humans cannot see this light, but the eyes of birds and butterflies are highly sensitive to it. When they see the glowing UV reflection on the glass, they perceive it as a solid wall and fly safely around the exterior of the bridge rather than crashing into it.</p>
+                        
+                        <div class="page-controls">
+                            <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
+                            <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+
+        <div id="page-greenhouse" class="page-view">
+            <div class="content-container">
+                <div class="split-card">
+                    <div class="split-text">
+                        <span class="section-number">06. Temperature</span>
+                        <h2>Beating the Greenhouse Effect</h2>
+                        <p>Enclosing the previously open bridge with windows naturally raises another concern: will the trapped air act like a greenhouse and make the bridge unbearably hot? Fortunately, our design solves this issue entirely.</p>
+                        <p>The specialized glass and its UV coating not only prevent wildlife collisions but also effectively block and reflect harsh solar heat. Combined with our new opaque GORE-TEX roof and built-in ventilation fans, the interior space remains cool, shaded, and incredibly comfortable.</p>
+                        
+                        <div class="page-controls">
+                            <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
+                            <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+                        </div>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Sunlight filtered through green canopy" class="split-image">
+                </div>
+            </div>
+        </div>
+
+        <div id="page-dimensions" class="page-view">
+            <div class="content-container">
+                <div class="split-card">
+                    <img src="https://images.unsplash.com/photo-1513689125086-6c432170e843?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Pedestrian bridge and walkway" class="split-image">
+                    <div class="split-text">
+                        <span class="section-number">07. Dimensions</span>
+                        <h2>Bridge Measurements</h2>
+                        <p>Built to perfectly fit our campus landscape, the renewed bridge's structural frame remains exactly 12.9 meters long, 1.8 meters wide, and 3.5 meters high. We kept the original dimensions to ensure the crossing is strong, secure, and familiar for everyone to use.</p>
+                        
+                        <div class="page-controls">
+                            <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
+                            <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <h3>Bridge Proportions & Layout</h3>
+                    <img src="https://i.imgur.com/9Cvis6q.jpeg" alt="Bridge dimensions technical diagram" class="diagram-image">
+                </div>
+            </div>
+        </div>
+
+        <div id="page-future" class="page-view">
+            <div class="content-container">
+                <div class="split-card">
+                    <div class="split-text">
+                        <span class="section-number">08. Future</span>
+                        <h2>Looking Ahead</h2>
+                        <p>As caring designers, we understand that introducing large glass walls into a forest space can slightly alter the surrounding microclimate. Moving forward, our next goal is to meticulously measure any temperature shifts near the bridge exterior to ensure the entire school environment, and its beautiful butterfly population, stays balanced and healthy.</p>
+                        
+                        <div class="page-controls">
+                            <button class="btn-outline" onclick="navigateStep(-1)">&#8592; Previous</button>
+                            <button class="btn-modern" onclick="navigateStep(1)">Next Page &#8594;</button>
+                        </div>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Vibrant green forest" class="split-image">
+                </div>
+            </div>
+        </div>
+
+        <div id="page-thanks" class="page-view" style="padding-top: 100px;">
+            <div class="credits-container">
+                
+                <div class="credits-header">
+                    <h2>With Deepest Gratitude</h2>
+                    <p>GUIDED BY WISDOM, BUILT WITH PASSION.</p>
+                </div>
+                
+                <div class="section-title">The Development Team</div>
+                <div class="dev-team-grid">
+                    <div class="dev-card">
+                        <h3>Website & Digital Architecture</h3>
+                        <p>Perley Lo & Nathan Tse</p>
+                    </div>
+                    <div class="dev-card">
+                        <h3>3D Rendering & Physical Modeling</h3>
+                        <p>Jason Yang & Fang Liangyu</p>
+                    </div>
+                </div>
+
+                <div class="light-flare"></div> <div class="section-title">Deepest Gratitude to</div>
+
+                <div class="acknowledgements-grid">
+                    <div class="ack-card">
+                        <h4>Esteemed Supervisor</h4>
+                        <p>Fr. Wong Ting Yuet, Alan, S.J.</p>
+                    </div>
+                    <div class="ack-card">
+                        <h4>Esteemed Principal</h4>
+                        <p>Dr. Chan Wai Lun, Davis</p>
+                    </div>
+                    <div class="ack-card">
+                        <h4>Asst. Principal & Panel Head</h4>
+                        <p>Mr. Lee Kwun King, Chris</p>
+                    </div>
+
+                    <div class="ack-card">
+                        <h4>IDEEA Teacher</h4>
+                        <p>Ms. Chan Siu Chuk, Prudence</p>
+                    </div>
+                    <div class="ack-card">
+                        <h4>IDEEA Teacher</h4>
+                        <p>Mr. Yeung Pui Hei, Edward</p>
+                    </div>
+                    <div class="ack-card">
+                        <h4>IDEEA Teachers</h4>
+                        <p>Mr. Fan Yui Hang, Tommy<br><span style="font-size: smaller;">& other IDEEA teachers</span></p>
+                    </div>
+
+                    <div class="ack-card">
+                        <h4>All HKPU Advisors</h4>
+                        <p>Hong Kong<br>Polytechnic University</p>
+                    </div>
+                    <div class="ack-card">
+                        <h4>Art Teacher & Advisor</h4>
+                        <p>Mr. Siu Kam Kuen</p>
+                    </div>
+                    <div class="ack-card">
+                        <h4>Teacher & Advisor</h4>
+                        <p>Mr. Lam Yiu Choi, Jonathan</p>
+                    </div>
+
+                    <div class="ack-card">
+                        <h4>All WYHK Staff</h4>
+                        <p>All Jesuit Fathers & Teachers</p>
+                    </div>
+                    <div class="ack-card">
+                        <h4>All Supporting Staff</h4>
+                        <p>All Janitors & Office Staff</p>
+                    </div>
+                    <div class="ack-card">
+                        <h4>WYHK Community</h4>
+                        <p>All Students, Parents, & Alumni</p>
+                    </div>
+                </div>
+
+                <div class="thank-you-box">
+		<p>and finally...<p>
+                    <h2>Thank YOU!</h2>
+                    <p style="text-wrap: balance;">Thank you for supporting and visiting our&nbsp;booth</p>
+                </div>
+                
+                <div style="display: flex; justify-content: center; margin-top: 3rem; position: relative; z-index: 2;">
+                    <button class="btn-outline" style="border-color: rgba(255,255,255,0.4); color: white; background: rgba(0,0,0,0.2);" onclick="navigateStep(-1)">&#8592; Go Back</button>
+                </div>
+
+                <div class="site-footer">
+                    &copy; 2026 Wah Yan Eco-Bridge Initiative. All Rights Reserved.<br>
+                    Designed for the Environment.
+                </div>
+            </div>
+        </div>
+
+    </main>
 
     <script>
+        /* ==========================================================
+           Professional Touch: Preloader Logic
+           ========================================================= */
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 600); // Slight delay so the user actually sees the premium loading animation
+        });
+
+        /* ==========================================================
+           Professional Touch: Scroll to Top Logic
+           ========================================================= */
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
         /* ==========================================================
            Advanced Sequential Navigation Logic
            ========================================================= */
@@ -721,28 +925,36 @@
         const hamburger = document.getElementById('hamburger');
         const navLinksMenu = document.getElementById('navLinks');
 
-        hamburger.addEventListener('click', () => {
+        // Added keyboard accessibility to hamburger menu
+        hamburger.addEventListener('click', toggleMenu);
+        hamburger.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter' || e.key === ' ') toggleMenu();
+        });
+
+        function toggleMenu() {
             hamburger.classList.toggle('toggle');
             navLinksMenu.classList.toggle('nav-active');
-        });
+        }
 
         /* ==========================================================
            Pop Fact Logic
            ========================================================= */
         const facts = [
-            "Butterflies taste food with their feet! 🦶",
+            "Butterflies taste food with their feet! 🦋",
             "A group of butterflies is called a kaleidoscope. 🌈",
-            "Butterflies can see colors humans can't, including UV light. 🎨",
-            "The top flight speed of a butterfly is 12 mph! 🏎️",
+            "Butterflies can see colors humans can't, including UV light. 👁️",
+            "The top flight speed of a butterfly is 12 mph! 💨",
             "Many adult butterflies only live for 1 to 2 weeks. ⏳",
-            "Butterflies breathe through tiny openings on their abdomen. 🌬️"
+            "Butterflies breathe through tiny openings on their abdomen. 🍃"
         ];
         let currentFactIndex = 0;
 
         function triggerFact(elementId) {
             const factDisplay = document.getElementById(elementId);
-            factDisplay.innerText = facts[currentFactIndex];
-            currentFactIndex = (currentFactIndex + 1) % facts.length;
+            if(factDisplay) {
+                factDisplay.innerText = facts[currentFactIndex];
+                currentFactIndex = (currentFactIndex + 1) % facts.length;
+            }
         }
 
         /* ==========================================================
